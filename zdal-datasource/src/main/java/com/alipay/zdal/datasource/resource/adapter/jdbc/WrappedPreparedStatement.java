@@ -191,7 +191,6 @@ public class WrappedPreparedStatement extends WrappedStatement implements Prepar
     public boolean execute() throws SQLException {
         checkTransaction();
         try {
-            doSqlValve(sql);
             checkConfiguredQueryTimeout();
             return ps.execute();
         } catch (Throwable t) {
@@ -206,7 +205,6 @@ public class WrappedPreparedStatement extends WrappedStatement implements Prepar
     public ResultSet executeQuery() throws SQLException {
         checkTransaction();
         try {
-            doSqlValve(sql);
             checkConfiguredQueryTimeout();
             ResultSet resultSet = ps.executeQuery();
             return registerResultSet(resultSet);
@@ -223,7 +221,6 @@ public class WrappedPreparedStatement extends WrappedStatement implements Prepar
 
         checkTransaction();
         try {
-            doSqlValve(sql);
             checkConfiguredQueryTimeout();
             return ps.executeUpdate();
         } catch (Throwable t) {

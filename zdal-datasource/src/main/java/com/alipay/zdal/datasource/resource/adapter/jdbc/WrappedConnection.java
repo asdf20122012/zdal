@@ -47,9 +47,6 @@ import org.apache.log4j.Logger;
 import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
 import com.alipay.zdal.datasource.ZDataSource;
 import com.alipay.zdal.datasource.exception.NestedSQLException;
-import com.alipay.zdal.valve.Valve;
-import com.alipay.zdal.valve.util.InterceptorParam;
-import com.alipay.zdal.valve.util.MethodEnum;
 
 /**
  * A wrapper for a connection.
@@ -340,16 +337,6 @@ public class WrappedConnection implements Connection {
     public void setAutoCommit(boolean autocommit) throws SQLException {
         checkStatus();
         try {
-
-            if (zdatasource != null) {
-                Valve valve = zdatasource.getValve();
-                if (valve != null) {
-                    InterceptorParam param = new InterceptorParam();
-                    param.setAutoCommit(autocommit);
-                    param.setValve(valve);
-                    valve.ValveExe(MethodEnum.TXSetAutoCommit, param);
-                }
-            }
             mc.setJdbcAutoCommit(autocommit);
         } catch (Throwable t) {
             throw checkException(t);

@@ -4,7 +4,7 @@
  */
 package com.alipay.cif.core.dal.tddl;
 
-import com.alibaba.common.lang.StringUtil;
+import com.alipay.zdal.common.lang.StringUtil;
 
 /**
  * TDDL¹æÔò½âÎöÆ÷

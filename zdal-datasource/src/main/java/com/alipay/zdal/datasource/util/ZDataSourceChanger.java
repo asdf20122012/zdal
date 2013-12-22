@@ -25,7 +25,7 @@ public class ZDataSourceChanger {
         //先复制一份,在用推送的新值覆盖
         LocalTxDataSourceDO newDO = new LocalTxDataSourceDO();
         newDO.setDsName(zds.getDsName());
-        ZDataSourceUtil.copyDS2DO(zds.getLocalTxDataSource(), newDO, zds.getValve());
+        ZDataSourceUtil.copyDS2DO(zds.getLocalTxDataSource(), newDO);
         ZDataSourceUtil.replaceValueFromMap(newDO, properties);
 
         if (driverChange && !urlChange) {//jboss会为url缓存driver
@@ -42,7 +42,6 @@ public class ZDataSourceChanger {
         if (dsFileChange) {
             return reCreatePool(newDO, zds);
         }
-        zds.setValve(newDO.getSqlValve(), newDO.getTxValve(), newDO.getTableVave());
         return true;
     }
 

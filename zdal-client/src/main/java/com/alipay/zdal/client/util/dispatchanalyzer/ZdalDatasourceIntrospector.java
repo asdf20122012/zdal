@@ -12,13 +12,13 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import com.alibaba.common.lang.StringUtil;
 import com.alipay.zdal.client.datasource.keyweight.ZdalDataSourceKeyWeightRandom;
 import com.alipay.zdal.client.dispatcher.DatabaseChoicer;
 import com.alipay.zdal.client.dispatcher.Result;
 import com.alipay.zdal.client.jdbc.AbstractZdalDataSource;
 import com.alipay.zdal.client.util.condition.TableShardingRuleImpl;
 import com.alipay.zdal.common.Constants;
+import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.rule.config.beans.AppRule;
 import com.alipay.zdal.rule.config.beans.ShardRule;
 import com.alipay.zdal.rule.config.beans.TableRule;

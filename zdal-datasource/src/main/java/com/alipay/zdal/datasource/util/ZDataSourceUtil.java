@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.datasource.LocalTxDataSourceDO;
 import com.alipay.zdal.datasource.resource.adapter.jdbc.local.LocalTxDataSource;
-import com.alipay.zdal.valve.Valve;
 
 /**
  * ZDataSourceDRM util class
@@ -181,7 +180,7 @@ public final class ZDataSourceUtil {
      * @param ds
      * @param DO
      */
-    static void copyDS2DO(LocalTxDataSource ds, LocalTxDataSourceDO DO, Valve valve) {
+    static void copyDS2DO(LocalTxDataSource ds, LocalTxDataSourceDO DO) {
         DO.setUserName(ds.getUserName());
         try {
             DO.setEncPassword(ds.getEncPassword());
@@ -219,11 +218,6 @@ public final class ZDataSourceUtil {
         DO.setUserName(ds.getUserName());
         DO.setValidConnectionCheckerClassName(ds.getValidConnectionCheckerClassName());
         DO.setValidateOnMatch(ds.getValidateOnMatch());
-        if (valve != null) {
-            DO.setSqlValve(valve.getSqlValveStr());
-            DO.setTxValve(valve.getTxValveStr());
-            DO.setTableVave(valve.getTableValveStr());
-        }
     }
 
     /**

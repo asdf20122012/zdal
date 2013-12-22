@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
-import com.alibaba.common.lang.StringUtil;
+import com.alipay.zdal.common.lang.StringUtil;
 
 /**
  * @author <a href="mailto:xiang.yangx@alipay.com">Yang Xiang</a>

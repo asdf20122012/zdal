@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.springframework.util.Assert;
 
-import com.alibaba.common.lang.StringUtil;
+import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.rule.config.beans.AppRule;
 
 /**

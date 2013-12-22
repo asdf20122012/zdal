@@ -34,7 +34,6 @@ import java.util.Set;
 
 import javax.security.auth.Subject;
 
-import com.alipay.zdal.datasource.oci.ZDataSourceOciDriver;
 import com.alipay.zdal.datasource.resource.JBossResourceException;
 import com.alipay.zdal.datasource.resource.ResourceException;
 import com.alipay.zdal.datasource.resource.adapter.jdbc.BaseWrapperManagedConnectionFactory;
@@ -282,15 +281,15 @@ public class LocalManagedConnectionFactory extends BaseWrapperManagedConnectionF
                 //return immediately, some drivers (Cloudscape) do not let you create an instance.
                 return driver;
             }
-            //We loaded the class, but either it didn't register
-            //and is not spec compliant, or is the wrong class.
-            if (url.startsWith("jdbc:oracle:oci") && driverClass.equals("oracle.jdbc.OracleDriver")) {//只有在oracle-oci的时候才需要从cloundengine中获取driver.
-                driver = ZDataSourceOciDriver.getDriver(driverClass, url);
-            } else {
-                Class<?> clazz = Class.forName(driverClass, true, Thread.currentThread()
-                    .getContextClassLoader());
-                driver = (Driver) clazz.newInstance();
-            }
+            //            //We loaded the class, but either it didn't register
+            //            //and is not spec compliant, or is the wrong class.
+            //            if (url.startsWith("jdbc:oracle:oci") && driverClass.equals("oracle.jdbc.OracleDriver")) {//只有在oracle-oci的时候才需要从cloundengine中获取driver.
+            //                driver = ZDataSourceOciDriver.getDriver(driverClass, url);
+            //            } else {
+            Class<?> clazz = Class.forName(driverClass, true, Thread.currentThread()
+                .getContextClassLoader());
+            driver = (Driver) clazz.newInstance();
+            //            }
             DriverManager.registerDriver(driver);
             if (isDriverLoadedForURL(url)) {
                 return driver;

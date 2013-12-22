@@ -17,7 +17,6 @@ import com.alipay.zdal.datasource.client.util.ZConstants;
 import com.alipay.zdal.datasource.resource.adapter.jdbc.local.LocalTxDataSource;
 import com.alipay.zdal.datasource.util.PoolCondition;
 import com.alipay.zdal.datasource.util.ZDataSourceChanger;
-import com.alipay.zdal.valve.Valve;
 
 /**
  * 
@@ -26,8 +25,6 @@ import com.alipay.zdal.valve.Valve;
  * @version $Id: ZDataSource.java, v 0.1 May 11, 2012 3:38:23 PM liangjie.li Exp $
  */
 public class ZDataSource extends AbstractDataSource implements Flusher, Comparable<ZDataSource> {
-    /**  */
-    private final Valve                           valve             = new Valve();
 
     private static final Logger                   logger            = Logger
                                                                         .getLogger(ZDataSource.class);
@@ -69,25 +66,9 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
         checkParam(dataSourceDO);
         this.dsName = dataSourceDO.getDsName();
         localTxDataSource = ZDataSourceFactory.createLocalTxDataSource(dataSourceDO, this);
-        valve.set(dataSourceDO.getSqlValve(), dataSourceDO.getTxValve(), dataSourceDO
-            .getTableVave());
-        valve.setDsName(dataSourceDO.getDsName());
         PoolConditionWriter poolConditionWriter = new PoolConditionWriter(this);
         future = service.scheduleWithFixedDelay(poolConditionWriter, 0, ZConstants.LOGGER_DELAY,
             TimeUnit.SECONDS);
-    }
-
-    /**
-     * valve组件初始化
-     * @param sqlValve
-     * @param txValve
-     * @param tableValve
-     */
-    public void setValve(String sqlValve, String txValve, String tableValve) {
-        synchronized (valve) {
-            valve.reset();
-            valve.set(sqlValve, txValve, tableValve);
-        }
     }
 
     /**
@@ -127,7 +108,6 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
     public void destroy() throws Exception {
         ZDataSourceFactory.destroy(localTxDataSource);
         future.cancel(false);
-        valve.reset();
         synchronized (zdatasourceList) {
             zdatasourceList.remove(this);
         }
@@ -247,10 +227,6 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
 
     public void setLocalTxDataSource(LocalTxDataSource localTxDataSource) {
         this.localTxDataSource = localTxDataSource;
-    }
-
-    public Valve getValve() {
-        return valve;
     }
 
     @Override
