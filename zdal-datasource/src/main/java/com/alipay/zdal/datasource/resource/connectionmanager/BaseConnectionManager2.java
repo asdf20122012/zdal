@@ -184,10 +184,8 @@ public abstract class BaseConnectionManager2 implements ConnectionCacheListener,
      * @see com.alipay.zdal.datasource.Service#stopService()
      */
     public void stopService() throws Exception {
-    	if( null != poolingStrategy ){
-    		poolingStrategy.setConnectionListenerFactory(null);
-        	poolingStrategy = null;
-    	}
+        poolingStrategy.setConnectionListenerFactory(null);
+        poolingStrategy = null;
     }
 
     /**
@@ -564,12 +562,17 @@ public abstract class BaseConnectionManager2 implements ConnectionCacheListener,
          * @see com.alipay.zdal.datasource.resource.connectionmanager.ConnectionListener#unregisterConnection(java.lang.Object)
          */
         public synchronized void unregisterConnection(Object handle) {
-            if (!handles.remove(handle) && log.isDebugEnabled() ) 
-                log.debug("Unregistered handle that was not registered! " + handle
+            if (!handles.remove(handle)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Unregistered handle that was not registered! " + handle
                               + " for managedConnection: " + mc);
-            
-            if (trace && log.isDebugEnabled() ) 
-                log.debug("unregisterConnection: " + handles.size() + " handles left");
+                }
+            }
+            if (trace) {
+                if (log.isDebugEnabled()) {
+                    log.debug("unregisterConnection: " + handles.size() + " handles left");
+                }
+            }
         }
 
         public synchronized boolean isManagedConnectionFree() {
@@ -604,7 +607,7 @@ public abstract class BaseConnectionManager2 implements ConnectionCacheListener,
             try {
                 unregisterConnections();
             } catch (Throwable t) {
-                log.warn("Exceptions thrown in connectionErrorOccurred as ", t);
+                // ignore, it wasn't checked out.
             }
             if (ce != null && ce.getSource() != getManagedConnection())
                 log.warn("Notified of error on a different managed connection?");
@@ -667,4 +670,38 @@ public abstract class BaseConnectionManager2 implements ConnectionCacheListener,
         protected void toString(StringBuffer buffer) {
         }
     }
+
+    // private static class GetPrincipalAction implements PrivilegedAction
+    // {
+    // static PrivilegedAction ACTION = new GetPrincipalAction();
+    //
+    // public Object run()
+    // {
+    // Principal principal = SecurityAssociation.getPrincipal();
+    // return principal;
+    // }
+    //
+    // static Principal getPrincipal()
+    // {
+    // Principal principal = (Principal) AccessController.doPrivileged(ACTION);
+    // return principal;
+    // }
+    // }
+
+    // private static class GetCredentialAction implements PrivilegedAction
+    // {
+    // static PrivilegedAction ACTION = new GetCredentialAction();
+    //
+    // public Object run()
+    // {
+    // Object credential = SecurityAssociation.getCredential();
+    // return credential;
+    // }
+    //
+    // static Object getCredential()
+    // {
+    // Object credential = AccessController.doPrivileged(ACTION);
+    // return credential;
+    // }
+    // }
 }

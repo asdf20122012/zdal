@@ -135,8 +135,9 @@ public class SecureIdentityLoginModule {
             return true;
         }
         for (int i = 0; i < strLen; i++) {
-            if ((Character.isWhitespace(str.charAt(i)) == false))
+            if ((Character.isWhitespace(str.charAt(i)) == false)) {
                 return false;
+            }
         }
         return true;
     }
@@ -145,7 +146,7 @@ public class SecureIdentityLoginModule {
                                           NoSuchAlgorithmException, BadPaddingException,
                                           IllegalBlockSizeException {
         //        System.out.println(encode("ali88"));
-        System.out.println(decode("-5659120b30da16a9207a6df87216de44"));
+        //                System.out.println(decode("-19c84bf1dcbecee0917eaefd81d23fbf"));
     }
 
 }

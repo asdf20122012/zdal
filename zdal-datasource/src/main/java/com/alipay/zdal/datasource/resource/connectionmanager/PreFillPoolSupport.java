@@ -38,14 +38,14 @@ public interface PreFillPoolSupport
     * Prefill the connection pool 
     * 
     */
-   void prefill();
+   public void prefill();
    
    /**
     * Prefill the connection pool
     * 
     * @param noTxSeperatePool whether or not we are seperating non transaction and transaction pools
     */
-   void prefill(boolean noTxSeperatePool);
+   public void prefill(boolean noTxSeperatePool);
    
    /**
     * Prefill the connection pool
@@ -55,12 +55,12 @@ public interface PreFillPoolSupport
     * @param noTxnSeperatePool whether or not we are seperating non transaction and transaction pools
     *   
     */
-   void prefill(Subject subject, ConnectionRequestInfo cri, boolean noTxnSeperatePool);
+   public void prefill(Subject subject, ConnectionRequestInfo cri, boolean noTxnSeperatePool);
 
    /**
     * Get the flag indicating whether or not to attempt to prefill this pool.
     * 
     * @return true or false depending on whether or not to prefill this pool.
     */
-   boolean shouldPreFill();
+   public boolean shouldPreFill();
 }

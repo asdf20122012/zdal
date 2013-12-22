@@ -36,8 +36,6 @@ import com.alipay.zdal.datasource.resource.connectionmanager.TxConnectionManager
 import com.alipay.zdal.datasource.resource.spi.ConnectionManager;
 import com.alipay.zdal.datasource.resource.spi.ConnectionRequestInfo;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnectionFactory;
-import com.alipay.zdal.datasource.scalable.ScalableConnectionPoolSupport;
-import com.alipay.zdal.datasource.scalable.impl.ScaleConnectionPoolException;
 import com.alipay.zdal.datasource.transaction.TransactionManager;
 import com.alipay.zdal.datasource.util.PoolCondition;
 
@@ -48,7 +46,7 @@ import com.alipay.zdal.datasource.util.PoolCondition;
  * @author <a href="mailto:bill@jboss.org">Bill Burke</a>
  * @version $Revision: 57189 $
  */
-public class LocalTxDataSource implements ScalableConnectionPoolSupport {
+public class LocalTxDataSource {
 
     protected static Logger    logger = Logger.getLogger(LocalTxDataSource.class);
 
@@ -468,10 +466,4 @@ public class LocalTxDataSource implements ScalableConnectionPoolSupport {
             .getInUseConnectionCount(), pool.getMaxConnectionsInUseCount(), pool
             .getConnectionCreatedCount(), pool.getConnectionDestroyedCount());
     }
-
-	@Override
-	public void resetConnectionPoolSize(int poolMinSize, int poolMaxSize)
-			throws ScaleConnectionPoolException {
-		pool.resetConnectionPoolSize(poolMinSize,poolMaxSize);
-	}
 }

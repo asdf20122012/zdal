@@ -31,13 +31,13 @@ package com.alipay.zdal.datasource.resource.connectionmanager;
  */
 public interface JBossManagedConnectionPoolMBean {
 
-    String STOPPED = "Stopped";
+    public static final String STOPPED = "Stopped";
 
-    String STOPPING = "Stopping";
+    public static final String STOPPING = "Stopping";
 
-    String STARTED = "Started";
+    public static final String STARTED = "Started";
 
-    String STARTING = "Starting";
+    public static final String STARTING = "Starting";
 
     /**
      * start the service, create is already called
@@ -196,7 +196,7 @@ public interface JBossManagedConnectionPoolMBean {
      *
      * @return true of false if background validation is enabled.
      */
-    boolean getBackGroundValidation();
+    public boolean getBackGroundValidation();
 
     /**
      * Set the background validation
@@ -204,35 +204,35 @@ public interface JBossManagedConnectionPoolMBean {
      * @param backgroundValidation true or false if background validation is to
      *            be enabled
      */
-    void setBackGroundValidation(boolean backgroundValidation);
+    public void setBackGroundValidation(boolean backgroundValidation);
 
     /**
      * Set the background validation in minutes
      *
      * @param backgroundValidationInterval the background interval in minutes
      */
-    void setBackGroundValidationMinutes(long backgroundValidationInterval);
+    public void setBackGroundValidationMinutes(long backgroundValidationInterval);
 
     /**
      * Get the background validation in minutes
      *
      * @return the background validation in minutes
      */
-    long getBackGroundValidationMinutes();
+    public long getBackGroundValidationMinutes();
 
     /**
      * Get prefill
      *
      * @return true or false depending upon prefill being set
      */
-    boolean getPreFill();
+    public boolean getPreFill();
 
     /**
      * Set the prefill
      *
      * @param prefill true or false depending upon if prefill is being used
      */
-    void setPreFill(boolean prefill);
+    public void setPreFill(boolean prefill);
 
     /**
      * Whether or not we want to immeadiately create a new connection when an
@@ -241,7 +241,7 @@ public interface JBossManagedConnectionPoolMBean {
      * @return true of false depending upon whether fast fail is being used.
      *
      */
-    boolean getUseFastFail();
+    public boolean getUseFastFail();
 
     /**
      * Indicate whether or not we want to immeadiately create a new connection
@@ -251,6 +251,6 @@ public interface JBossManagedConnectionPoolMBean {
      * @param useFastFail whether or not we want to use fast fail semantics in a
      *            connection attempt.
      */
-    void setUseFastFail(boolean useFastFail);
+    public void setUseFastFail(boolean useFastFail);
 
 }

@@ -1,13 +1,8 @@
-/**
- * Alipay.com Inc.
- * Copyright (c) 2004-2013 All Rights Reserved.
- */
 package com.alipay.zdal.datasource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.jdbc.sorter.MySQLExceptionSorter;
 import com.alipay.zdal.common.jdbc.sorter.OracleExceptionSorter;
 import com.alipay.zdal.common.lang.StringUtil;
@@ -20,35 +15,7 @@ import com.alipay.zdal.datasource.resource.security.SecureIdentityLoginModule;
  */
 public class LocalTxDataSourceDO implements Cloneable {
 
-    public static final String DB_TYPE = "dbType";
-
-	public static final String DS_NAME = "dsName";
-
-	public static final String CONNECTION_PROPERTIES = "connectionProperties";
-
-	public static final String PREFILL = "prefill";
-
-	public static final String QUERY_TIMEOUT = "queryTimeout";
-
-	public static final String PREPARED_STATEMENT_CACHE_SIZE = "preparedStatementCacheSize";
-
-	public static final String IDLE_TIMEOUT_MINUTES = "idleTimeoutMinutes";
-
-	public static final String BLOCKING_TIMEOUT_MILLIS = "blockingTimeoutMillis";
-
-	private static final String DRIVER_CLASS = "driverClass";
-
-	public static final String MAX_CONN = "maxConn";
-
-	public static final String MIN_CONN = "minConn";
-
-	public static final String PASSWORD = "password";
-
-	private static final String USER_NAME = "userName";
-
-	private static final String JDBC_URL = "jdbcUrl";
-
-	/** 数据源名称,必填 */
+    /** 数据源名称,必填 */
     private String              dsName                          = null;
 
     /** 数据库连接的url,必填，由统一数据源提供. */
@@ -121,6 +88,11 @@ public class LocalTxDataSourceDO implements Cloneable {
     @Deprecated
     private long                backgroundValidationMinutes     = 0;
     @Deprecated
+    private String              sqlValve                        = null;
+    @Deprecated
+    private String              txValve                         = null;
+    @Deprecated
+    private String              tableVave                       = null;
 
     /**  */
     public static final int     UNSET                           = -1;
@@ -615,54 +587,28 @@ public class LocalTxDataSourceDO implements Cloneable {
     public void setConnectionProperties(Map<String, String> connectionProperties) {
         this.connectionProperties = connectionProperties;
     }
-    
-    public static LocalTxDataSourceDO convertFromMap(Map<String, ?> settingMap) throws Exception{
-    	if( null == settingMap || settingMap.isEmpty() ){
-    		return null;
-    	}
-    	LocalTxDataSourceDO dataSourceDO = new LocalTxDataSourceDO();
-    	if(  isValidated(settingMap) ){
-//            dataSourceDO.setDsName(settingMap.get(DS_NAME).toString());
-            dataSourceDO.setConnectionURL(settingMap.get(JDBC_URL).toString());
-            dataSourceDO.setUserName(settingMap.get(USER_NAME).toString());
-            dataSourceDO.setEncPassword(settingMap.get(PASSWORD).toString());
-            dataSourceDO.setMinPoolSize(Integer.valueOf(settingMap.get(MIN_CONN).toString()));
-            dataSourceDO.setMaxPoolSize(Integer.valueOf(settingMap.get(MAX_CONN).toString()));
-            dataSourceDO.setDriverClass(settingMap.get(DRIVER_CLASS).toString());
-            dataSourceDO.setBlockingTimeoutMillis(Integer.valueOf(settingMap.get(BLOCKING_TIMEOUT_MILLIS).toString()));
-            dataSourceDO.setIdleTimeoutMinutes(Integer.valueOf(settingMap.get(IDLE_TIMEOUT_MINUTES).toString()));
-            dataSourceDO.setPreparedStatementCacheSize(Integer.valueOf(settingMap.get(PREPARED_STATEMENT_CACHE_SIZE).toString()));
-            dataSourceDO.setQueryTimeout(Integer.valueOf(settingMap.get(QUERY_TIMEOUT).toString()));
-            if( null != settingMap.get(CONNECTION_PROPERTIES) ){
-                dataSourceDO.getConnectionProperties().putAll((Map) settingMap.get(CONNECTION_PROPERTIES));
-            }
-        	dataSourceDO.setPrefill(Boolean.valueOf(settingMap.get(PREFILL).toString()));
-            String dbType = settingMap.get(JDBC_URL).toString();
-            if (dbType.equalsIgnoreCase(DBType.MYSQL.toString())) {
-                dataSourceDO.setExceptionSorterClassName(MySQLExceptionSorter.class.getName());
-            } else if (dbType.equalsIgnoreCase(DBType.ORACLE.toString())) {
-                dataSourceDO.setExceptionSorterClassName(OracleExceptionSorter.class.getName());
-            } 
-    	}
-    	return dataSourceDO;
+
+    public String getSqlValve() {
+        return sqlValve;
     }
 
-	private static boolean isValidated(Map<String, ?> settingMap) {
-	    boolean isValidated = true;
-		if( null != settingMap && !settingMap.isEmpty() ){
-		    isValidated = null != settingMap.get(DB_TYPE) ;
-			isValidated = null != settingMap.get(JDBC_URL);
-			isValidated = null != settingMap.get(USER_NAME);
-			isValidated = null != settingMap.get(PASSWORD);
-			isValidated = null != settingMap.get(MIN_CONN);
-			isValidated = null != settingMap.get(MAX_CONN);
-			isValidated = null != settingMap.get(DRIVER_CLASS);
-			isValidated = null != settingMap.get(BLOCKING_TIMEOUT_MILLIS);
-			isValidated = null != settingMap.get(IDLE_TIMEOUT_MINUTES);
-			isValidated = null != settingMap.get(PREPARED_STATEMENT_CACHE_SIZE);
-			isValidated = null != settingMap.get(QUERY_TIMEOUT);
-			isValidated = null != settingMap.get(PREFILL);
-		}
-		return isValidated;
-	}
+    public void setSqlValve(String sqlValve) {
+        this.sqlValve = sqlValve;
+    }
+
+    public String getTxValve() {
+        return txValve;
+    }
+
+    public void setTxValve(String txValve) {
+        this.txValve = txValve;
+    }
+
+    public String getTableVave() {
+        return tableVave;
+    }
+
+    public void setTableVave(String tableVave) {
+        this.tableVave = tableVave;
+    }
 }

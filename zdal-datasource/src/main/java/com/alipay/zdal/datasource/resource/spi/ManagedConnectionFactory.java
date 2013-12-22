@@ -45,7 +45,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @throws ResourceAdapterInternalException for an internal error in the
      *            resource adapter
      */
-    Object createConnectionFactory() throws ResourceException;
+    public Object createConnectionFactory() throws ResourceException;
 
     /**
      * Creates a connection factory instance. the connection manager is provided
@@ -57,7 +57,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @throws ResourceAdapterInternalException for an internal error in the
      *            resource adapter
      */
-    Object createConnectionFactory(ConnectionManager cxManager) throws ResourceException;
+    public Object createConnectionFactory(ConnectionManager cxManager) throws ResourceException;
 
     /**
      * Creates a connection factory instance. the connection manager is provided
@@ -69,7 +69,7 @@ public interface ManagedConnectionFactory extends Serializable {
     * @throws ResourceAdapterInternalException for an internal error in the
     *            resource adapter
      */
-    Object createConnectionFactory(ConnectionManager cxManager, String dataSourceName)
+    public Object createConnectionFactory(ConnectionManager cxManager, String dataSourceName)
                                                                                              throws ResourceException;
 
     /**
@@ -80,7 +80,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @return the managed connection
      * @throws ResourceException for a generic error 
      */
-    ManagedConnection createManagedConnection(Subject subject,
+    public ManagedConnection createManagedConnection(Subject subject,
                                                      ConnectionRequestInfo cxRequestInfo)
                                                                                          throws ResourceException;
 
@@ -97,7 +97,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @throws SecurityException for a security problem
      * @throws NotSupportedException if not supported
      */
-    ManagedConnection matchManagedConnections(Set connectionSet, Subject subject,
+    public ManagedConnection matchManagedConnections(Set connectionSet, Subject subject,
                                                      ConnectionRequestInfo cxRequestInfo)
                                                                                          throws ResourceException;
 
@@ -107,7 +107,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @return the log writer
      * @throws ResourceException for a generic error 
      */
-    PrintWriter getLogWriter() throws ResourceException;
+    public PrintWriter getLogWriter() throws ResourceException;
 
     /**
      * Sets the logwriter for this instance.
@@ -117,7 +117,7 @@ public interface ManagedConnectionFactory extends Serializable {
      * @throws ResourceAdapterInternalException for an internal error in the
      *            resource adapter
      */
-    void setLogWriter(PrintWriter out) throws ResourceException;
+    public void setLogWriter(PrintWriter out) throws ResourceException;
 
     /**
      * Tests object for equality
@@ -125,12 +125,12 @@ public interface ManagedConnectionFactory extends Serializable {
      * @param other the other object
      * @return true when equals, false otherwise
      */
-    boolean equals(Object other);
+    public boolean equals(Object other);
 
     /**
      * Generates a hashCode for this object
      * 
      * @return the hash code
      */
-    int hashCode();
+    public int hashCode();
 }

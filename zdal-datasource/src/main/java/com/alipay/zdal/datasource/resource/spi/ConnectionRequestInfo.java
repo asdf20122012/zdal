@@ -35,12 +35,12 @@ public interface ConnectionRequestInfo
     * @param other the object to test
     * @return true when equal, false otherwise
 	 */
-   boolean equals(Object other);
+   public boolean equals(Object other);
 
    /**
 	 * Generates a hashCode for this object
     * 
     * @return the hash code
 	 */
-   int hashCode();
+   public int hashCode();
 }

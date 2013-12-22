@@ -21,11 +21,10 @@
  */
 package com.alipay.zdal.datasource.resource.util.timeout;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import com.alipay.zdal.datasource.resource.util.ThrowableHandler;
+import com.alipay.zdal.datasource.resource.util.threadpool.BasicThreadPool;
+import com.alipay.zdal.datasource.resource.util.threadpool.BlockingMode;
+import com.alipay.zdal.datasource.resource.util.threadpool.ThreadPool;
 
 /**
  * The timeout factory.
@@ -80,15 +79,15 @@ public class TimeoutFactory {
     private static int             timeoutFactoriesCount = 0;
 
     /** The default threadpool used to execute timeouts */
-    /*private static BasicThreadPool DEFAULT_TP            = new BasicThreadPool("Timeouts");
+    private static BasicThreadPool DEFAULT_TP            = new BasicThreadPool("Timeouts");
     static {
         DEFAULT_TP.setBlockingMode(BlockingMode.RUN);
-    }*/
+    }
 
     /** Lazy constructions of the TimeoutFactory singleton */
     private synchronized static TimeoutFactory getSingleton() {
         if (singleton == null) {
-            singleton = new TimeoutFactory();
+            singleton = new TimeoutFactory(DEFAULT_TP);
         }
         return singleton;
     }
@@ -103,10 +102,8 @@ public class TimeoutFactory {
     private Thread        workerThread;
 
     /** Per TimeoutFactory thread pool used to execute timeouts */
-//    private ThreadPool    threadPool;
+    private ThreadPool    threadPool;
 
-    private ThreadPoolExecutor threadPool;
-    
     /** Linked list of free TimeoutImpl instances. */
     private TimeoutImpl   freeList;
 
@@ -248,26 +245,8 @@ public class TimeoutFactory {
     /**
      * Constructs a new TimeoutFactory that uses the provided ThreadPool
      */
-    public TimeoutFactory() {
-        /**
-         * Reference the definitions from JBoss's BasicThreadPool
-         public BasicThreadPool(String name, ThreadGroup threadGroup) {
-	        ThreadFactory factory = new ThreadPoolThreadFactory();
-	
-	        queue = new BoundedLinkedQueue(1024);
-			//Maximum pool size
-	        executor = new MinPooledExecutor(queue, 100);
-	        executor.setMinimumPoolSize(100);
-	        executor.setKeepAliveTime(60 * 1000);
-	        executor.setThreadFactory(factory);
-	        executor.abortWhenBlocked();
-	
-	        poolNumber = lastPoolNumber.increment();
-	        setName(name);
-	        this.threadGroup = threadGroup;
-	    }
-         */
-        threadPool = new ThreadPoolExecutor(100, 100, 60 * 1000, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024));
+    public TimeoutFactory(ThreadPool threadPool) {
+        this.threadPool = threadPool;
         q = new TimeoutImpl[16];
         freeList = null;
         size = 0;
@@ -286,10 +265,10 @@ public class TimeoutFactory {
     /**
      * Constructs a new TimeoutFactory that uses the default thread pool
      */
-    /*public TimeoutFactory() {
+    public TimeoutFactory() {
         this(DEFAULT_TP);
-    }*/
-    
+    }
+
     /**
      * Schedules a new timeout.
      * 
@@ -536,7 +515,7 @@ public class TimeoutFactory {
                 // Wrap the TimeoutImpl with a runnable that invokes the target callback
                 TimeoutWorker worker = new TimeoutWorker(work);
                 try {
-                    threadPool.execute(worker);
+                    threadPool.run(worker);
                 } catch (Throwable t) {
                     // protect the worker thread from pool enqueue errors
                     ThrowableHandler.add(ThrowableHandler.Type.ERROR, t);

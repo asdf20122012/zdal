@@ -24,6 +24,6 @@ public interface Flusher {
      * @param map
      * @return
      */
-    boolean flush(Map<String, String> map);
+    public boolean flush(Map<String, String> map);
 
 }

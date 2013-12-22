@@ -293,9 +293,7 @@ public class LRUCachePolicy
                   ++m_count;
                   entryAdded(entry);
                }
-               else if (m_count == 1 && m_head == entry) {
-                   
-               } // there is only the head and I want to promote it, do nothing
+               else if (m_count == 1 && m_head == entry) {} // there is only the head and I want to promote it, do nothing
                else if (m_count < m_capacity)
                {
                   entry.m_prev = null;

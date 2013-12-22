@@ -49,7 +49,7 @@ public interface ManagedConnection
     * @throws CommException for a communication failure with the EIS
     * @throws EISSystemException for an error from the EIS
 	 */
-   Object getConnection(Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException;
+   public Object getConnection(Subject subject, ConnectionRequestInfo cxRequestInfo) throws ResourceException;
 
    /**
     * Destroys the connection to the underlying resource.
@@ -57,7 +57,7 @@ public interface ManagedConnection
     * @throws ResourceException for a generic error
     * @throws IllegalStateException if the connection is not a legal state for destruction 
     */
-   void destroy() throws ResourceException;
+   public void destroy() throws ResourceException;
 
    /**
     * Application server calls this to force cleanup of connection.
@@ -66,7 +66,7 @@ public interface ManagedConnection
     *            resource adapter
     * @throws IllegalStateException if the connection is not a legal state for cleanup 
     */
-   void cleanup() throws ResourceException;
+   public void cleanup() throws ResourceException;
 
    /**
     * Associates a new application level connection handle with the connection.
@@ -77,21 +77,21 @@ public interface ManagedConnection
     * @throws ResourceAdapterInternalException for an internal error in the
     *            resource adapter
     */
-   void associateConnection(Object connection) throws ResourceException;
+   public void associateConnection(Object connection) throws ResourceException;
    
    /**
 	 * Adds a connection event listener
 	 * 
 	 * @param listener the listener
 	 */
-   void addConnectionEventListener(ConnectionEventListener listener);
+   public void addConnectionEventListener(ConnectionEventListener listener);
 
    /**
 	 * Removes a connection event listener
 	 * 
 	 * @param listener the listener
 	 */
-   void removeConnectionEventListener(ConnectionEventListener listener);
+   public void removeConnectionEventListener(ConnectionEventListener listener);
 
    /**
     * Returns an XAResource instance.
@@ -102,7 +102,7 @@ public interface ManagedConnection
     * @throws ResourceAdapterInternalException for an internal error in the
     *            resource adapter
     */
-   XAResource getXAResource() throws ResourceException;
+   public XAResource getXAResource() throws ResourceException;
    
    /**
 	 * Returns a LocalTransaction instance.
@@ -113,7 +113,7 @@ public interface ManagedConnection
     * @throws ResourceAdapterInternalException for an internal error in the
     *            resource adapter
 	 */
-   LocalTransaction getLocalTransaction() throws ResourceException;
+   public LocalTransaction getLocalTransaction() throws ResourceException;
 
    /**
     * Gets metadata inormation for this instances underlying resource manager
@@ -123,7 +123,7 @@ public interface ManagedConnection
     * @throws ResourceException for a generic error
     * @throws NotSupportedException if not supported
     */
-   ManagedConnectionMetaData getMetaData() throws ResourceException;
+   public ManagedConnectionMetaData getMetaData() throws ResourceException;
    
    /**
 	 * Gets the logwriter for this instance.
@@ -131,7 +131,7 @@ public interface ManagedConnection
     * @return the log writer
     * @throws ResourceException for a generic error
 	 */
-   PrintWriter getLogWriter() throws ResourceException;
+   public PrintWriter getLogWriter() throws ResourceException;
 
    /**
 	 * Sets the logwriter for this instance.
@@ -141,5 +141,5 @@ public interface ManagedConnection
     * @throws ResourceAdapterInternalException for an internal error in the
     *            resource adapter
 	 */
-   void setLogWriter(PrintWriter out) throws ResourceException;
+   public void setLogWriter(PrintWriter out) throws ResourceException;
 }

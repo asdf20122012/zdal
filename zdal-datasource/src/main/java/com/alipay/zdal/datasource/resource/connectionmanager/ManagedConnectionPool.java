@@ -26,7 +26,6 @@ import javax.security.auth.Subject;
 import com.alipay.zdal.datasource.resource.ResourceException;
 import com.alipay.zdal.datasource.resource.spi.ConnectionRequestInfo;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnectionFactory;
-import com.alipay.zdal.datasource.scalable.ScalableConnectionPoolSupport;
 import com.alipay.zdal.datasource.transaction.Transaction;
 
 /**
@@ -37,7 +36,7 @@ import com.alipay.zdal.datasource.transaction.Transaction;
  *
  * @version $Revision: 57747 $
  */
-public interface ManagedConnectionPool extends ScalableConnectionPoolSupport
+public interface ManagedConnectionPool
 {
    /**
     * Retrieve the managed connection factory for this pool

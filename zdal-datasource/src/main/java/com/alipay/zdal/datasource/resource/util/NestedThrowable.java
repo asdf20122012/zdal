@@ -66,7 +66,7 @@ public interface NestedThrowable extends Serializable {
     boolean NESTED_TRACE_ENABLED     = Util
                                          .getBoolean(
                                              "nestedTraceEnabled",
-                                             Java.isCompatible(Java.VERSION_1_4) && !PARENT_TRACE_ENABLED
+                                             (Java.isCompatible(Java.VERSION_1_4) && !PARENT_TRACE_ENABLED)
                                                      || !Java.isCompatible(Java.VERSION_1_4));
 
     /**
@@ -130,7 +130,7 @@ public interface NestedThrowable extends Serializable {
 
             log.debug(name + "=" + value);
 
-            return Boolean.valueOf(value);
+            return new Boolean(value).booleanValue();
         }
 
         /**

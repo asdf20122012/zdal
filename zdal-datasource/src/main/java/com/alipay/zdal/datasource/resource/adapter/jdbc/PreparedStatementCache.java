@@ -102,7 +102,7 @@ public class PreparedStatementCache extends LRUCachePolicy {
         @Override
         public int hashCode() {
             int result;
-            result = sql != null ? sql.hashCode() : 0;
+            result = (sql != null ? sql.hashCode() : 0);
             result = 29 * result + type;
             result = 29 * result + resultSetType;
             result = 29 * result + resultSetConcurrency;

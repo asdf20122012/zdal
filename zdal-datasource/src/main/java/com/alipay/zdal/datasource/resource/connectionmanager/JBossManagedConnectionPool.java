@@ -38,7 +38,6 @@ import com.alipay.zdal.datasource.resource.adapter.jdbc.local.LocalTxDataSource;
 import com.alipay.zdal.datasource.resource.connectionmanager.InternalManagedConnectionPool.PoolParams;
 import com.alipay.zdal.datasource.resource.spi.ConnectionRequestInfo;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnectionFactory;
-import com.alipay.zdal.datasource.scalable.impl.ScaleConnectionPoolException;
 import com.alipay.zdal.datasource.tm.TransactionLocal;
 import com.alipay.zdal.datasource.transaction.Transaction;
 import com.alipay.zdal.datasource.transaction.TransactionManager;
@@ -435,15 +434,6 @@ public class JBossManagedConnectionPool implements JBossManagedConnectionPoolMBe
             this.clf = clf;
         }
 
-        public void resetConnectionPoolSize(int poolMinSize, int poolMaxSize) throws ScaleConnectionPoolException{
-        	//Since we only use the one pooling strategy, we won't worry about effect other pool.
-        	for(SubPoolContext subPool : subPools.values()){
-        		if( null != subPool.getSubPool() ){
-        			subPool.getSubPool().resetConnectionPoolSize(poolMinSize, poolMaxSize);
-        		}
-        	}
-        }
-        
         public ConnectionListener getConnection(Transaction trackByTransaction, Subject subject,
                                                 ConnectionRequestInfo cri) throws ResourceException {
             // Determine the pool key for this request
@@ -451,8 +441,8 @@ public class JBossManagedConnectionPool implements JBossManagedConnectionPoolMBe
             if (noTxSeparatePools)
                 separateNoTx = clf.isTransactional();
             Object key = getKey(subject, cri, separateNoTx);
-
             SubPoolContext subPool = getSubPool(key, subject, cri, poolName);
+
             InternalManagedConnectionPool mcp = subPool.getSubPool();
 
             // Are we doing track by connection?
@@ -1069,7 +1059,7 @@ public class JBossManagedConnectionPool implements JBossManagedConnectionPoolMBe
             if (other == null)
                 value = new Integer(subject.hashCode());
             else
-                value = Boolean.valueOf(subject.equals(other));
+                value = new Boolean(subject.equals(other));
             return value;
         }
 
@@ -1085,13 +1075,5 @@ public class JBossManagedConnectionPool implements JBossManagedConnectionPoolMBe
             return equals.booleanValue();
         }
     }
-
-	public void resetConnectionPoolSize(int poolMinSize, int poolMaxSize) throws ScaleConnectionPoolException {
-		poolingStrategy.resetConnectionPoolSize(poolMinSize, poolMaxSize);
-		poolParams.maxSize = poolMaxSize;
-		if( poolParams.minSize != poolMinSize && poolMinSize >= 1 ){
-			poolParams.minSize = poolMinSize;
-		}
-	}
 
 }

@@ -120,10 +120,12 @@ public class ResourceException extends Exception {
     public String getMessage() {
         String msg = super.getMessage();
         String ec = getErrorCode();
-        if ((msg == null) && (ec == null)) 
+        if ((msg == null) && (ec == null)) {
             return null;
-        if ((msg != null) && (ec != null)) 
+        }
+        if ((msg != null) && (ec != null)) {
             return (msg + ", error code: " + ec);
+        }
         return ((msg != null) ? msg : ("error code: " + ec));
     }
 

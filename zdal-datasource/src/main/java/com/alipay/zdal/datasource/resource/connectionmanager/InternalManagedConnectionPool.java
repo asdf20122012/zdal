@@ -46,9 +46,6 @@ import com.alipay.zdal.datasource.resource.spi.ManagedConnection;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnectionFactory;
 import com.alipay.zdal.datasource.resource.spi.ValidatingManagedConnectionFactory;
 import com.alipay.zdal.datasource.resource.util.UnreachableStatementException;
-import com.alipay.zdal.datasource.scalable.ScalableConnectionPoolSupport;
-import com.alipay.zdal.datasource.scalable.impl.ScalableSemaphore;
-import com.alipay.zdal.datasource.scalable.impl.ScaleConnectionPoolException;
 
 /**
  * The internal pool implementation
@@ -59,7 +56,7 @@ import com.alipay.zdal.datasource.scalable.impl.ScaleConnectionPoolException;
  *
  * @version $Revision: 61055 $
  */
-public class InternalManagedConnectionPool implements ScalableConnectionPoolSupport{
+public class InternalManagedConnectionPool {
     private static final Logger             logger               = Logger
                                                                      .getLogger(Constants.ZDAL_DATASOURCE_POOL_LOGNAME);
 
@@ -91,7 +88,7 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
     private final ArrayList                 connectionListeners;
 
     /** The permits used to control who can checkout a connection */
-    private final ScalableSemaphore         permits;
+    private final InternalSemaphore         permits;
 
     /** The log */
     private final Logger                    log;
@@ -140,7 +137,7 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
         this.log = log;
         this.trace = log.isDebugEnabled();
         connectionListeners = new ArrayList(this.maxSize);
-        permits = new ScalableSemaphore(this.maxSize);
+        permits = new InternalSemaphore(this.maxSize);
 
         if (poolParams.prefill) {
             PoolFiller.fillPool(this);
@@ -181,6 +178,19 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
     }
 
     /**
+     * 强制使连接池的信号量与实际的数据库总连接保持一致
+     */
+    public void compareAndResetPermit() {
+        long total = getAvailableConnections() + getConnectionInUseCount();
+        int difference = (int) (maxSize - total);
+        if (difference > 0) {
+            permits.release(difference);
+        } else if (difference < 0) {
+            permits.reduceSemaphores(-difference);
+        }
+    }
+
+    /**
      * todo distinguish between connection dying while match called
      * and bad match strategy.  In latter case we should put it back in
      * the pool.
@@ -206,7 +216,7 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
                             cl = (ConnectionListener) connectionListeners
                                 .remove(connectionListeners.size() - 1);
                             checkedOut.add(cl);
-                            int size = maxSize - permits.availablePermits();
+                            int size = (maxSize - permits.availablePermits());
 
                             //Update the maxUsedConnections
                             if (size > maxUsedConnections)
@@ -269,7 +279,7 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
                     cl = createConnectionEventListener(subject, cri);
                     synchronized (connectionListeners) {
                         checkedOut.add(cl);
-                        int size = maxSize - permits.availablePermits();
+                        int size = (maxSize - permits.availablePermits());
                         if (size > maxUsedConnections)
                             maxUsedConnections = size;
                     }
@@ -347,8 +357,10 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
             return;
         }
 
-        if (trace && log.isDebugEnabled())
-            log.debug("putting ManagedConnection back into pool kill=" + kill + " cl=" + cl);
+        if (trace)
+            if (log.isDebugEnabled()) {
+                log.debug("putting ManagedConnection back into pool kill=" + kill + " cl=" + cl);
+            }
         try {
             cl.getManagedConnection().cleanup();
         } catch (ResourceException re) {
@@ -392,8 +404,10 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
         }
 
         if (kill) {
-            if (trace && log.isDebugEnabled())
-                log.debug("Destroying returned connection " + cl);
+            if (trace)
+                if (log.isDebugEnabled()) {
+                    log.debug("Destroying returned connection " + cl);
+                }
             doDestroy(cl, "returnConnection");
         }
 
@@ -405,15 +419,19 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
     public void flush() {
         ArrayList destroy = null;
         synchronized (connectionListeners) {
-            if (trace && log.isDebugEnabled())
-                log.debug("Flushing pool checkedOut=" + checkedOut + " inPool="
-                          + connectionListeners);
+            if (trace)
+                if (log.isDebugEnabled()) {
+                    log.debug("Flushing pool checkedOut=" + checkedOut + " inPool="
+                              + connectionListeners);
+                }
 
             // Mark checked out connections as requiring destruction
             for (Iterator i = checkedOut.iterator(); i.hasNext();) {
                 ConnectionListener cl = (ConnectionListener) i.next();
-                if (trace && log.isDebugEnabled())
-                    log.debug("Flush marking checked out connection for destruction " + cl);
+                if (trace)
+                    if (log.isDebugEnabled()) {
+                        log.debug("Flush marking checked out connection for destruction " + cl);
+                    }
                 cl.setState(ConnectionListener.DESTROY);
             }
             // Destroy connections in the pool
@@ -429,8 +447,10 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
         if (destroy != null) {
             for (int i = 0; i < destroy.size(); ++i) {
                 ConnectionListener cl = (ConnectionListener) destroy.get(i);
-                if (trace && log.isDebugEnabled())
-                    log.debug("Destroying flushed connection " + cl);
+                if (trace)
+                    if (log.isDebugEnabled()) {
+                        log.debug("Destroying flushed connection " + cl);
+                    }
                 doDestroy(cl, "flushConnectionPool");
             }
 
@@ -472,8 +492,11 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
         if (destroy != null) {
             for (int i = 0; i < destroy.size(); ++i) {
                 ConnectionListener cl = (ConnectionListener) destroy.get(i);
-                if (trace && log.isDebugEnabled() ) 
-                    log.debug("Destroying timedout connection " + cl);
+                if (trace) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Destroying timedout connection " + cl);
+                    }
+                }
                 doDestroy(cl, "removeTimeout");
             }
 
@@ -615,8 +638,10 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
      * @throws Exception
      */
     public void validateConnections() throws Exception {
-        if (trace && log.isDebugEnabled())
-           log.debug("Attempting to  validate connections for pool " + this);
+        if (trace)
+            if (log.isDebugEnabled()) {
+                log.debug("Attempting to  validate connections for pool " + this);
+            }
 
         if (permits.tryAcquire(poolParams.blockingTimeout, TimeUnit.MILLISECONDS)) {
             boolean destroyed = false;
@@ -804,27 +829,4 @@ public class InternalManagedConnectionPool implements ScalableConnectionPoolSupp
             ++destroyed;
         }
     }
-
-	@Override
-	public void resetConnectionPoolSize(int poolMinSize, int poolMaxSize)
-			throws ScaleConnectionPoolException {
-		if( poolParams.minSize != poolMinSize && poolMinSize >= 1 ){
-			poolParams.minSize = poolMinSize;
-		}
-		if( poolMaxSize != 0 && this.poolParams.minSize > poolMaxSize){
-			throw new ScaleConnectionPoolException("Failed to reset pool maximum size due to the pool min "
-				+ "size " + this.poolParams.minSize + " is larger than the new pool max size" + poolMaxSize + " .");
-		}
-		if( poolMaxSize > 0 && poolParams.maxSize != poolMaxSize ){
-			logger.info("Reset pool maximum size into " + poolMaxSize + " from " + poolParams.maxSize);
-			logger.info(permits.getSum());
-			permits.resetPermits(poolMaxSize);
-			poolParams.maxSize = poolMaxSize;
-		}else{
-			if(logger.isDebugEnabled()){
-				logger.warn("This pool has been informed to reset maximum pool size with same size " + poolMaxSize);
-			}
-		}
-	}
-	
 }

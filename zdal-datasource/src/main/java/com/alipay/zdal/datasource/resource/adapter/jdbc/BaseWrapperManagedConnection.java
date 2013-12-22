@@ -48,6 +48,7 @@ import com.alipay.zdal.datasource.resource.spi.ConnectionRequestInfo;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnection;
 import com.alipay.zdal.datasource.resource.spi.ManagedConnectionMetaData;
 import com.alipay.zdal.datasource.resource.spi.ResourceAdapterInternalException;
+import com.alipay.zdal.valve.util.OutstripValveException;
 
 /**
  * BaseWrapperManagedConnection
@@ -272,6 +273,8 @@ public abstract class BaseWrapperManagedConnection implements ManagedConnection 
     }
 
     void connectionError(Throwable t) {
+        if (t instanceof OutstripValveException)
+            return;
         if (t instanceof SQLException == false || mcf.isExceptionFatal((SQLException) t))
             broadcastConnectionError(t);
     }

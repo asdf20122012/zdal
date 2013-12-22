@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>zdal-parent</artifactId>
 		<groupId>com.alipay.zdal</groupId>
-		<version>3.0.0</version>
+		<version>0.0.1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -18,10 +18,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>zdal-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>zdal-datasource-oci</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -44,12 +40,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.alipay.test.ats</groupId>
-			<artifactId>ats-common-driver</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

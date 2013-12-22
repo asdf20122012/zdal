@@ -17,6 +17,7 @@ import com.alipay.zdal.datasource.client.util.ZConstants;
 import com.alipay.zdal.datasource.resource.adapter.jdbc.local.LocalTxDataSource;
 import com.alipay.zdal.datasource.util.PoolCondition;
 import com.alipay.zdal.datasource.util.ZDataSourceChanger;
+import com.alipay.zdal.valve.Valve;
 
 /**
  * 
@@ -26,11 +27,12 @@ import com.alipay.zdal.datasource.util.ZDataSourceChanger;
  */
 public class ZDataSource extends AbstractDataSource implements Flusher, Comparable<ZDataSource> {
     /**  */
-    protected static final Logger                 logger            = Logger
+    private final Valve                           valve             = new Valve();
+
+    private static final Logger                   logger            = Logger
                                                                         .getLogger(ZDataSource.class);
 
-    protected static AtomicBoolean                switching         = new AtomicBoolean(false);
-
+    private static AtomicBoolean                  switching         = new AtomicBoolean(false);
     private final static ScheduledExecutorService service           = Executors
                                                                         .newScheduledThreadPool(2,
                                                                             new ThreadFactory() {
@@ -39,18 +41,19 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
                                                                                                                    1);
 
                                                                                 @Override
-                                                                                public Thread newThread(Runnable r) {
+                                                                                public Thread newThread(
+                                                                                                        Runnable r) {
                                                                                     Thread t = new Thread(
                                                                                         r);
-                                                                                    t.setName("zdal-datasource-monitor-"
-                                                                                              + threadCount
-                                                                                                  .getAndIncrement());
+                                                                                    t
+                                                                                        .setName("zdal-datasource-monitor-"
+                                                                                                 + threadCount
+                                                                                                     .getAndIncrement());
                                                                                     return t;
                                                                                 }
                                                                             });
-    protected String                              dsName            = "";
-
-    protected LocalTxDataSource                   localTxDataSource = null;
+    private String                                dsName            = "";
+    private LocalTxDataSource                     localTxDataSource = null;
 
     // datasource destroy时停止任务 binghun 20130522
     private ScheduledFuture<?>                    future;
@@ -66,9 +69,25 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
         checkParam(dataSourceDO);
         this.dsName = dataSourceDO.getDsName();
         localTxDataSource = ZDataSourceFactory.createLocalTxDataSource(dataSourceDO, this);
+        valve.set(dataSourceDO.getSqlValve(), dataSourceDO.getTxValve(), dataSourceDO
+            .getTableVave());
+        valve.setDsName(dataSourceDO.getDsName());
         PoolConditionWriter poolConditionWriter = new PoolConditionWriter(this);
         future = service.scheduleWithFixedDelay(poolConditionWriter, 0, ZConstants.LOGGER_DELAY,
             TimeUnit.SECONDS);
+    }
+
+    /**
+     * valve组件初始化
+     * @param sqlValve
+     * @param txValve
+     * @param tableValve
+     */
+    public void setValve(String sqlValve, String txValve, String tableValve) {
+        synchronized (valve) {
+            valve.reset();
+            valve.set(sqlValve, txValve, tableValve);
+        }
     }
 
     /**
@@ -106,8 +125,9 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
      * @throws Exception
      */
     public void destroy() throws Exception {
-        ZDataSourceFactory.destroy(getLocalTxDataSource());
+        ZDataSourceFactory.destroy(localTxDataSource);
         future.cancel(false);
+        valve.reset();
         synchronized (zdatasourceList) {
             zdatasourceList.remove(this);
         }
@@ -227,6 +247,10 @@ public class ZDataSource extends AbstractDataSource implements Flusher, Comparab
 
     public void setLocalTxDataSource(LocalTxDataSource localTxDataSource) {
         this.localTxDataSource = localTxDataSource;
+    }
+
+    public Valve getValve() {
+        return valve;
     }
 
     @Override

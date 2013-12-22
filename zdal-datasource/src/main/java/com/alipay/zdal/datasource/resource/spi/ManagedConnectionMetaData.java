@@ -37,7 +37,7 @@ public interface ManagedConnectionMetaData
     * @return the product name
     * @throws ResourceException for a generic error 
 	 */
-   String getEISProductName() throws ResourceException;
+   public String getEISProductName() throws ResourceException;
 
    /**
 	 * Returns product version of the underlying resource.
@@ -45,7 +45,7 @@ public interface ManagedConnectionMetaData
     * @return the product version
     * @throws ResourceException for a generic error 
 	 */
-   String getEISProductVersion() throws ResourceException;
+   public String getEISProductVersion() throws ResourceException;
 
    /**
 	 * Returns the maximum supported number of connections allowed to the
@@ -54,7 +54,7 @@ public interface ManagedConnectionMetaData
     * @return the maximum number of connections
     * @throws ResourceException for a generic error 
 	 */
-   int getMaxConnections() throws ResourceException;
+   public int getMaxConnections() throws ResourceException;
 
    /**
 	 * Returns user name associated with the underlying connection.
@@ -62,5 +62,5 @@ public interface ManagedConnectionMetaData
     * @return the user name
     * @throws ResourceException for a generic error 
 	 */
-   String getUserName() throws ResourceException;
+   public String getUserName() throws ResourceException;
 }

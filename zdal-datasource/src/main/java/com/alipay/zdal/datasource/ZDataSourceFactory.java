@@ -95,9 +95,7 @@ public final class ZDataSourceFactory {
             .getBackgroundValidationMinutes());
         localTxDataSource.setBlockingTimeoutMillis(dataSourceDO.getBlockingTimeoutMillis());
         localTxDataSource.setCheckValidConnectionSQL(dataSourceDO.getCheckValidConnectionSQL());
-        if( null != dataSourceDO.getConnectionProperties() ){
-        	localTxDataSource.setConnectionProperties(dataSourceDO.getConnectionProperties());
-        }
+        localTxDataSource.setConnectionProperties(dataSourceDO.getConnectionProperties());
         localTxDataSource.setConnectionURL(dataSourceDO.getConnectionURL());
         localTxDataSource.setDriverClass(dataSourceDO.getDriverClass());
         localTxDataSource.setExceptionSorterClassName(dataSourceDO.getExceptionSorterClassName());

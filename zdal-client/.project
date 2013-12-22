@@ -4,7 +4,6 @@
   <projects>
     <project>zdal-common</project>
     <project>zdal-datasource</project>
-    <project>zdal-datasource-oci</project>
     <project>zdal-parser</project>
     <project>zdal-rule</project>
   </projects>

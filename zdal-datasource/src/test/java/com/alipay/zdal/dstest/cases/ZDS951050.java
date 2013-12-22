@@ -1,7 +1,9 @@
 package com.alipay.zdal.dstest.cases;
 
-import static com.alipay.ats.internal.domain.ATS.Step;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,10 +15,13 @@ import com.alipay.ats.annotation.Priority;
 import com.alipay.ats.annotation.Subject;
 import com.alipay.ats.annotation.Tester;
 import com.alipay.ats.enums.PriorityLevel;
-import com.alipay.ats.junit.ATSJUnitRunner;
+import com.alipay.ats.junit.ATSJUnitRunner;import static com.alipay.ats.internal.domain.ATS.*;
+
 import com.alipay.zdal.datasource.LocalTxDataSourceDO;
 import com.alipay.zdal.datasource.ZDataSource;
 import com.alipay.zdal.dstest.utils.ZDSTest;
+import com.alipay.zdal.valve.Valve;
+import com.alipay.zdal.valve.config.ThresholdAndPeriod;
 /**
  * 创建zdatasource同时传入valve参数
  * @author yin.meng
@@ -54,7 +59,7 @@ public class ZDS951050 extends ZDSTest{
 		}
 	}
 
-    /*@Subject("不配置valve参数")
+    @Subject("不配置valve参数")
     @Priority(PriorityLevel.NORMAL)
     @Tester("riqiu")
     @Test
@@ -80,7 +85,7 @@ public class ZDS951050 extends ZDSTest{
 	    Assert.isTrue(sqlLimit.equals(noLimit),"校验sql限流");
 	    Assert.isTrue(txLimit.equals(txLimit),"校验tx限流");
 	    Assert.isTrue(tableLimit.equals(emptyTable),"校验table限流");	    
-	}*/
+	}
 
     @Subject("配置合法valve参数")
     @Priority(PriorityLevel.NORMAL)
@@ -88,6 +93,9 @@ public class ZDS951050 extends ZDSTest{
     @Test
 	public void testTC951052() {
 		Step("准备valve参数");
+    	localTxDSDo.setSqlValve("1,1");
+		localTxDSDo.setTxValve("1,60");
+		localTxDSDo.setTableVave("t1,1,1;t2,1,60");
 		
 		Step("创建数据源");
 		try {
@@ -98,7 +106,7 @@ public class ZDS951050 extends ZDSTest{
 		}
 		
 		Step("获取valve参数");
-		/*Valve valve = zDataSource.getValve();
+		Valve valve = zDataSource.getValve();
 		ThresholdAndPeriod sqlLimit=valve.getSqlValve();
 		ThresholdAndPeriod txLimit=valve.getTXValve();
 		Map<String, ThresholdAndPeriod> tableLimit=valve.getTableValve();
@@ -112,7 +120,7 @@ public class ZDS951050 extends ZDSTest{
 		Step("验证valve参数");
         Assert.isTrue(sqlLimit.equals(Limit1),"校验sql限流");
 	    Assert.isTrue(txLimit.equals(Limit2),"校验tx限流");
-	    Assert.isTrue(tableLimit.equals(Limit3),"校验table限流");*/
+	    Assert.isTrue(tableLimit.equals(Limit3),"校验table限流");
 	}
 	
     @Subject("配置不合法valve参数")
@@ -121,6 +129,9 @@ public class ZDS951050 extends ZDSTest{
     @Test
 	public void testTC951053() {		
 		Step("准备valve参数");
+    	localTxDSDo.setSqlValve("s");
+		localTxDSDo.setTxValve("s");
+		localTxDSDo.setTableVave("s");
 		
 		Step("创建数据源");
 		try {
@@ -131,7 +142,7 @@ public class ZDS951050 extends ZDSTest{
 		}
 		
 		Step("获取valve参数");
-		/*Valve valve = zDataSource.getValve();
+		Valve valve = zDataSource.getValve();
 		ThresholdAndPeriod sqlLimit=valve.getSqlValve();
 		ThresholdAndPeriod txLimit=valve.getTXValve();
 		Map<String, ThresholdAndPeriod> tableLimit=valve.getTableValve();
@@ -142,6 +153,6 @@ public class ZDS951050 extends ZDSTest{
 		Step("验证valve参数");
 	    Assert.isTrue(sqlLimit.equals(noLimit),"校验sql限流");
 	    Assert.isTrue(txLimit.equals(txLimit),"校验tx限流");
-	    Assert.isTrue(tableLimit.equals(emptyTable),"校验table限流");	    */
+	    Assert.isTrue(tableLimit.equals(emptyTable),"校验table限流");	    
 	}
 }

@@ -5,10 +5,8 @@
     <project>zdal-client</project>
     <project>zdal-common</project>
     <project>zdal-datasource</project>
-    <project>zdal-datasource-oci</project>
     <project>zdal-parser</project>
     <project>zdal-rule</project>
-    <project>zdal-sequence</project>
   </projects>
   <buildSpec>
     <buildCommand>

@@ -38,13 +38,13 @@ import com.alipay.zdal.datasource.transaction.SystemException;
 public interface ConnectionListener extends ConnectionEventListener
 {
    /** Normal state */
-   public static int NORMAL = 0;
+   public static final int NORMAL = 0;
 
    /** Destroy this connection */
-   public static int DESTROY = 1;
+   public static final int DESTROY = 1;
 
    /** This connection has been destroyed */
-   public static int DESTROYED = 2;
+   public static final int DESTROYED = 2;
 
    /**
     * Retrieve the managed connection for this listener

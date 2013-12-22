@@ -240,9 +240,10 @@ public class CachedConnectionManager {
             if (!stack.contains(oldKey)) {
                 disconnect(oldKey, unsharableResources);
             } // end of if ()
-        } else if (debug && closeAll(oldKey.getCMToConnectionsMap()) && error ) {
-            throw new ResourceException(
-                "Some connections were not closed, see the log for the allocation stacktraces");
+        } else if (debug) {
+            if (closeAll(oldKey.getCMToConnectionsMap()) && error)
+                throw new ResourceException(
+                    "Some connections were not closed, see the log for the allocation stacktraces");
         }
 
         //At one time I attempted to recycle connections held over method calls.
@@ -483,8 +484,9 @@ public class CachedConnectionManager {
         }
 
         public Map getCMToConnectionsMap() {
-            if (cmToConnectionsMap == null) 
+            if (cmToConnectionsMap == null) {
                 cmToConnectionsMap = new HashMap();
+            } // end of if ()
             return cmToConnectionsMap;
         }
     }

@@ -42,6 +42,6 @@ public interface ConnectionManager extends Serializable {
      * @return the connection handle
      * @throws ResourceException for an generic error
      */
-    Object allocateConnection(ManagedConnectionFactory mcf,
+    public Object allocateConnection(ManagedConnectionFactory mcf,
                                      ConnectionRequestInfo cxRequestInfo) throws ResourceException;
 }

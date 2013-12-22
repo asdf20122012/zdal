@@ -11,12 +11,12 @@ public interface Service {
      * 
      * @throws Exception
      */
-    void startService() throws Exception;
+    public void startService() throws Exception;
 
     /**
      * 
      * @throws Exception
      */
-    void stopService() throws Exception;
+    public void stopService() throws Exception;
 
 }

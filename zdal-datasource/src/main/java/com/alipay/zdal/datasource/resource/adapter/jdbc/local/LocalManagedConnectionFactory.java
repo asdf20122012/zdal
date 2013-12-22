@@ -147,7 +147,7 @@ public class LocalManagedConnectionFactory extends BaseWrapperManagedConnectionF
      * @see com.alipay.zdal.datasource.resource.spi.ManagedConnectionFactory#createManagedConnection(javax.security.auth.Subject, com.alipay.zdal.datasource.resource.spi.ConnectionRequestInfo)
      */
     public ManagedConnection createManagedConnection(Subject subject, ConnectionRequestInfo cri)
-                                                                                                throws ResourceException {
+                                                                                                throws com.alipay.zdal.datasource.resource.ResourceException {
         Properties props = getConnectionProperties(subject, cri);
         // Some friendly drivers (Oracle, you guessed right) modify the props you supply.
         // Since we use our copy to identify compatibility in matchManagedConnection, we need
@@ -171,8 +171,10 @@ public class LocalManagedConnectionFactory extends BaseWrapperManagedConnectionF
                 throw new JBossResourceException("Wrong driver class for this connection URL");
             }
             String stz = copy.getProperty("sessionTimeZone");//支持oracle-driver中设置timestamp字段的属性.
-            if (stz != null && stz.trim().length() > 0 && (con instanceof oracle.jdbc.OracleConnection)) 
+            if (stz != null && stz.trim().length() > 0
+                && (con instanceof oracle.jdbc.OracleConnection)) {
                 ((oracle.jdbc.OracleConnection) con).setSessionTimeZone(stz);
+            }
 
             return new LocalManagedConnection(this, con, props, transactionIsolation,
                 preparedStatementCacheSize);
@@ -199,11 +201,16 @@ public class LocalManagedConnectionFactory extends BaseWrapperManagedConnectionF
                 //First check the properties
                 if (mc.getProps().equals(newProps)) {
                     //Next check to see if we are validating on matchManagedConnections
-                    if ((getValidateOnMatch() && mc.checkValid()) || !getValidateOnMatch())
+                    if ((getValidateOnMatch() && mc.checkValid()) || !getValidateOnMatch()) {
+
                         return mc;
+
+                    }
+
                 }
             }
         }
+
         return null;
     }
 
@@ -226,11 +233,13 @@ public class LocalManagedConnectionFactory extends BaseWrapperManagedConnectionF
      */
     @Override
     public boolean equals(Object other) {
-        if (this == other) 
+        if (this == other) {
             return true;
+        }
 
-        if (getClass() != other.getClass()) 
+        if (getClass() != other.getClass()) {
             return false;
+        }
 
         LocalManagedConnectionFactory otherMcf = (LocalManagedConnectionFactory) other;
         return this.connectionURL.equals(otherMcf.connectionURL)

@@ -3,7 +3,6 @@
   <comment/>
   <projects>
     <project>zdal-common</project>
-    <project>zdal-datasource-oci</project>
   </projects>
   <buildSpec>
     <buildCommand>

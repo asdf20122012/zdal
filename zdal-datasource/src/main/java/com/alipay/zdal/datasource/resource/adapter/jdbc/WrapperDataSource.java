@@ -145,8 +145,9 @@ public class WrapperDataSource implements Referenceable, DataSource, Serializabl
 
                 // Round up to the nearest second
                 long result = timeout / 1000;
-                if ((result % 1000) != 0) 
+                if ((result % 1000) != 0) {
                     ++result;
+                }
 
                 return (int) result;
             } else {

@@ -215,7 +215,7 @@ public class CachedPreparedStatement implements PreparedStatement {
     /** 
      * @see java.sql.PreparedStatement#setAsciiStream(int, java.io.InputStream, int)
      */
-    public void setAsciiStream(int parameterIndex, InputStream x, int length)
+    public void setAsciiStream(int parameterIndex, java.io.InputStream x, int length)
                                                                                      throws SQLException {
         ps.setAsciiStream(parameterIndex, x, length);
     }
@@ -224,7 +224,7 @@ public class CachedPreparedStatement implements PreparedStatement {
      * @deprecated
      */
     @Deprecated
-    public void setUnicodeStream(int parameterIndex, InputStream x, int length)
+    public void setUnicodeStream(int parameterIndex, java.io.InputStream x, int length)
                                                                                        throws SQLException {
         ps.setUnicodeStream(parameterIndex, x, length);
     }
@@ -232,7 +232,7 @@ public class CachedPreparedStatement implements PreparedStatement {
     /** 
      * @see java.sql.PreparedStatement#setBinaryStream(int, java.io.InputStream, int)
      */
-    public void setBinaryStream(int parameterIndex, InputStream x, int length)
+    public void setBinaryStream(int parameterIndex, java.io.InputStream x, int length)
                                                                                       throws SQLException {
         ps.setBinaryStream(parameterIndex, x, length);
     }
@@ -283,7 +283,7 @@ public class CachedPreparedStatement implements PreparedStatement {
     /** 
      * @see java.sql.PreparedStatement#setCharacterStream(int, java.io.Reader, int)
      */
-    public void setCharacterStream(int parameterIndex, Reader reader, int length)
+    public void setCharacterStream(int parameterIndex, java.io.Reader reader, int length)
                                                                                          throws SQLException {
         ps.setCharacterStream(parameterIndex, reader, length);
     }

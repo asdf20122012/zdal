@@ -40,7 +40,7 @@ public interface LocalTransaction
     * @throws ResourceAdapterInternalException for an internal error in the resource adapter
     * @throws EISSystemException for an EIS specific exception 
 	 */
-   void begin() throws ResourceException;
+   public void begin() throws ResourceException;
 
    /**
 	 * Commits a local transaction on the userlying resource.
@@ -50,7 +50,7 @@ public interface LocalTransaction
     * @throws ResourceAdapterInternalException for an internal error in the resource adapter
     * @throws EISSystemException for an EIS specific exception 
 	 */
-   void commit() throws ResourceException;
+   public void commit() throws ResourceException;
 
    /**
 	 * Rolls back a local transaction on the userlying resource.
@@ -60,5 +60,5 @@ public interface LocalTransaction
     * @throws ResourceAdapterInternalException for an internal error in the resource adapter
     * @throws EISSystemException for an EIS specific exception 
 	 */
-   void rollback() throws ResourceException;
+   public void rollback() throws ResourceException;
 }

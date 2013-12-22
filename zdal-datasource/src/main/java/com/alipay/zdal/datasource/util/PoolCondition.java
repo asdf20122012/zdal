@@ -44,10 +44,10 @@ public class PoolCondition {
         //               + availableConnectionCount + "\t当前数据源管理的连接数:" + connectionCount + "\t当前在使用中的连接数:"
         //               + inUseConnectionCount + "\t被使用过的最大的连接数:" + maxConnectionsInUseCount + "\t总共创建的连接数:"
         //               + connectionCreatedCount + "\t总共销毁的连接数:" + connectionDestroyedCount;
-        return dsName + "[Min:" + minSize + "; Max:" + maxSize + "; CanUse:"
-               + availableConnectionCount + "; Managed:" + connectionCount + "; Using:"
-               + inUseConnectionCount + "; MaxUsed:" + maxConnectionsInUseCount + "; CreateCount:"
-               + connectionCreatedCount + "; DestroyCount:" + connectionDestroyedCount + "]";
+        return dsName + "[min:" + minSize + "-max:" + maxSize + "-canUse:"
+               + availableConnectionCount + "-managed:" + connectionCount + "-using:"
+               + inUseConnectionCount + "-maxUsed:" + maxConnectionsInUseCount + "-createCount:"
+               + connectionCreatedCount + "-destroyCount:" + connectionDestroyedCount + "]";
     }
 
     public int getMinSize() {

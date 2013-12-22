@@ -2,15 +2,16 @@ package com.alipay.zdal.datasource.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
 import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.datasource.LocalTxDataSourceDO;
 import com.alipay.zdal.datasource.resource.adapter.jdbc.local.LocalTxDataSource;
+import com.alipay.zdal.valve.Valve;
 
 /**
  * ZDataSourceDRM util class
@@ -126,7 +127,13 @@ public final class ZDataSourceUtil {
                     } catch (Exception e1) {
                         logger.error(e1);
                     }
-                } 
+                } else if (StringUtil.equalsIgnoreCase(key, Parameter.SQL_VALVE)) {
+                    newDO.setSqlValve(value);
+                } else if (StringUtil.equalsIgnoreCase(key, Parameter.TX_VALVE)) {
+                    newDO.setTxValve(value);
+                } else if (StringUtil.equalsIgnoreCase(key, Parameter.TABLE_VALVE)) {
+                    newDO.setTableVave(value);
+                }
             }
         }
     }
@@ -174,7 +181,7 @@ public final class ZDataSourceUtil {
      * @param ds
      * @param DO
      */
-    static void copyDS2DO(LocalTxDataSource ds, LocalTxDataSourceDO DO) {
+    static void copyDS2DO(LocalTxDataSource ds, LocalTxDataSourceDO DO, Valve valve) {
         DO.setUserName(ds.getUserName());
         try {
             DO.setEncPassword(ds.getEncPassword());
@@ -212,6 +219,11 @@ public final class ZDataSourceUtil {
         DO.setUserName(ds.getUserName());
         DO.setValidConnectionCheckerClassName(ds.getValidConnectionCheckerClassName());
         DO.setValidateOnMatch(ds.getValidateOnMatch());
+        if (valve != null) {
+            DO.setSqlValve(valve.getSqlValveStr());
+            DO.setTxValve(valve.getTxValveStr());
+            DO.setTableVave(valve.getTableValveStr());
+        }
     }
 
     /**
@@ -281,9 +293,9 @@ public final class ZDataSourceUtil {
             || newDO.getPreparedStatementCacheSize() != oldDS.getPreparedStatementCacheSize()
             || newDO.getQueryTimeout() != oldDS.getQueryTimeout()
             || !StringUtil.equals(newDO.getTrackStatements(), oldDS.getTrackStatements())
-            || !StringUtil.equals(
+            || (!StringUtil.equals(
                 StringUtil.equals("-1", newDO.getTransactionIsolation()) ? "DEFAULT" : newDO
-                    .getTransactionIsolation(), oldDS.getTransactionIsolation())
+                    .getTransactionIsolation(), oldDS.getTransactionIsolation()))
             || !StringUtil.equals(newDO.getValidConnectionCheckerClassName(), oldDS
                 .getValidConnectionCheckerClassName())
             || newDO.isNoTxSeparatePools() != oldDS.getNoTxSeparatePools()
