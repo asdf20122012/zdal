@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="rw951340" dbmode="dev" idcName="gzone" zoneError="EXCEPTOIN">
+<AppDataSource name="simple-rw951341" dataBaseType="MYSQL" version="1" zoneDs="group_0_w,group_0_r">
+  <datasource name="rw" dataSourceType="SHARD">
+    <shard>
+      <tableName>user</tableName>
+      <dbRules>
+        <dbRule>Integer.valueOf(#user_id#)%2</dbRule>
+      </dbRules>
+      <tableRules>
+        <tableRule>Integer.valueOf(#user_id#)%2</tableRule>
+        <tableRule>Integer.valueOf(#age#)%2</tableRule>
+      </tableRules>
+      <tableSuffix>resetForEachDB:[_0-_1]</tableSuffix>
+      <dbIndex>group_0,group_1</dbIndex>
+    </shard>
+    <datasource name="group_0" dataSourceType="RW" readwriteRule="ds0:r10w10,ds2:r0w0">
+      <datasource name="ds0" dataSourceType="PHYSICS">
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_transation_0</jdbcUrl>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <password>-76079f94c1e11c89</password>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+        <userName>mysql</userName>
+      </datasource>
+      <datasource name="ds2" dataSourceType="PHYSICS">
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_transation_0_bac</jdbcUrl>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <password>-76079f94c1e11c89</password>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+        <userName>mysql</userName>
+      </datasource>
+    </datasource>
+    <datasource name="group_1" dataSourceType="RW" readwriteRule="ds1:r10w10,ds3:r0w0">
+      <datasource name="ds1" dataSourceType="PHYSICS">
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_transation_1</jdbcUrl>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <password>-76079f94c1e11c89</password>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+        <userName>mysql</userName>
+      </datasource>
+      <datasource name="ds3" dataSourceType="PHYSICS">
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <jdbcUrl>jdbc:mysql://mysql-1-2.bjl.alipay.net:3306/tddl_transation_1_bac</jdbcUrl>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <password>-76079f94c1e11c89</password>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+        <userName>mysql</userName>
+      </datasource>
+    </datasource>
+  </datasource>
+</AppDataSource>
+</App>
+

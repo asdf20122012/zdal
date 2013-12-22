@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="gbk"?>
+<app name="appName" dbmode="dev" idcName="gz00">
+
+	<!-- reference from trade 
+	
+	<AppDataSource name="ZFBHistoryDataSource" dataBaseType="ORACLE">
+		<datasource name="group_00" dataSourceType="RW" readwriteRule="history-ds:r10w10">
+			<datasource name="history-ds" dataSourceType="PHYSICS">
+				<jdbcUrl>thinarchivehost.url</jdbcUrl>
+				<userName>thinarchivehost.user</userName>
+				<password>thinarchivehost.password</password>
+				<minConn>2</minConn>
+				<maxConn>5</maxConn>
+				<blockingTimeoutMillis>500</blockingTimeoutMillis>
+				<idleTimeoutMinutes>30</idleTimeoutMinutes>
+				<preparedStatementCacheSize>0</preparedStatementCacheSize>
+				<queryTimeout>10</queryTimeout>
+			</datasource>
+		</datasource>	
+	</AppDataSource>
+	
+	 -->
+	<appDataSource name="ZFBHistoryDataSource" dataBaseType="ORACLE" configType="atom">
+		<!--逻辑数据源 -->
+		<atomDataSource name="group_00" />
+		<physicDataSources>
+			<physicDataSource name="group_00">
+				<logicDB>group_00</logicDB>
+				<url>jdbc:oracle:thin:@public1.devdb.alipay.net:1521/public1</url>
+				<userName>misc</userName>
+				<password>-67a1370cbadc76b</password>
+				<minConn>2</minConn>
+				<maxConn>6</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>0</preparedStatementCacheSize>
+			</physicDataSource>
+		</physicDataSources>
+	</appDataSource>
+</app>

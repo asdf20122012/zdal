@@ -1,0 +1,7 @@
+2013-11-26 13:23:28,587 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql01Ds.ds0[Min:1; Max:20; CanUse:20; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:42,310 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql02Ds1.ds1[Min:1; Max:20; CanUse:20; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:42,311 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql02Ds1.ds0[Min:1; Max:20; CanUse:20; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:43,096 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql03Ds1.physics1[Min:1; Max:10; CanUse:10; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:43,097 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql03Ds1.physics2[Min:1; Max:10; CanUse:10; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:43,097 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql03Ds1.physics3[Min:1; Max:10; CanUse:10; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]
+2013-11-26 13:23:43,096 [/// - ] WARN  zdal-datasource-pool - zdalsqlParserMysql03Ds1.physics0[Min:1; Max:10; CanUse:10; Managed:0; Using:0; MaxUsed:0; CreateCount:0; DestroyCount:0]

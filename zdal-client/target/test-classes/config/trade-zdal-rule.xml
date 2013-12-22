@@ -1,0 +1,1160 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	
+	<bean id="addp_tddl_dsRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="addp_tddl_dsReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="addp_tddl_dsReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="trade_nonappend" value-ref="addp_tddl_ds_trade_nonappend" />
+				<entry key="dual" value-ref="addp_tddl_ds_dual" />
+				<entry key="trade_append" value-ref="addp_tddl_ds_trade_append" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="addp_tddl_ds_dual" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="dual" />
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#dual_id#);
+			</value>
+		</property>
+	</bean>
+	<bean id="addp_tddl_ds_trade_append" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_append" />
+		<property name="tbSuffix">
+			<value>throughAllDB:[000-255]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#ds_id#)%64
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#ds_id#).intdiv(64)
+			</value>
+		</property>
+	</bean>
+	<bean id="addp_tddl_ds_trade_nonappend" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_nonappend" />
+		<property name="tbSuffix">
+			<value>throughAllDB:[000-255]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#ds_id#)%64
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#ds_id#).intdiv(64)
+			</value>
+		</property>
+	</bean>
+	<bean id="addp_tddl_ds_newRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="addp_tddl_ds_newReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="addp_tddl_ds_newReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="dual" value-ref="addp_tddl_ds_new_dual" />
+				<entry key="trade_nonappend" value-ref="addp_tddl_ds_new_trade_nonappend" />
+				<entry key="trade_append" value-ref="addp_tddl_ds_new_trade_append" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="addp_tddl_ds_new_trade_nonappend" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_nonappend" />
+		<property name="tbSuffix">
+			<value>throughAllDB:[000-255]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3,group_4,group_5,group_6,group_7
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#ds_id#)%32
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#ds_id#).intdiv(32)
+			</value>
+		</property>
+	</bean>
+	<bean id="addp_tddl_ds_new_dual" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="dual" />
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3,group_4,group_5,group_6,group_7
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#dual_id#);
+			</value>
+		</property>
+	</bean>
+	<bean id="addp_tddl_ds_new_trade_append" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_append" />
+		<property name="tbSuffix">
+			<value>throughAllDB:[000-255]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_0,group_1,group_2,group_3,group_4,group_5,group_6,group_7
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				Integer.valueOf(#ds_id#)%32
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				Integer.valueOf(#ds_id#).intdiv(32)
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="trade50MasterRule" />
+		<property name="slaveRule" ref="trade50SlaveRule" />
+	</bean>
+	
+	<bean id="trade50MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="ORACLE" />
+		<property name="tableRules">
+			<map>
+				<entry key="notify_bytes_msg_normal" value-ref="trade50_notify_bytes_msg_normal" />
+				<entry key="trade_dback_consult" value-ref="trade50_trade_dback_consult" />
+				<entry key="seq_trade_daily_v2" value-ref="trade50_seq_trade_daily_v2" />
+				<entry key="seq_trade_voucher" value-ref="trade50_seq_trade_voucher" />
+				<entry key="sub_trade_base" value-ref="trade50_sub_trade_base" />
+				<entry key="trade_message_board" value-ref="trade50_trade_message_board" />
+				<entry key="system_maintenance" value-ref="trade50_system_maintenance" />
+				<entry key="seq_trade_logistics" value-ref="trade50_seq_trade_logistics" />
+				<entry key="trade_process" value-ref="trade50_trade_process" />
+				<entry key="dual" value-ref="trade50_dual" />
+				<entry key="notify_string_msg_normal" value-ref="trade50_notify_string_msg_normal" />
+				<entry key="trade_goods_info" value-ref="trade50_trade_goods_info" />
+				<entry key="trade_charge" value-ref="trade50_trade_charge" />
+				<entry key="trade_outtrade" value-ref="trade50_trade_outtrade" />
+				<entry key="seq_trade_base" value-ref="trade50_seq_trade_base" />
+				<entry key="seq_exterface_invoke" value-ref="trade50_seq_exterface_invoke" />
+				<entry key="notify" value-ref="trade50_notify" />
+				<entry key="trade_refund" value-ref="trade50_trade_refund" />
+				<entry key="trade_daily_v2" value-ref="trade50_trade_daily_v2" />
+				<entry key="exterface_invoke" value-ref="trade50_exterface_invoke" />
+				<entry key="seq_business_action" value-ref="trade50_seq_business_action" />
+				<entry key="timeout_long" value-ref="trade50_timeout_long" />
+				<entry key="trade_cooperate" value-ref="trade50_trade_cooperate" />
+				<entry key="business_action" value-ref="trade50_business_action" />
+				<entry key="seq_trade_refund" value-ref="trade50_seq_trade_refund" />
+				<entry key="seq_trade_note" value-ref="trade50_seq_trade_note" />
+				<entry key="trade_voucher" value-ref="trade50_trade_voucher" />
+				<entry key="seq_trade_message_board" value-ref="trade50_seq_trade_message_board" />
+				<entry key="trade_note" value-ref="trade50_trade_note" />
+				<entry key="seq_trade_base_n" value-ref="trade50_seq_trade_base_n" />
+				<entry key="business_activity" value-ref="trade50_business_activity" />
+				<entry key="seq_trade_charge" value-ref="trade50_seq_trade_charge" />
+				<entry key="trade_ext" value-ref="trade50_trade_ext" />
+				<entry key="trade_logistics" value-ref="trade50_trade_logistics" />
+				<entry key="seq_sub_trade_base" value-ref="trade50_seq_sub_trade_base" />
+				<entry key="seq_trade_goods_info" value-ref="trade50_seq_trade_goods_info" />
+				<entry key="timeout_remind" value-ref="trade50_timeout_remind" />
+				<entry key="trade_base" value-ref="trade50_trade_base" />
+				<entry key="seq_trade_fund_bill" value-ref="trade50_seq_trade_fund_bill" />
+				<entry key="trade_fund_bill" value-ref="trade50_trade_fund_bill" />
+				<entry key="timeout" value-ref="trade50_timeout" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="trade50SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="ORACLE" />
+		<property name="tableRules">
+			<map>
+				<entry key="notify_bytes_msg_normal" value-ref="trade50_notify_bytes_msg_normal" />
+				<entry key="trade_dback_consult" value-ref="trade50_trade_dback_consult" />
+				<entry key="seq_trade_daily_v2" value-ref="trade50_seq_trade_daily_v2" />
+				<entry key="seq_trade_voucher" value-ref="trade50_seq_trade_voucher" />
+				<entry key="sub_trade_base" value-ref="trade50_sub_trade_base" />
+				<entry key="trade_message_board" value-ref="trade50_trade_message_board" />
+				<entry key="system_maintenance" value-ref="trade50_system_maintenance" />
+				<entry key="seq_trade_logistics" value-ref="trade50_seq_trade_logistics" />
+				<entry key="trade_process" value-ref="trade50_trade_process" />
+				<entry key="dual" value-ref="trade50_dual" />
+				<entry key="notify_string_msg_normal" value-ref="trade50_notify_string_msg_normal" />
+				<entry key="trade_goods_info" value-ref="trade50_trade_goods_info" />
+				<entry key="trade_charge" value-ref="trade50_trade_charge" />
+				<entry key="trade_outtrade" value-ref="trade50_trade_outtrade" />
+				<entry key="seq_trade_base" value-ref="trade50_seq_trade_base" />
+				<entry key="seq_exterface_invoke" value-ref="trade50_seq_exterface_invoke" />
+				<entry key="notify" value-ref="trade50_notify" />
+				<entry key="trade_refund" value-ref="trade50_trade_refund" />
+				<entry key="trade_daily_v2" value-ref="trade50_trade_daily_v2" />
+				<entry key="exterface_invoke" value-ref="trade50_exterface_invoke" />
+				<entry key="seq_business_action" value-ref="trade50_seq_business_action" />
+				<entry key="timeout_long" value-ref="trade50_timeout_long" />
+				<entry key="trade_cooperate" value-ref="trade50_trade_cooperate" />
+				<entry key="business_action" value-ref="trade50_business_action" />
+				<entry key="seq_trade_refund" value-ref="trade50_seq_trade_refund" />
+				<entry key="seq_trade_note" value-ref="trade50_seq_trade_note" />
+				<entry key="trade_voucher" value-ref="trade50_trade_voucher" />
+				<entry key="seq_trade_message_board" value-ref="trade50_seq_trade_message_board" />
+				<entry key="trade_note" value-ref="trade50_trade_note" />
+				<entry key="seq_trade_base_n" value-ref="trade50_seq_trade_base_n" />
+				<entry key="business_activity" value-ref="trade50_business_activity" />
+				<entry key="seq_trade_charge" value-ref="trade50_seq_trade_charge" />
+				<entry key="trade_ext" value-ref="trade50_trade_ext" />
+				<entry key="trade_logistics" value-ref="trade50_trade_logistics" />
+				<entry key="seq_sub_trade_base" value-ref="trade50_seq_sub_trade_base" />
+				<entry key="seq_trade_goods_info" value-ref="trade50_seq_trade_goods_info" />
+				<entry key="timeout_remind" value-ref="trade50_timeout_remind" />
+				<entry key="trade_base" value-ref="trade50_trade_base" />
+				<entry key="seq_trade_fund_bill" value-ref="trade50_seq_trade_fund_bill" />
+				<entry key="trade_fund_bill" value-ref="trade50_trade_fund_bill" />
+				<entry key="timeout" value-ref="trade50_timeout" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="trade50_trade_outtrade" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_outtrade" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_timeout_long" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="timeout_long" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_fund_bill" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_fund_bill" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_voucher" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_voucher" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_note" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_note" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_business_action" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="business_action" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getTbRule(tradeNo);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getDbRule(tradeNo);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_system_maintenance" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="system_maintenance" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_charge" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_charge" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_notify_bytes_msg_normal" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="notify_bytes_msg_normal" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				def tradeNo=com.alipay.trade.core.dal.util.RuleParser.getTradeNo(#USER_DEFINED_PROPERTIES#); return com.alipay.trade.core.dal.util.RuleParser.getTbRule(tradeNo);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def tradeNo=com.alipay.trade.core.dal.util.RuleParser.getTradeNo(#USER_DEFINED_PROPERTIES#);return com.alipay.trade.core.dal.util.RuleParser.getDbRule(tradeNo);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_goods_info" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_goods_info" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				if(#TRADE_NO#.startsWith("SUB_")){return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#.substring(4));}else if(#TRADE_NO#.endsWith("_SUB")){return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#.substring(0,#TRADE_NO#.length()-4));}else{return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);}
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				if(#TRADE_NO#.startsWith("SUB_")){return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#.substring(4));}else if(#TRADE_NO#.endsWith("_SUB")){return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#.substring(0,#TRADE_NO#.length()-4));} else{return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);}
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_refund" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_refund" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_dual" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="dual" />
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				if(com.alipay.trade.core.context.TradeContext.getInstance().isSysDateFailover()){int groupNum=com.alipay.trade.core.dal.util.RuleParser.getGroupNum(#TRADE_NO#);return com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules.getDataSourceKeyOrderNum(groupNum);}else{return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);}
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_process" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_process" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_fund_bill" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_fund_bill" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_base_n" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_base_n" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				int groupNum=com.alipay.trade.core.dal.util.RuleParser.getGroupNum(#TRADE_NO#);return com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules.getDataSourceKeyOrderNum(groupNum);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_charge" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_charge" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_daily_v2" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_daily_v2" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_business_action" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_business_action" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(tradeNo);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getDbRule(tradeNo);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_notify_string_msg_normal" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="notify_string_msg_normal" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				def tradeNo=com.alipay.trade.core.dal.util.RuleParser.getTradeNo(#USER_DEFINED_PROPERTIES#); return com.alipay.trade.core.dal.util.RuleParser.getTbRule(tradeNo);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def tradeNo=com.alipay.trade.core.dal.util.RuleParser.getTradeNo(#USER_DEFINED_PROPERTIES#);return com.alipay.trade.core.dal.util.RuleParser.getDbRule(tradeNo);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_message_board" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_message_board" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_message_board" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_message_board" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_timeout_remind" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="timeout_remind" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_sub_trade_base" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_sub_trade_base" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_note" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_note" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_daily_v2" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_daily_v2" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_cooperate" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_cooperate" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_base" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_base" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_logistics" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_logistics" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_timeout" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="timeout" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_logistics" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_logistics" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_ext" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_ext" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_base" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_base" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				int groupNum=com.alipay.trade.core.dal.util.RuleParser.getGroupNum(#TRADE_NO#);return com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules.getDataSourceKeyOrderNum(groupNum);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_sub_trade_base" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="sub_trade_base" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_dback_consult" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_dback_consult" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_notify" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="notify" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"))}; (0..9).each{ j ->list.add("${j}".padLeft(2,"0"))}; (0..99).each{ k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));}}; (0..109).each {i ->if(i%11 == 0){ list.add("failover_"+"${i}".padLeft(3,"0"));}}; (0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}}; return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.mnotify.common.dal.tddl.RuleParser.getTableIndex(#ID#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.mnotify.common.dal.tddl.RuleParser.getDBIndex(#ID#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_voucher" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_voucher" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_exterface_invoke" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_exterface_invoke" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TARGET#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TARGET#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_seq_trade_goods_info" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="seq_trade_goods_info" />
+		<property name="tbSuffix">
+			<value>groovyAdjustTableList:[20_10,200_1]:def list = [];(0..9).each{ i -> (10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));};(10*i..10*i+9).each{ j->list.add("${j}".padLeft(2,"0"));}};(0..99).each{k ->list.add("${k}".padLeft(3,"0"));list.add("${k}".padLeft(3,"0"));};return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				if(#TRADE_NO#.startsWith("SUB_")){return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#.substring(4));}else if(#TRADE_NO#.endsWith("_SUB")){return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#.substring(0,#TRADE_NO#.length()-4));}else{return com.alipay.trade.core.dal.util.RuleParser.getSeqTbRule(#TRADE_NO#);}
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				if(#TRADE_NO#.startsWith("SUB_")){return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#.substring(4));}else if(#TRADE_NO#.endsWith("_SUB")){return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#.substring(0,#TRADE_NO#.length()-4));}else{return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);}
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_business_activity" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="business_activity" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getTbRule(tradeNo);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				def tradeNo=#TX_ID#.split("-")[1];return com.alipay.trade.core.dal.util.RuleParser.getDbRule(tradeNo);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_trade_refund" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_refund" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+	</bean>
+	<bean id="trade50_exterface_invoke" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="exterface_invoke" />
+		<property name="tbSuffix">
+			<value>groovyThroughAllDBTableList:def list = [];(0..9).each{ i ->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{ j ->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));}; return list;</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){ list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each { i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TARGET#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TARGET#);
+			</value>
+		</property>
+	</bean>
+</beans>

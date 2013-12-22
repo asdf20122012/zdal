@@ -1,0 +1,40 @@
+<?xml version="1.0"  encoding="gbk"?>
+<app name="cif" dbmode="dev" idcName="gz00">
+	<appDataSource name="cifDataSource" dataBaseType="ORACLE"
+		configType="group" zoneError="writeLog" zoneDS="">
+       <!-- 读写分离对应的逻辑数据源集合 -->
+        <groupDataSources>
+        	<!-- name relates with dbIndex, value relates with read write rule-->
+			<groupDataSource name="cifGroupKey" readWriteRule="writeDataSource:r0w10,read01DataSource:r10w0,read02DataSource:r10w0,read03DataSource:r10w0,read04DataSource:r10w0"/>
+		</groupDataSources>
+		<!-- 读写分离对应的物理数据源集合，有可能多个逻辑对应一个物理 -->
+		<phsicDataSources>
+			<phsicDataSource name="*********">
+				<logicDB>writeDataSource</logicDB>
+				<url> jdbc:oracle:thin:@cifdb.devdb.alipay.net:1521/cifdb </url>
+				<userName> customer </userName>
+				<password> -7cda29b2eef25d0e </password>
+				<minConn>2</minConn>
+				<maxConn>6</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>0</preparedStatementCacheSize>
+				<connectionProperties>…</connectionProperties>
+			</phsicDataSource>
+			<phsicDataSource name="*********">
+				<logicDB> read01DataSource </logicDB>
+				<url> jdbc:oracle:thin:@cifread.devdb.alipay.net:1521/cifdb </url>
+				<userName> customer </userName>
+				<password> -7cda29b2eef25d0e </password>
+				<minConn>2</minConn>
+				<maxConn>6</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>0</preparedStatementCacheSize>
+				<connectionProperties>…</connectionProperties>
+			</phsicDataSource>
+		</phsicDataSources>
+	</appDataSource>
+</app>

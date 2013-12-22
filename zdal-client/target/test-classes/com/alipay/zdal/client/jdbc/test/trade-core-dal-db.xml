@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sofa="http://img.alipay.net/dtd/schema/service"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://img.alipay.net/dtd/schema/service http://img.alipay.net/dtd/schema/service/sofa-service.xsd"
+	default-autowire="byName">
+
+	<bean id="tradecore_tddl" class="com.alipay.zdal.client.jdbc.ZdalDataSource" init-method="init" destroy-method="close">
+		<property name="appDsName" value="tradecore50"/>
+		<property name="connectionProperties">
+			<map>
+				<entry key="SetBigStringTryClob" value="true"/>
+				<entry key="defaultRowPrefetch" value="5"/>
+				<entry key="oracle.jdbc.implicitStatementCacheSize" value="100"/>
+				<entry key="oracle.net.CONNECT_TIMEOUT" value="10000"/>
+				<entry key="oracle.jdbc.ReadTimeout" value="60000"/>
+			</map>
+		</property>
+		<!-- failover库 -->
+		<property name="drm" value="app_tradecore"/>
+		<!-- ldc跨zone校验 -->
+		<property name="ldcDsDrm" value="app_tradecore"/>
+	</bean>
+	
+	<bean class="com.alipay.tradecore.common.dal.util.ZdalDsPrefillImpl">
+		<property name="dataSource" ref="tradecore_tddl" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		 <property name="dataSource" ref="tradecore_tddl"/>
+    </bean>
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate" />
+		
+    <!-- 新事务模板: 该事务模板中的处理将在新事务中运行 -->
+	<bean id="newTransTransactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW" />
+	</bean>	
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	    <property name="dataSource" ref="tradecore_tddl"/>
+		<property name="configLocation">
+			<value>classpath:sqlmap/sqlmap.xml</value>
+		</property>
+	</bean>
+	<bean id="baseSqlMapClientDAO" abstract="true" >
+	   <property name="dataSource">
+			<ref bean="tradecore_tddl" />
+		</property>
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+</beans>
+

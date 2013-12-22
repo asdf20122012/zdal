@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+
+	<bean id="sellrDsRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="masterRule" />
+		<!-- <property name="slaveRule" ref="readwriteRule" />
+		<property name="readwriteRule" ref="readwriteRule" /> -->
+	</bean>
+
+	<bean id="masterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="trade_base" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+
+	<bean id="trade_base" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="trade_base" />
+		<property name="tbNumForEachDb" value="10" />
+		<!-- <property name="tbSuffix" value="Test" /> -->
+		<property name="dbIndexes">
+			<value>
+				SETBYGROOVY:def list = [];(0..109).each {i ->if(i%11 == 0){
+				list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};(0..109).each
+				{
+				i->if(i%11!=0){list.add("master_"+"${i}".padLeft(3,"0"));list.add("failover_"+"${i}".padLeft(3,"0"));}};return
+				list;
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				return
+				com.alipay.trade.core.dal.util.RuleParser.getTbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				return
+				com.alipay.trade.core.dal.util.RuleParser.getDbRule(#TRADE_NO#);
+			</value>
+		</property>
+		<property name="tbSuffixPadding">
+			<value>
+				groovyThroughAllDBTableList:def list = [];(0..9).each{ i
+				->list.add("${i}".padLeft(2,"0"));list.add("${i}".padLeft(2,"0"));};(0..99).each{
+				j
+				->list.add("${j}".padLeft(3,"0"));list.add("${j}".padLeft(3,"0"));};
+				return list;
+			</value>
+		</property>
+	</bean>
+
+</beans>

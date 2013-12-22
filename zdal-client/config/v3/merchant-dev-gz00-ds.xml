@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+	
+	<bean id="merchant" class="com.alipay.zdal.client.config.bean.ZdalAppBean">
+		<property name="appName" value="merchant" />
+		<property name="dbmode" value="dev" />
+		<property name="idcName" value="gz00" />
+		<property name="appDataSourceList">
+			<list>		
+				<ref bean="merchantDataSource" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="merchantDataSource" class="com.alipay.zdal.client.config.bean.AppDataSourceBean">
+		<property name="appDataSourceName" value="merchantDataSource" />
+		<property name="dataBaseType" value="ORACLE" />
+		<property name="configType" value="RW" />
+		<property name="zoneError" value="EXCEPTOIN" />
+		<property name="zoneDSSet" >
+			<set>
+			</set>
+		</property>
+		
+		<property name="physicalDataSourceSet">
+			<set>
+				<ref bean="merchantDataSourcewriteDataSource"/>
+				<ref bean="merchantDataSourceread01DataSource"/>
+				<ref bean="merchantDataSourceread02DataSource"/>
+				<ref bean="merchantDataSourceread03DataSource"/>
+				<ref bean="merchantDataSourceread04DataSource"/>
+			</set>
+		</property>
+		<property name="groupDataSourceRuleMap">
+			<map>
+				<entry key="group_0" value="writeDataSource:r0w10,read01DataSource:r10w0,read02DataSource:r10w0,read03DataSource:r10w0,read04DataSource:r10w0  " />
+			</map>
+		</property>
+	</bean>
+	
+
+	<bean id="merchantDataSourcewriteDataSource" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="writeDataSource" />
+		<property name="jdbcUrl" value="jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifdb.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))" />
+	    <property name="userName" value="merchant" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="4" />
+	    <property name="maxConn" value="9" />
+	    <property name="blockingTimeoutMillis" value="500" />
+	    <property name="idleTimeoutMinutes" value="30" />
+	    <property name="preparedStatementCacheSize" value="50" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="merchantDataSourceread01DataSource" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="read01DataSource" />
+		<property name="jdbcUrl" value="jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifread.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))" />
+	    <property name="userName" value="merchant" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="3" />
+	    <property name="maxConn" value="7" />
+	    <property name="blockingTimeoutMillis" value="500" />
+	    <property name="idleTimeoutMinutes" value="30" />
+	    <property name="preparedStatementCacheSize" value="30" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="merchantDataSourceread02DataSource" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="read02DataSource" />
+		<property name="jdbcUrl" value="jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifdb.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))" />
+	    <property name="userName" value="merchant" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="3" />
+	    <property name="maxConn" value="7" />
+	    <property name="blockingTimeoutMillis" value="500" />
+	    <property name="idleTimeoutMinutes" value="30" />
+	    <property name="preparedStatementCacheSize" value="30" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="merchantDataSourceread03DataSource" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="read03DataSource" />
+		<property name="jdbcUrl" value="jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifread.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))" />
+	    <property name="userName" value="merchant" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="3" />
+	    <property name="maxConn" value="7" />
+	    <property name="blockingTimeoutMillis" value="500" />
+	    <property name="idleTimeoutMinutes" value="30" />
+	    <property name="preparedStatementCacheSize" value="30" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="merchantDataSourceread04DataSource" class="com.alipay.zdal.client.config.bean.PhysicalDataSourceBean" >
+		<property name="name" value="read04DataSource" />
+		<property name="jdbcUrl" value="jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifdb.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))" />
+	    <property name="userName" value="merchant" />
+	    <property name="password" value="-7cda29b2eef25d0e" />
+	    <property name="minConn" value="3" />
+	    <property name="maxConn" value="7" />
+	    <property name="blockingTimeoutMillis" value="500" />
+	    <property name="idleTimeoutMinutes" value="30" />
+	    <property name="preparedStatementCacheSize" value="30" />
+	    <property name="queryTimeout" value="180" />
+	    <property name="maxReadThreshold" value="100" />
+	    <property name="maxWriteThreshold" value="100" />
+		<property name="failoverRule" value="master" />
+		<property name="logicDbNameSet">
+			<set>
+			</set>
+		</property>
+	</bean>
+	
+	
+</beans>

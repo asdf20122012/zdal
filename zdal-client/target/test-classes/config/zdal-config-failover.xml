@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="gbk"?>
+<app name="trade" dbmode="dev" idcName="gz00">
+	<appDataSource name=" trade50" dataBaseType="ORACLE" configType="failover" zoneError="writeLog" zoneDS="master_000 , master_001">
+		<!--拆分后对应的数据源集合 -->
+		<groupDataSourceMap>
+			<groupDataSource name="master_000" value="thintrade00host:r10w10" />
+			<groupDataSource name="master_001" value="thintrade00host" />
+			<groupDataSource name="master_002" value="thintrade00host:r10w10" />
+			<groupDataSource name="failover_000" value="thintrade00_1host:r10w10"/>
+			<groupDataSource name="failover_001" value="thintrade00_1host:r10w10"/>
+			<groupDataSource name="failover_002" value="thintrade00_1host:r10w10"/>
+		</groupDataSourceMap>
+		<!--主库和Failover库分组情况 -->
+		<failoverRule>
+			<group name="group_000" value="master_000:10,failover_000:0" />
+			<group name="group_001" value="master_001:10,failover_001:0" />
+			<group name="group_002" value="master_002:10,failover_002:0" />
+		</failoverRule>
+		<phsicDataSourceMap><!--拆分后对应的物理数据源集合，有可能多个逻辑对应一个物理 -->
+			<phsicDataSource name="phydb01">
+				<logicDB>thintrade00host</logicDB>
+				<url>jdbc:mysql://mypay1.devdb.alipay.net:3306/couriercore01 </url>
+				<userName>couriercore</userName>
+				<password>-7cda29b2eef25d0e</password>
+				<minConn>2</minConn>
+				<maxConn>10</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>100</preparedStatementCacheSize>
+			</phsicDataSource>
+			<phsicDataSource name="phydb02">
+				<logicDB> thintrade00_1host </logicDB>
+				<url>jdbc:oracle:thin:@failover.devdb.alipay.net:1521/failove</url>
+				<userName>tradecore00</userName>
+				<password>-67a1370cbadc76b5</password>
+				<minConn>2</minConn>
+				<maxConn>10</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>100</preparedStatementCacheSize>
+			</phsicDataSource>
+		</phsicDataSourceMap>
+	</appDataSource>
+</app>

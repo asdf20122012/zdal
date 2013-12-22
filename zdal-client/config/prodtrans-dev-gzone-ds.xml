@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="prodtrans" dbmode="dev" idcName="gzone" zoneError="EXCEPTOIN">
+  
+  <AppDataSource name="prodtransDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="prodtrans" dataSourceType="SHARD">
+      <shard>
+        <tableName>prod_daily</tableName>
+        <dbRules>
+          <dbRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseDBIndex(#PRINCIPAL_ID#);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByDate(#PRINCIPAL_ID#, #time7,1_month,12#);</tableRule>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByDay(#PRINCIPAL_ID#, #Stat_day#);</tableRule>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByGmtBiz(#PRINCIPAL_ID#, #gmt_biz#);</tableRule>
+        </tableRules>
+        <tableSuffix>groovyTableList:return com.alipay.prodtrans.core.dal.tddl.RuleParser.getTbSuffixList();</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_39]</dbIndex>
+      </shard>
+      <shard>
+        <tableName>prod_log</tableName>
+        <dbRules>
+          <dbRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseDBIndex(#PRINCIPAL_ID#);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByDate(#PRINCIPAL_ID#, #time7,1_month,12#);</tableRule>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByDay(#PRINCIPAL_ID#, #Stat_day#);</tableRule>
+          <tableRule>return com.alipay.prodtrans.core.dal.tddl.RuleParser.parseTableIndexByGmtBiz(#PRINCIPAL_ID#, #gmt_biz#);</tableRule>
+        </tableRules>
+        <tableSuffix>groovyTableList:return com.alipay.prodtrans.core.dal.tddl.RuleParser.getTbSuffixList();</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_39]</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_00" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_01" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans10?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_02" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans11?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_03" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans20?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_04" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans21?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_05" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans30?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_06" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans31?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_07" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans40?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_08" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans41?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_09" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics10" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans50?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_10" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics11" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans51?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_11" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics12" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans60?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_12" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics13" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans61?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_13" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics14" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans70?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_14" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics15" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans71?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_15" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics16" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans80?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_16" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics17" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans81?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_17" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics18" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans90?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_18" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics19" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/prodtrans91?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_19" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics20" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_20" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics21" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_21" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics22" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans10?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_22" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics23" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans11?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_23" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics24" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans20?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_24" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics25" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans21?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_25" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics26" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans30?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_26" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics27" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans31?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_27" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics28" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans40?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_28" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics29" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans41?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_29" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics30" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans50?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_30" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics31" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans51?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_31" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics32" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans60?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_32" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics33" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans61?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_33" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics34" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans70?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_34" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics35" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans71?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_35" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics36" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans80?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_36" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics37" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans81?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_37" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics38" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans90?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_38" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics39" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/prodtrans91?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>prodtrans</userName>
+          <password>-19c84bf1dcbecee0917eaefd81d23fbf</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>12</maxConn>
+          <minConn>4</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>3</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_39" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+</App>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="gbk"?>
+<app name="gotone" dbmode="dev" idcName="gz00">
+	<appDataSource name="gtDataSource" dataBaseType="ORACLE" 
+		configType="shard" zoneError="writeLog" zoneDS="gtGroupKey0,gtGroupKey1 ">
+		<rule>sellerDsRule</rule><!-- AppRule Bean Id -->
+		<!--拆分后对应的逻辑数据源集合 -->
+		<groupDataSourceMap>
+			<groupDataSource name="gtGroupKey0" value="gotoneDS0:r10w10" />
+			<groupDataSource name="gtGroupKey1" value="gotoneDS1:r10w10" />
+			<groupDataSource name="gtGroupKey2" value="gotoneDS2:r10w10" />
+			<groupDataSource name="gtGroupKey3" value="gotoneDS3:r10w10" />
+		</groupDataSourceMap>
+		<phsicDataSourceMap><!--拆分后对应的物理数据源集合，有可能多个逻辑对应一个物理 -->
+			<phsicDataSource name="*********">
+				<logicDB> gotoneDS0 </logicDB>
+				<url>jdbc:mysql://mypay1.devdb.alipay.net:3306/couriercore01 </url>
+				<userName>couriercore</userName>
+				<password>-7cda29b2eef25d0e</password>
+				<minConn>2</minConn>
+				<maxConn>10</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>100</preparedStatementCacheSize>
+				<connectionProperties>…</connectionProperties>
+			</phsicDataSource>
+			<phsicDataSource name="*********">
+				<logicDB> gotoneDS1 </logicDB>
+				<url>jdbc:mysql://mypay1.devdb.alipay.net:3306/couriercore01 </url>
+				<userName>couriercore</userName>
+				<password>-7cda29b2eef25d0e</password>
+				<minConn>2</minConn>
+				<maxConn>10</maxConn>
+				<idleTimeout>30</idleTimeout>
+				<blockingTimeout>500</blockingTimeout>
+				<queryTimeout>30</queryTimeout>
+				<preparedStatementCacheSize>100</preparedStatementCacheSize>
+				<connectionProperties>…</connectionProperties>
+			</phsicDataSource>
+		</phsicDataSourceMap>
+	</appDataSource>
+</app>

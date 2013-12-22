@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-autowire="byName">
+	<bean id="root" class="com.taobao.tddl.common.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="rwRule" />
+	</bean>
+	<!--
+		============================================================================
+	-->
+	<!-- == 读写规则 == -->
+	<!--
+		============================================================================
+	-->
+	<bean id="rwRule" class="com.taobao.tddl.common.config.beans.ShardRule">
+		<!-- 数据库类型为mysql -->
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="table" value-ref="sharding_rule" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 根据influxId分库分表规则 -->
+	<bean id="sharding_rule" init-method="init"
+		class="com.taobao.tddl.common.config.beans.TableRule">
+		<property name="dbIndexes"  value="ds_0,ds_1,ds_2,ds_3" />
+		<!--分库规则-->
+		<property name="dbRuleArray">
+			<list>
+				<value>return Integer.valueOf(#user_id#)%2</value>
+			</list>
+		</property>
+		<!-- 分表规则 -->
+		<property name="tbRuleArray">
+			<list>
+			  <value>return "_"+Integer.valueOf(#user_id#)%2</value>
+		   </list>
+		</property>		
+		<!-- 表后缀 -->
+		<property name="tbSuffix">
+		<value>groovyAdjustTableList:[2_3,1_6,1_9]:def list = [];
+		(0..20).each{i -> list.add("_"+"${i}")};
+		 return list;</value>
+		</property>
+		<property name="tbSuffixPadding" value=""/>
+		<!-- 如果分库找不到分库信息，扫描所有的数据库 -->
+	  <property name="disableFullTableScan" value="true"/>
+	</bean>
+
+</beans>

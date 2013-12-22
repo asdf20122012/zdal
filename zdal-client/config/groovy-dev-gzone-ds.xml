@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="groovy" dbmode="dev" idcName="gzone" zoneError="EXCEPTOIN">
+  <AppDataSource name="test" dataBaseType="MYSQL" version="2" zoneDs="">
+    <datasource name="test" dataSourceType="SHARD">
+      <shard>
+        <tableName>table</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#user_id#)%2</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return "_"+Integer.valueOf(#user_id#)%2</tableRule>
+        </tableRules>
+        <tableSuffix>groovyAdjustTableList:[2_3,1_6,1_9]:def list = [];(0..20).each{i -> list.add("_"+"${i}")};return list;</tableSuffix>
+        <dbIndex>ds_0,ds_1,ds_2,ds_3</dbIndex>
+      </shard>
+      <datasource name="ds_0" dataSourceType="RW" readwriteRule="physics00:r10w10">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mysql-2-2.bjl.alipay.net:3306/tddl_0</jdbcUrl>
+          <userName>mysql</userName>
+          <password>4476b9e0bb1cb2cbdf8592078de921bc</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>10</maxConn>
+          <minConn>1</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+        </datasource>
+      </datasource>
+      <datasource name="ds_1" dataSourceType="RW" readwriteRule="physics01:r10w10">
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mysql-2-2.bjl.alipay.net:3306/tddl_1</jdbcUrl>
+          <userName>mysql</userName>
+          <password>4476b9e0bb1cb2cbdf8592078de921bc</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>10</maxConn>
+          <minConn>1</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+        </datasource>
+      </datasource>
+      <datasource name="ds_2" dataSourceType="RW" readwriteRule="physics02:r10w10">
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mysql-2-2.bjl.alipay.net:3306/tddl_1</jdbcUrl>
+          <userName>mysql</userName>
+          <password>4476b9e0bb1cb2cbdf8592078de921bc</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>10</maxConn>
+          <minConn>1</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+        </datasource>
+      </datasource>
+      <datasource name="ds_3" dataSourceType="RW" readwriteRule="physics03:r10w10">
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mysql-2-2.bjl.alipay.net:3306/tddl_1</jdbcUrl>
+          <userName>mysql</userName>
+          <password>4476b9e0bb1cb2cbdf8592078de921bc</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>10</maxConn>
+          <minConn>1</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  
+</App>
+

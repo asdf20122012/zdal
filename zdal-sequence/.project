@@ -1,0 +1,20 @@
+<projectDescription>
+  <name>zdal-sequence</name>
+  <comment/>
+  <projects>
+    <project>zdal-client</project>
+    <project>zdal-common</project>
+    <project>zdal-datasource</project>
+    <project>zdal-datasource-oci</project>
+    <project>zdal-parser</project>
+    <project>zdal-rule</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

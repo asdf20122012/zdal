@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="xts" dbmode="dev" idcName="gz00" zoneError="EXCEPTOIN">
+  <AppDataSource name="charge" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="charge-ds:r10w10">
+      <datasource name="charge-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public2)))</jdbcUrl>
+        <userName>golden</userName>
+        <password>-755edcae62795478</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>5</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="finance" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="finance-ds:r10w10">
+      <datasource name="finance-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public1)))</jdbcUrl>
+        <userName>finance</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>5</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="forexcore" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="forexcore-ds:r10w10">
+      <datasource name="forexcore-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public2)))</jdbcUrl>
+        <userName>forex</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>5</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="forexprod" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="forexprod-ds:r10w10">
+      <datasource name="forexprod-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public1)))</jdbcUrl>
+        <userName>forexprod</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>5</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="misc" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="misc-ds:r10w10">
+      <datasource name="misc-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public1)))</jdbcUrl>
+        <userName>misc</userName>
+        <password>-67a1370cbadc76b5</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>15</maxConn>
+        <minConn>6</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="paycore" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="parcore" dataSourceType="SHARD">
+      <shard>
+        <tableName>business_activity</tableName>
+        <dbRules>
+          <dbRule>return ((Integer.valueOf(right(#TX_ID#, 2)) /10) as int);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(right(#TX_ID#, 2))%10;</tableRule>
+        </tableRules>
+        <tableSuffix>througAllDB:[_00-_99]</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_09]</dbIndex>
+      </shard>
+      <shard>
+        <tableName>business_action</tableName>
+        <dbRules>
+          <dbRule>return ((Integer.valueOf(right(#TX_ID#, 2)) /10) as int);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(right(#TX_ID#, 2))%10;</tableRule>
+        </tableRules>
+        <tableSuffix>througAllDB:[_00-_99]</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_09]</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore1)))</jdbcUrl>
+          <userName>paycore00</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_00" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore1)))</jdbcUrl>
+          <userName>paycore01</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_01" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore1)))</jdbcUrl>
+          <userName>paycore01</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_02" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore1)))</jdbcUrl>
+          <userName>paycore03</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_03" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore1)))</jdbcUrl>
+          <userName>paycore01</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_04" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+          <userName>paycore05</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_05" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+          <userName>paycore06</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_06" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+          <userName>paycore07</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_07" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+          <userName>paycore08</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_08" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+          <userName>paycore09</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_09" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="remote" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="remote-ds:r10w10">
+      <datasource name="remote-ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=public2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=public2)))</jdbcUrl>
+        <userName>disttrans</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>5</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="trade" dataBaseType="ORACLE" version="1" zoneDs="">
+    <datasource name="trade-core" dataSourceType="SHARD">
+      <shard>
+        <tableName>business_action</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(right(#TX_ID#, 2), 10);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def dbIndex = Integer.valueOf(right(#TX_ID#, 2), 10);return ((dbIndex / 2) as int);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_09]</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_19]</dbIndex>
+      </shard>
+      <shard>
+        <tableName>business_activity</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(right(#TX_ID#, 2), 10);</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def dbIndex = Integer.valueOf(right(#TX_ID#, 2), 10);return ((dbIndex / 2) as int);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_09]</tableSuffix>
+        <dbIndex>SETBYRULE:M[_00-_19]</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade2)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore00</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_00" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore00</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_01" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade1)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore01</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_02" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore01</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_03" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade2)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore02</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_04" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore02</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_05" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade1)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore03</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_06" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore03</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_07" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade2)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore04</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_08" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore04</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_09" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics10" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade1)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore05</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_10" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics11" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore05</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_11" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics12" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade2)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore06</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_12" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics13" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore06</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_13" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics14" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade1)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore07</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_14" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics15" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore07</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_15" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics16" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade2)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore08</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_16" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics17" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore08</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_17" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics18" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=trade1.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=trade1)(SERVER=SHARED)))</jdbcUrl>
+          <userName>tradecore09</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_18" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics19" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+          <userName>tradecore09</userName>
+          <password>-67a1370cbadc76b5</password>
+          <driverClass>oracle.jdbc.OracleDriver</driverClass>
+          <maxConn>5</maxConn>
+          <minConn>2</minConn>
+          <blockingTimeoutMillis>180</blockingTimeoutMillis>
+          <idleTimeoutMinutes>180</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_19" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+</App>
+

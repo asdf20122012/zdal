@@ -1,0 +1,1869 @@
+<?xml version="1.0" encoding="gbk"?>
+<App name="finsupport" dbmode="dev" idcName="gz00" zoneError="EXCEPTOIN">
+  <AppDataSource name="PcconfigDataSource" dataBaseType="ORACLE" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds:r10w10">
+      <datasource name="ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifdb.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))</jdbcUrl>
+        <userName>pcconfig</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="SettlecoreAssistDataSource" dataBaseType="ORACLE" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds:r10w10">
+      <datasource name="ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=failover.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=failover)))</jdbcUrl>
+        <userName>settlecore</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="SettlecoreMasterDataSource" dataBaseType="ORACLE" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds:r10w10">
+      <datasource name="ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=paycore2.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=paycore2)))</jdbcUrl>
+        <userName>settlecore</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="SharedataDataSource" dataBaseType="ORACLE" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds:r10w10">
+      <datasource name="ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifdb.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))</jdbcUrl>
+        <userName>sharedata</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="SharedataReadDataSource" dataBaseType="ORACLE" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds:r10w10">
+      <datasource name="ds" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:oracle:oci:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=cifread.devdb.alipay.net)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=cifdb)))</jdbcUrl>
+        <userName>sharedata</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>oracle.jdbc.OracleDriver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="finextSlaveTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="finextSlaveDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_settle_serial_map</tableName>
+        <dbRules>
+          <dbRule>return #settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1)</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()),10);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_99]</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_terminal</tableName>
+        <dbRules>
+          <dbRule>return #term_trace_no#.substring(#term_trace_no#.length()-2,#term_trace_no#.length()-1)</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(#term_trace_no#.substring(#term_trace_no#.length()-2,#term_trace_no#.length()),10);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_99]</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_0" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_1" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext02?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_2" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext03?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_3" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext04?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_4" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext05?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_5" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext06?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_6" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext07?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_7" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext08?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_8" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/finext09?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_9" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="finextTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="finextDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_settle_serial_map</tableName>
+        <dbRules>
+          <dbRule>return #settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1)</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()),10);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_99]</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_terminal</tableName>
+        <dbRules>
+          <dbRule>return #inst_ref_no#.substring(#inst_ref_no#.length()-2,#inst_ref_no#.length()-1)</dbRule>
+          <dbRule>return #term_trace_no#.substring(#term_trace_no#.length()-2,#term_trace_no#.length()-1)</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return Integer.valueOf(#inst_ref_no#.substring(#inst_ref_no#.length()-2,#inst_ref_no#.length()),10);</tableRule>
+          <tableRule>return Integer.valueOf(#term_trace_no#.substring(#term_trace_no#.length()-2,#term_trace_no#.length()),10);</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_99]</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_0" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_1" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext02?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_2" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext03?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_3" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext04?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_4" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext05?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_5" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext06?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_6" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext07?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_7" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext08?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_8" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext09?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finext</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_9" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="finhistTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="finhistDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_settle_serial_unique</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>int month=Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2011..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_transaction</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>int month=Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2011..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_payer</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>int month=Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2011..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_inst</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>int month=Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2011..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_extension</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>int month=Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2011..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_settle_serial_map</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return #settle_serial_no#.substring(#settle_serial_no#.length()-1,#settle_serial_no#.length());</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_09]</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_terminal</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>return #term_trace_no#.substring(#term_trace_no#.length()-1,#term_trace_no#.length());</tableRule>
+        </tableRules>
+        <tableSuffix>resetForEachDB:[_00-_09]</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_recon_batch</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_recon_sub_batch</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_recon_recovery</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_dynamic_task_group</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_dynamic_task</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_pre_order</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_retrieval_serial</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#div_db_flag#.substring(4,6),10)-1;return #div_db_flag#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_incoming_serial</tableName>
+        <dbRules>
+          <dbRule>return 0;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#batch_no#.substring(4,6),10)-1;return #batch_no#.substring(0,4)+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (2012..2022).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(4,"0")+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finhist?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finhist</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_0" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="finreconTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="finreconDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_recon_batch</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_recon_sub_batch</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_recon_recovery</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_dynamic_task_group</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_dynamic_task</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_pre_order</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_retrieval_serial</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#div_db_flag#.substring(#div_db_flag#.length()-2,#div_db_flag#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>null</tableRule>
+        </tableRules>
+        <tableSuffix>null</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_incoming_serial</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#batch_no#.substring(#batch_no#.length()-2,#batch_no#.length()-1),10)%10;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>int month=Integer.valueOf(#batch_no#.substring(4,6),10)-1;return #batch_no#.substring(#batch_no#.length()-2,#batch_no#.length()).padLeft(2,"0")+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..99).each{i -&gt; (0..11).each{j -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0"))}};return list;</tableSuffix>
+        <dbIndex>master_0,master_1,master_2,master_3,master_4,master_5,master_6,master_7,master_8,master_9</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay3.devdb.alipay.net:3306/finrecon00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_0" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay3.devdb.alipay.net:3306/finrecon01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_1" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon02?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_2" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon03?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_3" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon04?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_4" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon05?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_5" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon06?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_6" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon07?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_7" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon08?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_8" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finrecon09?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>finrecon</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_9" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="fintransSlaveTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="fintransSlaveDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_settle_serial_unique</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_transaction</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_payer</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_inst</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_extension</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans00_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_00" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics00_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans00_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_01" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans01_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_02" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans01_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_03" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans02_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_04" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans02_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_05" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans03_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_06" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans03_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_07" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans04_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_08" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans04_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_09" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans05_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_10" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans05_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_11" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans06_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_12" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans06_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_13" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans07_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_14" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans07_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_15" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans08_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_16" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans08_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_17" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans09_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_18" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay6.devdb.alipay.net:3306/fintrans09_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_19" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="fintransTddlDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="fintransSlaveDataSource" dataSourceType="SHARD">
+      <shard>
+        <tableName>fin_settle_serial_unique</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_transaction</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_payer</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_inst</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_influx_extension</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#influx_id#.substring(21,22))*2 + Integer.valueOf(#influx_id#.substring(22,23));</dbRule>
+          <dbRule>return Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2))*2 + Integer.valueOf(#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length()-1));</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#influx_id#.substring(4,6),10)-1;return #influx_id#.substring(21,22).padLeft(2,"0")+"_"+#influx_id#.substring(22,24)+"_"+"${month}".padLeft(2,"0");</tableRule>
+          <tableRule>def month = Integer.valueOf(#settle_serial_no#.substring(4,6),10)-1;return #settle_serial_no#.substring(#settle_serial_no#.length()-3,#settle_serial_no#.length()-2).padLeft(2,"0")+"_"+#settle_serial_no#.substring(#settle_serial_no#.length()-2,#settle_serial_no#.length())+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <shard>
+        <tableName>fin_request_no_unique</tableName>
+        <dbRules>
+          <dbRule>return Integer.valueOf(#request_biz_no#.substring(#request_biz_no#.length()-1))*2 + Integer.valueOf(#request_biz_no#.substring(#request_biz_no#.length()-4,#request_biz_no#.length()-3))%2;</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>def month = Integer.valueOf(#request_biz_no#.substring(4,6),10)-1;def dbrule = Integer.valueOf(#request_biz_no#.substring(#request_biz_no#.length()-4,#request_biz_no#.length()-3))%2;return #request_biz_no#.substring(#request_biz_no#.length()-1).padLeft(2,"0")+"_"+"${dbrule}"+#request_biz_no#.substring(#request_biz_no#.length()-3,#request_biz_no#.length()-2)+"_"+"${month}".padLeft(2,"0");</tableRule>
+        </tableRules>
+        <tableSuffix>groovyThroughAllDBTableList:def list = []; (0..9).each{i-&gt;(0..19).each{j -&gt; (0..11).each{k -&gt; list.add("${i}".padLeft(2,"0")+"_"+"${j}".padLeft(2,"0")+"_"+"${k}".padLeft(2,"0"))}}};return list;</tableSuffix>
+        <dbIndex>master_00,master_01,master_02,master_03,master_04,master_05,master_06,master_07,master_08,master_09,master_10,master_11,master_12,master_13,master_14,master_15,master_16,master_17,master_18,master_19</dbIndex>
+      </shard>
+      <datasource name="master" dataSourceType="FAILOVER" failoverRule="master">
+        <datasource name="physics00_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans00_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_00" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics00_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans00_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_01" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans01_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_02" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics01_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans01_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_03" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans02_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_04" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics02_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans02_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_05" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans03_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_06" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics03_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans03_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_07" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans04_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_08" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics04_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans04_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_09" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans05_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_10" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics05_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans05_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_11" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans06_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_12" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics06_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans06_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_13" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans07_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_14" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics07_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans07_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_15" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans08_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_16" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics08_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans08_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_17" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09_0" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans09_0?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_18" dataSourceType="LOGIC" />
+        </datasource>
+        <datasource name="physics09_1" dataSourceType="PHYSICS">
+          <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/fintrans09_1?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+          <userName>fintrans</userName>
+          <password>-7cda29b2eef25d0e</password>
+          <driverClass>com.mysql.jdbc.Driver</driverClass>
+          <maxConn>20</maxConn>
+          <minConn>5</minConn>
+          <blockingTimeoutMillis>500</blockingTimeoutMillis>
+          <idleTimeoutMinutes>30</idleTimeoutMinutes>
+          <preparedStatementCacheSize>100</preparedStatementCacheSize>
+          <queryTimeout>180</queryTimeout>
+          <sqlValve>-1,1</sqlValve>
+          <tableValve />
+          <transactionValve>-1,1</transactionValve>
+          <datasource name="master_19" dataSourceType="LOGIC" />
+        </datasource>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+  <AppDataSource name="sequenceDataSource" dataBaseType="MYSQL" version="1" zoneDs="" document="false" hotspot="">
+    <datasource name="group_00" dataSourceType="RW" readwriteRule="ds0:r10w10,ds1:r10w10,ds2:r10w10,ds3:r10w10,ds4:r10w10,ds5:r10w10,ds6:r10w10,ds7:r10w10,ds8:r10w10,ds9:r10w10">
+      <datasource name="ds0" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext00?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds1" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext01?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds2" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext02?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds3" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext03?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds4" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext04?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds5" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext05?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds6" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext06?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds7" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext07?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds8" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext08?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds9" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://mypay5.devdb.alipay.net:3306/finext09?useUnicode=true&amp;amp;characterEncoding=gbk</jdbcUrl>
+        <userName>finext</userName>
+        <password>-7cda29b2eef25d0e</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>25</maxConn>
+        <minConn>2</minConn>
+        <blockingTimeoutMillis>500</blockingTimeoutMillis>
+        <idleTimeoutMinutes>30</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+</App>

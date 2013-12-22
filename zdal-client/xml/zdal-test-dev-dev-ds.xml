@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="GBK"?>
+<App name="zdal-test" dbmode="dev" idcName="dev" zoneError="LOG">
+  <AppDataSource name="zdal-ds-1" dataBaseType="MYSQL" version="3">
+    <datasource name="shard" dataSourceType="SHARD">
+      <shard>
+        <tableName>tableName1</tableName>
+        <dbRules>
+          <dbRule>dbRule</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>tableRule</tableRule>
+        </tableRules>
+        <tableSuffix>tableSuffix</tableSuffix>
+        <dbIndex>ds0,ds1,ds2,ds3</dbIndex>
+      </shard>
+      <shard>
+        <tableName>tableName2</tableName>
+        <dbRules>
+          <dbRule>dbRule</dbRule>
+        </dbRules>
+        <tableRules>
+          <tableRule>tableRule</tableRule>
+        </tableRules>
+        <tableSuffix>tableSuffix</tableSuffix>
+        <dbIndex>ds0,ds1,ds2,ds3</dbIndex>
+      </shard>
+      <datasource name="ds0" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://10.253.36.17:3306/tddl_0?useUnicode=true111;characterEncoding=gbk</jdbcUrl>
+        <userName>root</userName>
+        <password>6f8e652f571678f2</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds1" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://10.253.36.17:3306/tddl_1?useUnicode=true111;characterEncoding=gbk</jdbcUrl>
+        <userName>root</userName>
+        <password>6f8e652f571678f2</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds2" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://10.253.36.17:3306/tddl_2?useUnicode=true111;characterEncoding=gbk</jdbcUrl>
+        <userName>root</userName>
+        <password>6f8e652f571678f2</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+      <datasource name="ds3" dataSourceType="PHYSICS">
+        <jdbcUrl>jdbc:mysql://10.253.36.17:3306/tddl_3?useUnicode=true111;characterEncoding=gbk</jdbcUrl>
+        <userName>root</userName>
+        <password>6f8e652f571678f2</password>
+        <driverClass>com.mysql.jdbc.Driver</driverClass>
+        <maxConn>20</maxConn>
+        <minConn>1</minConn>
+        <blockingTimeoutMillis>180</blockingTimeoutMillis>
+        <idleTimeoutMinutes>180</idleTimeoutMinutes>
+        <preparedStatementCacheSize>100</preparedStatementCacheSize>
+        <queryTimeout>180</queryTimeout>
+        <sqlValve>-1,1</sqlValve>
+        <tableValve />
+        <transactionValve>-1,1</transactionValve>
+      </datasource>
+    </datasource>
+  </AppDataSource>
+</App>
+

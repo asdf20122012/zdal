@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:sofa="http://img.alipay.net/dtd/schema/service" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://img.alipay.net/dtd/schema/service http://img.alipay.net/dtd/schema/service/sofa-service.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+         http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd"
+	default-autowire="byName">
+	<!-- 先从zdataconsole中获取配置信息，如果获取失败，直接加载本地配置文件 -->
+	<bean id="dataSource" class="com.alipay.zdal.client.jdbc.ZdalDataSource" init-method="init" destroy-method="close">
+	    <!-- 应用名称 ,由zdal相关人员分配-->
+		<property name="appName" value=""/>
+		<!-- 数据源名称,由zdal相关人员分配 -->
+		<property name="appDsName" value=""/>
+		<!-- 数据库环境：开发数据库:dev;sit数据库:test;性能测试数据库:lab;线上数据库:prod -->
+		<property name="dbmode" value=""/>
+		<!-- LDC标示：开发:dev;测试:rzone;线上:gzonea,gzoneb,gzonepre,rzone00a,rzone00b,rzone01a,rzone01b,rzone02a,rzone02b,rzone03a,rzone03b,rzone04a,rzone04b,rzone05a,rzone05b -->
+		<property name="zone" value=""/>		
+		<!-- 开发：http://zdataconsole.stable.alipay.net:8080  测试：http://zdataconsole-1-1.test.alipay.net:8080  线上：http://zdataconsole.alipay.com:8080 -->
+		<property name="zdataconsoleUrl" value=""/>	
+		<!-- zdal数据源存放的路径：sofa2：/home/admin/${appName}/jboss/deploy      cloundengine：/home/admin/${appName}-run/deploy/zdataconsole.ace/config/db -->	
+		<property name="configPath" value=""/>
+		<!-- 主备数据源需要切换的时候，进行配置，与对应的drm资源匹配，由zdal相关人员分配 -->
+		<property name="drm" value=""/>
+	</bean>
+	
+	<!-- 从加载本地配置文件 -->
+	<bean id="zdalDataSource" class="com.alipay.zdal.client.jdbc.ZdalDataSourceWithLocalConfig" init-method="init" destroy-method="close">
+	    <!-- 应用名称,由zdal相关人员分配 -->
+		<property name="appName" value=""/>
+		<!-- 数据源名称,由zdal相关人员分配 -->
+		<property name="appDsName" value=""/>
+		<!-- 数据库环境：开发数据库:dev;sit数据库:test;性能测试数据库:lab;线上数据库:prod -->
+		<property name="dbmode" value=""/>
+		<!-- LDC标示：开发:dev;测试:rzone;线上:gzonea,gzoneb,gzonepre,rzone00a,rzone00b,rzone01a,rzone01b,rzone02a,rzone02b,rzone03a,rzone03b,rzone04a,rzone04b,rzone05a,rzone05b -->
+		<property name="zone" value=""/>
+		<!-- zdal数据源存放的路径：sofa2：/home/admin/${appName}/jboss/deploy      cloundengine：/home/admin/${appName}-run/deploy/zdataconsole.ace/config/db-->	
+		<property name="configPath" value=""/>
+		<!-- 主备数据源需要切换的时候，进行配置，与对应的drm资源匹配，由zdal相关人员分配 -->
+		<property name="drm" value=""/>
+	</bean>
+</beans>
