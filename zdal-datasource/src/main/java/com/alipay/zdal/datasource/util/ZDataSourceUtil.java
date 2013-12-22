@@ -126,12 +126,6 @@ public final class ZDataSourceUtil {
                     } catch (Exception e1) {
                         logger.error(e1);
                     }
-                } else if (StringUtil.equalsIgnoreCase(key, Parameter.SQL_VALVE)) {
-                    newDO.setSqlValve(value);
-                } else if (StringUtil.equalsIgnoreCase(key, Parameter.TX_VALVE)) {
-                    newDO.setTxValve(value);
-                } else if (StringUtil.equalsIgnoreCase(key, Parameter.TABLE_VALVE)) {
-                    newDO.setTableVave(value);
                 }
             }
         }

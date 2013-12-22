@@ -43,8 +43,6 @@ public class OracleExceptionSorter implements ExceptionSorter, Serializable {
 
     private static final Logger logger           = Logger.getLogger(OracleExceptionSorter.class);
 
-    public static int           ERRORCODE        = -1;
-
     public OracleExceptionSorter() {
     }
 
@@ -99,9 +97,6 @@ public class OracleExceptionSorter implements ExceptionSorter, Serializable {
             || (error_code == 17447) //OALL8 is in an inconsistent state
             || (error_code == 17401) || (error_code == 3137)//报文错误
             || (error_code == ROLLBACK_ERRORCODE)) {//rollback失败直接剔出连接.
-            return true;
-        }
-        if (e.getErrorCode() == ERRORCODE) {//如果是应急需要剔出的errorcode，就自动提出.
             return true;
         }
 

@@ -37,7 +37,4 @@ public final class Parameter {
     public static final String USE_JMX                            = "useJmx";
     public static final String VALIDATE_ONMATCH                   = "validateOnMatch";
     public static final String VALID_CONNECTION_CHECKER_CLASSNAME = "validConnectionCheckerClassName";
-    public static final String SQL_VALVE                          = "sqlValve";
-    public static final String TX_VALVE                           = "transactionValve";
-    public static final String TABLE_VALVE                        = "tableValve";
 }

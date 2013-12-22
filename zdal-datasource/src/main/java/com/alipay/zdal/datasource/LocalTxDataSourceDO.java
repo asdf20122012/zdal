@@ -87,12 +87,6 @@ public class LocalTxDataSourceDO implements Cloneable {
     private boolean             txQueryTimeout                  = false;
     @Deprecated
     private long                backgroundValidationMinutes     = 0;
-    @Deprecated
-    private String              sqlValve                        = null;
-    @Deprecated
-    private String              txValve                         = null;
-    @Deprecated
-    private String              tableVave                       = null;
 
     /**  */
     public static final int     UNSET                           = -1;
@@ -586,29 +580,5 @@ public class LocalTxDataSourceDO implements Cloneable {
 
     public void setConnectionProperties(Map<String, String> connectionProperties) {
         this.connectionProperties = connectionProperties;
-    }
-
-    public String getSqlValve() {
-        return sqlValve;
-    }
-
-    public void setSqlValve(String sqlValve) {
-        this.sqlValve = sqlValve;
-    }
-
-    public String getTxValve() {
-        return txValve;
-    }
-
-    public void setTxValve(String txValve) {
-        this.txValve = txValve;
-    }
-
-    public String getTableVave() {
-        return tableVave;
-    }
-
-    public void setTableVave(String tableVave) {
-        this.tableVave = tableVave;
     }
 }

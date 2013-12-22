@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 
-import com.alipay.zdal.client.config.utils.DbmodeUtils;
 import com.alipay.zdal.common.Constants;
 import com.alipay.zdal.common.lang.StringUtil;
 
@@ -54,7 +53,9 @@ public abstract class ZdalDataSourceConfig {
         }
         CONFIG_LOGGER.warn("WARN ## the appDsName = " + this.appDsName);
 
-        this.dbmode = DbmodeUtils.getDbmode(this.dbmode);
+        if (StringUtil.isBlank(dbmode)) {
+            throw new IllegalArgumentException("ERROR ## the dbmode is null");
+        }
         CONFIG_LOGGER.warn("WARN ## the dbmode = " + this.dbmode);
 
         if (StringUtil.isBlank(configPath)) {

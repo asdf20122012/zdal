@@ -35,9 +35,6 @@ import java.sql.SQLException;
 public class MySQLExceptionSorter implements ExceptionSorter, Serializable {
     private static final long serialVersionUID = 2375890129763721017L;
 
-    /** 应急切换的errorcode. */
-    public static int         ERRORCODE        = -1;
-
     //    public boolean isExceptionFatal(SQLException e) {
     //        int loopCount = 20; //防止人为失误，当两个Throwable互为对方的initCause()时，造成死循环
     //
@@ -89,9 +86,6 @@ public class MySQLExceptionSorter implements ExceptionSorter, Serializable {
             case 1038: // ER_OUT_OF_SORTMEMORY
             case ROLLBACK_ERRORCODE:// rollback失败.
                 return true;
-        }
-        if (e.getErrorCode() == ERRORCODE) {//如果是应急需要剔出的errorcode，就自动提出.
-            return true;
         }
 
         final String error_text = (e.getMessage()).toUpperCase();

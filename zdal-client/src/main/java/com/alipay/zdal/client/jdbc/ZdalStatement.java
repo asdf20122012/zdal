@@ -40,7 +40,6 @@ import com.alipay.zdal.client.controller.RuleController;
 import com.alipay.zdal.client.controller.TargetDBMeta;
 import com.alipay.zdal.client.dispatcher.DispatcherResult;
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
-import com.alipay.zdal.client.exceptions.ZdalLdcException;
 import com.alipay.zdal.client.jdbc.DBSelector.AbstractDataSourceTryer;
 import com.alipay.zdal.client.jdbc.DBSelector.DataSourceTryer;
 import com.alipay.zdal.client.jdbc.parameter.ParameterContext;
@@ -428,8 +427,6 @@ public class ZdalStatement implements Statement {
 
         } catch (ZdalRuleCalculateException e) {
             log.error("规则引擎计算错误，sql=" + originalSql, e);
-            throw e;
-        } catch (ZdalLdcException e) {
             throw e;
         } catch (RuntimeException e) {
             String context = ExceptionUtils.getErrorContext(originalSql, parameters,
