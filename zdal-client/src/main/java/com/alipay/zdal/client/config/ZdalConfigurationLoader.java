@@ -13,34 +13,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.xfire.client.Client;
-import org.codehaus.xfire.client.XFireProxyFactory;
-import org.codehaus.xfire.service.Service;
-import org.codehaus.xfire.service.binding.ObjectServiceFactory;
-import org.codehaus.xfire.transport.http.CommonsHttpMessageSender;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
-import com.alibaba.common.lang.StringUtil;
 import com.alipay.zdal.client.config.bean.AppDataSourceBean;
 import com.alipay.zdal.client.config.bean.PhysicalDataSourceBean;
 import com.alipay.zdal.client.config.bean.ZdalAppBean;
 import com.alipay.zdal.client.config.exceptions.ZdalConfigException;
 import com.alipay.zdal.common.Constants;
 import com.alipay.zdal.common.DBType;
-import com.alipay.zdataconsole.zdal.service.ZdalConfigService;
+import com.alipay.zdal.common.lang.StringUtil;
 
 /**
  * <p>
- * A single loader to load Zdal configurations via Web Service or local directory in order to
- * initialize Zdal data source context. Afterward, it holds all zdal configurations across 
- * applications distinguish by unique id consist of appName + dbMode + zone
+ * A single loader to load Zdal configurations via Web Service or local
+ * directory in order to initialize Zdal data source context. Afterward, it
+ * holds all zdal configurations across applications distinguish by unique id
+ * consist of appName + dbMode + zone
  * </p>
+ * 
  * @author <a href="mailto:xiang.yangx@alipay.com">Yang Xiang</a>
- *
+ * 
  */
 public class ZdalConfigurationLoader {
 
@@ -61,10 +56,10 @@ public class ZdalConfigurationLoader {
 
     static {
         localConfigDir = System.getProperty("user.home");
-        if (!localConfigDir.endsWith(File.separator)) {//如果不是以文件的分隔符结尾，就补充文件分隔符.
+        if (!localConfigDir.endsWith(File.separator)) {// 如果不是以文件的分隔符结尾，就补充文件分隔符.
             localConfigDir += File.separator;
         }
-        if( !localConfigDir.startsWith(File.separator)){
+        if (!localConfigDir.startsWith(File.separator)) {
             localConfigDir = File.separator + localConfigDir;
         }
         localConfigDir += "conf" + File.separator + "zdal";
@@ -76,8 +71,10 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * Load Zdal configuration context via Spring XmlApplicationContext when the zdal has not been loaded up.
-     * If application's Zdal configuration has been loaded up, just fetch the zdal config from the single configuration map.
+     * Load Zdal configuration context via Spring XmlApplicationContext when the
+     * zdal has not been loaded up. If application's Zdal configuration has been
+     * loaded up, just fetch the zdal config from the single configuration map.
+     * 
      * @param appName
      * @param dbMode
      * @param idcName
@@ -87,8 +84,7 @@ public class ZdalConfigurationLoader {
      * @return
      */
     public synchronized ZdalConfig getZdalConfiguration(String appName, String dbMode,
-                                                        String idcName, String appDsName,
-                                                        String zdataconsoleUrl, String configPath) {
+                                                        String appDsName, String configPath) {
         ZdalConfig zdalConfig = null;
         if (StringUtil.isEmpty(appName) || StringUtil.isEmpty(dbMode)
             || StringUtil.isEmpty(idcName) || StringUtil.isEmpty(appDsName)) {
@@ -102,7 +98,7 @@ public class ZdalConfigurationLoader {
             }
         }
         List<String> zdalConfigurationFilePathList = new ArrayList<String>();
-        //Pull DS configuration from Zdal Console
+        // Pull DS configuration from Zdal Console
         String cfgContent = pullZdalConfigurationFromConsole(appName, dbMode, idcName,
             zdataconsoleUrl, CONFIGURATION_DS);
         String filePath = localizeZdalConfiguration(appName, dbMode, idcName,
@@ -118,7 +114,7 @@ public class ZdalConfigurationLoader {
             zdalConfigurationFilePathList.add("file:" + filePath);
         }
         configurationFile = null;
-        //Pull Rule configuration from Zdal Console
+        // Pull Rule configuration from Zdal Console
         cfgContent = pullZdalConfigurationFromConsole(appName, dbMode, idcName, zdataconsoleUrl,
             CONFIGURATION_RULE);
         filePath = localizeZdalConfiguration(appName, dbMode, idcName, Constants.LOCAL_CONFIG_RULE,
@@ -138,9 +134,8 @@ public class ZdalConfigurationLoader {
                 "ERROR ## There is no local Zdal configuration files for " + appName
                         + " to initialize ZdalDataSource.");
         }
-        loadZdalConfigurationContext(
-            zdalConfigurationFilePathList.toArray(new String[zdalConfigurationFilePathList.size()]),
-            appName, dbMode, idcName);
+        loadZdalConfigurationContext(zdalConfigurationFilePathList
+            .toArray(new String[zdalConfigurationFilePathList.size()]), appName, dbMode, idcName);
         if (!MapUtils.isEmpty(zdalConfigMap)) {
             return zdalConfigMap.get(appDsUniqueId);
         } else {
@@ -149,14 +144,16 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * It is pretty much as same as getZdalConfiguration, but it only load configuration from local which given parameter
-     * configPath. 
+     * It is pretty much as same as getZdalConfiguration, but it only load
+     * configuration from local which given parameter configPath.
      * 
      * @param appName
      * @param dbMode
      * @param idcName
      * @param appDsName
-     * @param configPath Given path to load applications's data source and rule configuraiton files.
+     * @param configPath
+     *            Given path to load applications's data source and rule
+     *            configuraiton files.
      * @return
      */
     public synchronized ZdalConfig getZdalConfigurationFromLocal(String appName, String dbMode,
@@ -190,9 +187,8 @@ public class ZdalConfigurationLoader {
                 "ERROR ## There is no local Zdal configuration files for " + appName
                         + " to initialize ZdalDataSource.");
         }
-        loadZdalConfigurationContext(
-            zdalConfigurationFilePathList.toArray(new String[zdalConfigurationFilePathList.size()]),
-            appName, dbMode, idcName);
+        loadZdalConfigurationContext(zdalConfigurationFilePathList
+            .toArray(new String[zdalConfigurationFilePathList.size()]), appName, dbMode, idcName);
         if (!MapUtils.isEmpty(zdalConfigMap)) {
             return zdalConfigMap.get(appDsUniqueId);
         } else {
@@ -201,8 +197,10 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * Load Zdal configuration with local Zdal configuration files include a data source definition and 
-     * a rule definition then return the configurations of an application 
+     * Load Zdal configuration with local Zdal configuration files include a
+     * data source definition and a rule definition then return the
+     * configurations of an application
+     * 
      * @param appName
      * @param dbMode
      * @param idcName
@@ -234,8 +232,9 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * For testing, we can use this method to load configuration from local files instead of using 
-     * zdal console.
+     * For testing, we can use this method to load configuration from local
+     * files instead of using zdal console.
+     * 
      * @param fileNames
      * @param appName
      * @param dbMode
@@ -265,13 +264,17 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * Localize the fetched Zdal configuration from Zdal Console into local folder.
-     * File name as app-dbmode-idcname-ds.xml or app-dbmode-idcname-rule.xml
+     * Localize the fetched Zdal configuration from Zdal Console into local
+     * folder. File name as app-dbmode-idcname-ds.xml or
+     * app-dbmode-idcname-rule.xml
+     * 
      * @param appName
      * @param dbmode
      * @param idcName
-     * @param type defined either DS or Rule
-     * @param configContent configuration pull from zdal console
+     * @param type
+     *            defined either DS or Rule
+     * @param configContent
+     *            configuration pull from zdal console
      * @return
      */
     protected String localizeZdalConfiguration(final String appName, final String dbmode,
@@ -279,7 +282,8 @@ public class ZdalConfigurationLoader {
                                                final String configContent) {
         String configFileName = null;
         if (StringUtil.isEmpty(configContent)) {
-            log.warn("WARN ## synced the latest configuration is empty, Zdal started to utilize local configuration to initialize.");
+            log
+                .warn("WARN ## synced the latest configuration is empty, Zdal started to utilize local configuration to initialize.");
         }
         if (Constants.LOCAL_CONFIG_DS == type) {
             configFileName = MessageFormat.format(Constants.LOCAL_CONFIG_FILENAME_SUFFIX, appName,
@@ -295,16 +299,19 @@ public class ZdalConfigurationLoader {
         File configFile = new File(localConfigDir, configFileName);
         try {
             if (configFile.exists()) {
-                if (StringUtil.isEmpty(configContent)) { //Load local configuration file
+                if (StringUtil.isEmpty(configContent)) { // Load local
+                    // configuration
+                    // file
                     return configFile.getAbsolutePath();
                 } else {
-                    configFile.delete();//先删除原来的文件.
+                    configFile.delete();// 先删除原来的文件.
                     configFile = null;
                     configFile = new File(localConfigDir, configFileName);
                     configFile.createNewFile();
                 }
             } else {
-                if (StringUtil.isEmpty(configContent)) { //return null as there is no file
+                if (StringUtil.isEmpty(configContent)) { // return null as there
+                    // is no file
                     return null;
                 }
                 configFile.createNewFile();
@@ -351,22 +358,27 @@ public class ZdalConfigurationLoader {
             configService = (ZdalConfigService) factory.create(service,
                 zdataconsoleUrl + Constants.WERBSERVICE_URL_SUFFIX);
             Client client = null;
-            for (int i = 0; i < 3; i++) {//重试3次（尽管xfire内部已经重试了3次），每次间隔1秒.
+            for (int i = 0; i < 3; i++) {// 重试3次（尽管xfire内部已经重试了3次），每次间隔1秒.
                 try {
                     client = Client.getInstance(configService);
-                    client.setProperty(CommonsHttpMessageSender.HTTP_TIMEOUT, "5000");//设置socket请求通信的超时时间
-                    /*client.setProperty(CommonsHttpMessageSender.HTTP_CONNECTION_TIMEOUT,
-                        CommonsHttpMessageSender.HTTP_CONNECTION_MANAGER_TIMEOUT, "10000");*/
-                    configContent = configService.getAppDsConfig(appName, dbmode, idcName);//默认会重试3次.
+                    client.setProperty(CommonsHttpMessageSender.HTTP_TIMEOUT, "5000");// 设置socket请求通信的超时时间
+                    /*
+                     * client.setProperty(CommonsHttpMessageSender.HTTP_CONNECTION_TIMEOUT
+                     * ,
+                     * CommonsHttpMessageSender.HTTP_CONNECTION_MANAGER_TIMEOUT,
+                     * "10000");
+                     */
+                    configContent = configService.getAppDsConfig(appName, dbmode, idcName);// 默认会重试3次.
                     break;
                 } catch (Exception e) {
-                    log.warn("WARN ## get the config info from zdataconsole has an error, the appName = "
-                             + appName
-                             + ", the dbmode = "
-                             + dbmode
-                             + ", the idcName = "
-                             + idcName
-                             + e.getMessage());
+                    log
+                        .warn("WARN ## get the config info from zdataconsole has an error, the appName = "
+                              + appName
+                              + ", the dbmode = "
+                              + dbmode
+                              + ", the idcName = "
+                              + idcName
+                              + e.getMessage());
                     try {
                         Thread.sleep(2000L);
                     } catch (InterruptedException e1) {
@@ -393,7 +405,7 @@ public class ZdalConfigurationLoader {
      */
     protected synchronized void loadZdalConfigurationContext(String[] fileNames, String appName,
                                                              String dbMode, String idcName) {
-        //		Map<String, ZdalConfig> zdalConfigMap = null;
+        // Map<String, ZdalConfig> zdalConfigMap = null;
         try {
             FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext(fileNames);
             if (null == ctx.getBean(appName)) {
@@ -419,8 +431,8 @@ public class ZdalConfigurationLoader {
             String appDsUniqueId = null;
             appBeanMap.put(generateAppUniqueId(appName, dbMode, idcName), appBean);
             for (AppDataSourceBean appDataSourceBean : appBean.getAppDataSourceList()) {
-                appDsUniqueId = generateAppDsUniqueId(appName, dbMode, idcName,
-                    appDataSourceBean.getAppDataSourceName());
+                appDsUniqueId = generateAppDsUniqueId(appName, dbMode, idcName, appDataSourceBean
+                    .getAppDataSourceName());
                 zdalConfigMap.put(appDsUniqueId, populateZdalConfig(appBean, appDataSourceBean));
             }
         } catch (Exception e) {
@@ -449,14 +461,14 @@ public class ZdalConfigurationLoader {
         config.setZoneError(ZoneError.convert(appDataSourceBean.getZoneError()));
         config.setAppDsName(appDataSourceBean.getAppDataSourceName());
         config.setDbType(DBType.convert(appDataSourceBean.getDataBaseType()));
-        //Set Rule
+        // Set Rule
         config.setAppRootRule(appDataSourceBean.getAppRule());
         config.setZoneDs(appDataSourceBean.getZoneDSSet());
         Map<String, DataSourceParameter> dataSourceParameterMap = new HashMap<String, DataSourceParameter>();
         for (PhysicalDataSourceBean physicalDataSource : appDataSourceBean
             .getPhysicalDataSourceSet()) {
-            dataSourceParameterMap.put(physicalDataSource.getName(),
-                DataSourceParameter.valueOf(physicalDataSource));
+            dataSourceParameterMap.put(physicalDataSource.getName(), DataSourceParameter
+                .valueOf(physicalDataSource));
             if (null != physicalDataSource.getLogicDbNameSet()
                 && !physicalDataSource.getLogicDbNameSet().isEmpty()) {
                 for (String logicDBName : physicalDataSource.getLogicDbNameSet()) {
@@ -515,6 +527,7 @@ public class ZdalConfigurationLoader {
 
     /**
      * Generate App unique ID with appName + dbMode + ZoneId
+     * 
      * @param names
      * @return
      */
@@ -528,7 +541,9 @@ public class ZdalConfigurationLoader {
     }
 
     /**
-     * Generate App DataSource Name unique ID with appName + dbMode + ZoneId + appDsName
+     * Generate App DataSource Name unique ID with appName + dbMode + ZoneId +
+     * appDsName
+     * 
      * @param names
      * @return
      */

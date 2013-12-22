@@ -67,18 +67,9 @@ public class ZdalConnection implements Connection {
     // TConnection对象创建的所有TStatement对象，包括TPreparedStatement对象
     private Set<ZdalStatement>                   openStatements               = new HashSet<ZdalStatement>();
 
-    private DataSourceConfigType                       dbConfigType                 = null;
+    private DataSourceConfigType                 dbConfigType                 = null;
 
     private boolean                              isHintReplaceSupport         = false;
-
-    // 本zone内的ds，防止路由错误
-    protected Set<String>                        zoneDs                       = new HashSet<String>();
-
-    //路由错误的时候，是抛出异常还是打印日志
-    protected boolean                            isThrowException             = true;
-
-    /** 便于业务预热本zone的uid对应的业务. */
-    protected boolean                            prefillZdal                  = false;
 
     /**  数据源的名称*/
     protected String                             appDsName                    = null;
@@ -143,9 +134,6 @@ public class ZdalConnection implements Connection {
         stmt.setRetryingTimes(retryingTimes);
         //		stmt.setPoolRandom(poolRandom);
         stmt.setDbConfigType(dbConfigType);
-        stmt.setThrowException(isThrowException);
-        stmt.setPrefillZdal(prefillZdal);
-        stmt.setZoneDs(zoneDs);
         stmt.setAppDsName(getAppDsName());
         openStatements.add(stmt);
 
@@ -183,9 +171,6 @@ public class ZdalConnection implements Connection {
         stmt.setEnableProfileRealDBAndTables(enableProfileRealDBAndTables);
         stmt.setRetryingTimes(retryingTimes);
         stmt.setDbConfigType(dbConfigType);
-        stmt.setThrowException(isThrowException);
-        stmt.setPrefillZdal(prefillZdal);
-        stmt.setZoneDs(zoneDs);
         stmt.setAppDsName(getAppDsName());
         openStatements.add(stmt);
         return stmt;
@@ -638,30 +623,6 @@ public class ZdalConnection implements Connection {
 
     public DataSourceConfigType getDbConfigType() {
         return dbConfigType;
-    }
-
-    public Set<String> getZoneDs() {
-        return zoneDs;
-    }
-
-    public void setZoneDs(Set<String> zoneDs) {
-        this.zoneDs = zoneDs;
-    }
-
-    public boolean isThrowException() {
-        return isThrowException;
-    }
-
-    public void setThrowException(boolean isThrowException) {
-        this.isThrowException = isThrowException;
-    }
-
-    public boolean isPrefillZdal() {
-        return prefillZdal;
-    }
-
-    public void setPrefillZdal(boolean prefillZdal) {
-        this.prefillZdal = prefillZdal;
     }
 
     public String getAppDsName() {

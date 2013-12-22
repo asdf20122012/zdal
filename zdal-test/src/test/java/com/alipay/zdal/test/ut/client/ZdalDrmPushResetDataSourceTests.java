@@ -58,12 +58,12 @@ private FakedZdalDataSource dataSource = null;
 
 private ZdalSignalResource resource = null;
 
-private ZdalDrmPushListener configListener = null;
+private DefaultZdalConfigListener configListener = null;
 
 @Before
 public void setUp() throws Exception {
 	dataSource = new FakedZdalDataSource();
-	configListener = new ZdalDrmPushListener(dataSource);
+	configListener = new DefaultZdalConfigListener(dataSource);
 	resource = new ZdalSignalResource(configListener, "trade50",
             DBType.ORACLE);
 }
