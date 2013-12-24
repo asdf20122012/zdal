@@ -302,8 +302,6 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
 
         checkClosed();
 
-        long startTime = System.currentTimeMillis();
-
         SqlExecutionContext context = getExecutionContext(sql, getParameters());
 
         if (context.mappingRuleReturnNullValue()) {
@@ -314,8 +312,6 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
 
         changeParameters(context.getChangedParameters());
 
-        long elapsedTime4Tddl = System.currentTimeMillis() - startTime;
-
         // int tablesSize = 0;
 
         dumpSql(sql, context.getTargetSqls(), parameterSettings);
@@ -325,7 +321,6 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
 
         for (Entry<String, SqlAndTable[]> entry : context.getTargetSqls().entrySet()) {
             for (SqlAndTable targetSql : entry.getValue()) {
-                long start = System.currentTimeMillis();
                 // tablesSize++;
                 try {
                     String dbSelectorId = entry.getKey();
@@ -334,12 +329,8 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
                         .getFailedDataSources(), connection, actualResultSets);
 
                     // TODO:添加到resultSet close()以前的时间统计
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTables(entry.getKey(), targetSql, during);
                 } catch (SQLException e) {
 
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTablesWithException(entry.getKey(), targetSql, during);
                     if (exceptions == null) {
                         exceptions = new ArrayList<SQLException>();
                     }
@@ -349,10 +340,6 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
             }
         }
 
-        long elapsedTime = System.currentTimeMillis() - startTime;
-
-        profileWithException(exceptions, context.getVirtualTableName(), sql, elapsedTime);
-
         ExceptionUtils.throwSQLException(exceptions, sql, getParameters());
         DummyTResultSet resultSet = mergeResultSets(context, actualResultSets);
         openResultSets.add(resultSet);
@@ -360,9 +347,6 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
         this.results = resultSet;
         this.moreResults = false;
         this.updateCount = -1;
-
-        // 记录全部的时间，包括tddl耗费时间和db耗费时间
-        profile(context.getVirtualTableName(), sql, elapsedTime4Tddl, elapsedTime);
 
         return this.results;
 
@@ -491,19 +475,11 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
             return executeUpdate0();
         }
 
-        long startTime = System.currentTimeMillis();
-
         SqlExecutionContext context = getExecutionContext(sql, getParameters());
         if (context.mappingRuleReturnNullValue()) {
             return 0;
         }
         changeParameters(context.getChangedParameters());
-
-        long elapsedTime4Tddl = System.currentTimeMillis() - startTime;
-
-        // int tablesSize = 0;
-
-        // int databaseSize = context.getTargetSqls().size();
 
         dumpSql(sql, context.getTargetSqls(), parameterSettings);
 
@@ -514,18 +490,13 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
             for (SqlAndTable targetSql : entry.getValue()) {
                 // tablesSize++;
 
-                long start = System.currentTimeMillis();
                 try {
 
                     String dbSelectorID = entry.getKey();
                     Connection connection = getActualConnection(dbSelectorID);
                     affectedRows = executeUpdateAndCountAffectRows(dbSelectorID, targetSql.sql,
                         context.getFailedDataSources(), connection, affectedRows);
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTables(entry.getKey(), targetSql, during);
                 } catch (SQLException e) {
-                    long during = System.currentTimeMillis();
-                    profileRealDatabaseAndTablesWithException(entry.getKey(), targetSql, during);
                     if (exceptions == null) {
                         exceptions = new ArrayList<SQLException>();
                     }
@@ -534,18 +505,12 @@ public class ZdalPreparedStatement extends RetryableTStatement implements Prepar
             }
         }
 
-        long elapsedTime = System.currentTimeMillis() - startTime;
-
         this.results = null;
         this.moreResults = false;
         this.updateCount = affectedRows;
 
-        profileWithException(exceptions, context.getVirtualTableName(), sql, elapsedTime);
-
         ExceptionUtils.throwSQLException(exceptions, sql, getParameters());
 
-        // 记录全部的时间
-        profile(context.getVirtualTableName(), sql, elapsedTime4Tddl, elapsedTime);
         return affectedRows;
     }
 

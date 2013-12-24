@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
 import com.alipay.zdal.client.util.ExceptionUtils;
 import com.alipay.zdal.common.DBType;
-import com.alipay.zdal.common.operationDBType;
+import com.alipay.zdal.common.OperationDBType;
 import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
 
 
@@ -93,7 +93,7 @@ public interface DBSelector {
      * 是否支持重试
      * @return
      */
-    boolean isSupportRetry(operationDBType type);
+    boolean isSupportRetry(OperationDBType type);
 
     //	/**
     //	 * 将当前数据源数组拷贝一份，然后新建一个新的随机选择数组

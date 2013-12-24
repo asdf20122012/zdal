@@ -13,7 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
-import com.alipay.zdal.common.operationDBType;
+import com.alipay.zdal.common.OperationDBType;
 
 
 
@@ -66,7 +66,7 @@ public class RetryableTStatement extends ZdalStatement {
 			//retringContext.addSQLException(e);
 			//validRetryable(retringContext, e);
 		    //added by fanzeng, 需要进一步验证此处是否需要重试
-            validRetryable(dbIndex, e, operationDBType.readFromDb);
+            validRetryable(dbIndex, e, OperationDBType.readFromDb);
 			if (failedDataSources != null) {
 				ConnectionAndDatasource connectionAndDatasource = getConnectionProxy()
 						.getConnectionAndDatasourceByDBSelectorID(dbIndex);
@@ -93,7 +93,7 @@ public class RetryableTStatement extends ZdalStatement {
 		} catch (SQLException e) {
 			//retringContext.addSQLException(e);
 			//validRetryable(retringContext,e);
-			validRetryable(dbSelectorId, e, operationDBType.readFromDb);
+			validRetryable(dbSelectorId, e, OperationDBType.readFromDb);
 			if (failedDataSources != null) {
 				ConnectionAndDatasource connectionAndDatasource = getConnectionProxy()
 						.getConnectionAndDatasourceByDBSelectorID(dbSelectorId);
@@ -151,7 +151,7 @@ public class RetryableTStatement extends ZdalStatement {
 	 */
 	protected void validRetryable(String dbSelectorId,
 			SQLException currentException,
-                                  operationDBType type) throws SQLException {
+                                  OperationDBType type) throws SQLException {
 		ConnectionAndDatasource connectionAndDatasource = getConnectionProxy()
 		.getConnectionAndDatasourceByDBSelectorID(dbSelectorId);
 		

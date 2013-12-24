@@ -17,7 +17,7 @@ import com.alipay.ats.assertion.TestAssertion;
 import com.alipay.ats.enums.PriorityLevel;
 import com.alipay.ats.junit.ATSJUnitRunner;
 import com.alipay.zdal.client.config.ZoneError;
-import com.alipay.zdal.client.config.drm.ZdalLdcSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalLdcSignalResource;
 import com.alipay.zdal.client.exceptions.ZdalLdcException;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
 import com.alipay.zdal.test.common.ConstantsTest;

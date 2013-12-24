@@ -19,12 +19,11 @@ import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import com.alipay.zdal.client.config.DataSourceConfigType;
 import com.alipay.zdal.client.config.DataSourceParameter;
 import com.alipay.zdal.client.config.ZdalConfig;
 import com.alipay.zdal.client.config.ZdalConfigListener;
 import com.alipay.zdal.client.config.ZdalDataSourceConfig;
-import com.alipay.zdal.client.config.drm.ZdalSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.client.controller.SpringBasedDispatcherImpl;
 import com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules;
 import com.alipay.zdal.client.datasource.keyweight.ZdalDataSourceKeyWeightRandom;
@@ -34,13 +33,11 @@ import com.alipay.zdal.client.exceptions.ZdalClientException;
 import com.alipay.zdal.client.jdbc.dbselector.EquityDbManager;
 import com.alipay.zdal.client.jdbc.dbselector.OneDBSelector;
 import com.alipay.zdal.client.jdbc.dbselector.PriorityDbGroupSelector;
-import com.alipay.zdal.client.util.TableSuffixGenerator;
 import com.alipay.zdal.common.Closable;
 import com.alipay.zdal.common.Constants;
 import com.alipay.zdal.common.DBType;
-import com.alipay.zdal.common.FailoverDBRuleKey;
-import com.alipay.zdal.common.Monitor;
 import com.alipay.zdal.common.RuntimeConfigHolder;
+import com.alipay.zdal.common.jdbc.sorter.DB2ExceptionSorter;
 import com.alipay.zdal.common.jdbc.sorter.MySQLExceptionSorter;
 import com.alipay.zdal.common.jdbc.sorter.OracleExceptionSorter;
 import com.alipay.zdal.common.lang.StringUtil;
@@ -83,7 +80,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
     private Map<String, ? extends Object>              rwDataSourcePoolConfig;
     private Map<String, ZdalDataSourceKeyWeightRandom> keyWeightMapConfig;
     private Map<String, String>                        keyWeightConfig;
-    private int                                        timeoutThreshold    = 100;
     private int                                        retryingTimes       = 4;
 
     private AppRule                                    appRule;
@@ -172,6 +168,7 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             throw new ZdalClientException("ERROR ## the datasource parameter is empty");
         }
         this.dbType = zdalConfig.getDbType();
+        this.dbConfigType = zdalConfig.getDataSourceConfigType();
 
         for (Entry<String, DataSourceParameter> entry : zdalConfig.getDataSourceParameters()
             .entrySet()) {
@@ -184,26 +181,30 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                                               + " dataSource failured", e);
             }
         }
-        if (dbConfigType == DataSourceConfigType.SHARD_FAILOVER) {
+        if (dbConfigType.isShard()) {
             this.dataSourcePoolConfig = getFailoverDataSourcePoolConfig(zdalConfig
-                .getMasterLogicPhysicsDsNames(), zdalConfig.getFailoverLogicPhysicsDsNames());
-            this.keyWeightConfig = this.getFailoverRules(zdalConfig.getMasterLogicPhysicsDsNames(),
-                zdalConfig.getFailoverLogicPhysicsDsNames());
-            appRule = zdalConfig.getAppRootRule();
+                .getLogicPhysicsDsNames());//建立逻辑和物理的对应关系.
+            this.appRule = zdalConfig.getAppRootRule();
+            initForAppRule(appRule);
+        } else if (dbConfigType.isShardFailover()) {
+            this.dataSourcePoolConfig = getFailoverDataSourcePoolConfig(zdalConfig
+                .getLogicPhysicsDsNames());//建立逻辑和物理的对应关系.
+            this.keyWeightConfig = zdalConfig.getFailoverRules();
+            this.appRule = zdalConfig.getAppRootRule();
             initForAppRule(appRule);
             CONFIG_LOGGER.warn("WARN ## the shardFailoverWeight of " + appDsName + " is :"
                                + getReceivDataStr(keyWeightConfig));
-        } else if (dbConfigType == DataSourceConfigType.SHARD_GROUP) {
-            this.rwDataSourcePoolConfig = zdalConfig.getReadWriteRules();
-            appRule = zdalConfig.getAppRootRule();
+        } else if (dbConfigType.isShardGroup()) {
+            this.rwDataSourcePoolConfig = zdalConfig.getGroupRules();
+            this.appRule = zdalConfig.getAppRootRule();
             initForAppRule(appRule);
             CONFIG_LOGGER.warn("WARN ## the shardRWWeight of " + appDsName + " is :"
-                               + getReceivDataStr(zdalConfig.getReadWriteRules()));
-        } else if (dbConfigType == DataSourceConfigType.GROUP) {
-            this.rwDataSourcePoolConfig = zdalConfig.getReadWriteRules();
+                               + getReceivDataStr(zdalConfig.getGroupRules()));
+        } else if (dbConfigType.isGroup()) {
+            this.rwDataSourcePoolConfig = zdalConfig.getGroupRules();
             this.initForLoadBalance(zdalConfig.getDbType());
             CONFIG_LOGGER.warn("WARN ## the RWWeight of " + appDsName + " is :"
-                               + getReceivDataStr(zdalConfig.getReadWriteRules()));
+                               + getReceivDataStr(zdalConfig.getGroupRules()));
         }
 
         this.initConfigListener();
@@ -220,56 +221,19 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         Map<String, DBSelector> dsSelectors = this.buildRwDbSelectors(this.rwDataSourcePoolConfig);
         this.runtimeConfigHolder.set(new ZdalRuntime(dsSelectors));
         this.setDbTypeForDBSelector(dbType);
-        Monitor.setAppName(appName);
     }
 
     /**
-     * 获取failover的 主库和failover库的映射规则
-     * 
-     * @param masterDBMap
-     *            主库的逻辑库和物理库的映射关系
-     * @param failoverDBMap
-     *            failover库的逻辑库和物理库的映射关系
-     * @return 主库和failover库的分组关系
+     * 建立failover的逻辑数据源与物理数据源的对应关系.
+     * @param logicPhysicsDsNames
+     * @return
      */
-    private Map<String, String> getFailoverRules(Map<String, String> masterDBMap,
-                                                 Map<String, String> failoverDBMap) {
-        // 验证
-        int masterDBSize = masterDBMap.size();
-        int failoverDBSize = failoverDBMap.size();
-        if (masterDBSize == 0 || failoverDBSize == 0) {
-            return null;
-        }
-        Map<String, String> keyWeightMapConfig = new HashMap<String, String>();
-        // int lenth = 2;
-        for (int i = 0; i < masterDBSize; i++) {
-            // String key = StringUtil.alignRight(String.valueOf(i), lenth,
-            // '0');
-            String key = TableSuffixGenerator.getTableSuffix(i, masterDBSize);
-            String masterKey = FailoverDBRuleKey.MASTER_KEY.getValue() + key;
-            String failoverKey = FailoverDBRuleKey.FAILOVER_KEY.getValue() + key;
-            if (masterDBMap.get(masterKey) == null || failoverDBMap.get(failoverKey) == null) {
-                throw new IllegalArgumentException("The datasource map configure error!masterKey:"
-                                                   + masterKey + ",failoverKey:" + failoverKey);
-            }
-            String value = masterKey + ":10," + failoverKey + ":0";
-            keyWeightMapConfig.put(Constants.DBINDEX_DS_GROUP_KEY_PREFIX + key, value);
-        }
-        return keyWeightMapConfig;
-    }
-
     private Map<String, DataSource> getFailoverDataSourcePoolConfig(
-                                                                    Map<String, String> masterDBMap,
-                                                                    Map<String, String> failoverDBMap) {
+                                                                    Map<String, String> logicPhysicsDsNames) {
         Map<String, DataSource> logicDataSourcesMap = new HashMap<String, DataSource>();
-        for (Map.Entry<String, String> mEntry : masterDBMap.entrySet()) {
+        for (Map.Entry<String, String> mEntry : logicPhysicsDsNames.entrySet()) {
             String key = mEntry.getKey().trim();
             String value = mEntry.getValue().trim();
-            logicDataSourcesMap.put(key, dataSourcesMap.get(value));
-        }
-        for (Map.Entry<String, String> fEntry : failoverDBMap.entrySet()) {
-            String key = fEntry.getKey().trim();
-            String value = fEntry.getValue().trim();
             logicDataSourcesMap.put(key, dataSourcesMap.get(value));
         }
         return logicDataSourcesMap;
@@ -294,7 +258,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                 new ZdalDataSourceKeyWeightRumtime(keyWeightMapConfig));
         }
         this.initForDispatcher(appRule);
-        Monitor.setAppName(appName);
     }
 
     private void initForDispatcher(AppRule appRule) {
@@ -610,7 +573,7 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             } else if (e.getValue() instanceof DBSelector) {
                 dsSelectors.put(rdbIndex, (DBSelector) e.getValue());
                 dsSelectors.put(wdbIndex, (DBSelector) e.getValue());
-            } else if (e.getValue() instanceof String) {
+            } else if (e.getValue() instanceof String) {//只有这个String类型的有效.
                 parse(dsSelectors, e.getKey(), (String) e.getValue());
             }
             dsSelectors.get(rdbIndex).setDbType(this.dbType);
@@ -669,8 +632,8 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             // 对于每个DataSource和权重
             String dsKey = dbIndex + Constants.DBINDEX_DSKEY_CONN_CHAR + i;
             String[] beanIdAndWeight = databaseSources[i].split(":"); // dbs[i]=slaver_db3_a:R10W10
-            DataSource dataSource = (DataSource) this
-                .getDataSourceObject(beanIdAndWeight[0].trim());
+            DataSource dataSource = (DataSource) this.getDataSourceObject(super.getZdalConfig()
+                .getLogicPhysicsDsNames().get(beanIdAndWeight[0].trim()));//逻辑到物理的映射
             int[] weightRWPQ = parseWeightRW(beanIdAndWeight.length == 2 ? beanIdAndWeight[1]
                 : null);
 
@@ -699,8 +662,9 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             Map<String, Integer> rWeights = weightGroups.values().toArray(new Map[1])[0];
             EquityDbManager equityDbManager = new EquityDbManager(dbIndex, rInitDataSources,
                 rWeights);
-            if (dbType != null)
+            if (dbType != null) {
                 equityDbManager.setDbType(dbType);
+            }
             equityDbManager.setAppDsName(appDsName);
             dsSelectors.put(dbIndex, equityDbManager);
         } else {
@@ -734,7 +698,8 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         if (dbs.length == 1) {
             int index = dbs[0].indexOf(":");
             String dsbeanId = index == -1 ? dbs[0] : dbs[0].substring(0, index);// 单个DS去除不必要的权重
-            DataSource ds = this.getDataSourceObject(dsbeanId.trim());
+            DataSource ds = this.getDataSourceObject(super.getZdalConfig().getLogicPhysicsDsNames()
+                .get(dsbeanId.trim()));//逻辑到物理的映射
             OneDBSelector selectorRead = new OneDBSelector(rdbIndex, ds);
             selectorRead.setAppDsName(appDsName);
             OneDBSelector selectorWrite = new OneDBSelector(wdbIndex, ds);
@@ -1008,6 +973,8 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             dsDo.setExceptionSorterClassName(MySQLExceptionSorter.class.getName());
         } else if (dbType.isOracle()) {
             dsDo.setExceptionSorterClassName(OracleExceptionSorter.class.getName());
+        } else if (dbType.isDB2()) {
+            dsDo.setExceptionSorterClassName(DB2ExceptionSorter.class.getName());
         } else {
             throw new ZdalClientException("ERROR ## the DbType must be mysql/oracle.");
         }
@@ -1053,7 +1020,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         connection.setDataSourcePool(rt == null ? null : rt.dbSelectors);
         connection.setWriteDispatcher(this.writeDispatcher);
         connection.setReadDispatcher(this.readDispatcher);
-        connection.setTimeoutThreshold(this.timeoutThreshold);
         connection.setRetryingTimes(this.retryingTimes);
         connection.setDbConfigType(this.dbConfigType);
         connection.setAppDsName(appDsName);
@@ -1105,10 +1071,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         return keyWeightMapConfig;
     }
 
-    public void setKeyWeightMapConfig(Map<String, ZdalDataSourceKeyWeightRandom> keyWeightMapConfig) {
-        this.keyWeightMapConfig = keyWeightMapConfig;
-    }
-
     public RuntimeConfigHolder<ZdalRuntime> getRuntimeConfigHolder() {
         return runtimeConfigHolder;
     }
@@ -1151,18 +1113,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
 
     public Map<String, ? extends Object> getDataSourcePoolConfig() {
         return dataSourcePoolConfig;
-    }
-
-    public void setDataSourcePoolConfig(Map<String, ? extends Object> dataSourcePoolConfig) {
-        this.dataSourcePoolConfig = dataSourcePoolConfig;
-    }
-
-    public void setRwDataSourcePoolConfig(Map<String, ? extends Object> rwDataSourcePoolConfig) {
-        this.rwDataSourcePoolConfig = rwDataSourcePoolConfig;
-    }
-
-    public void setAppRule(AppRule appRule) {
-        this.appRule = appRule;
     }
 
     public DBType getDbType() {

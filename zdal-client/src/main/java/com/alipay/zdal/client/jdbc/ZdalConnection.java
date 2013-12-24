@@ -62,8 +62,6 @@ public class ZdalConnection implements Connection {
     private boolean                              txStart;
     private String                               txTarget;
 
-    private long                                 timeoutThreshold;
-
     // TConnection对象创建的所有TStatement对象，包括TPreparedStatement对象
     private Set<ZdalStatement>                   openStatements               = new HashSet<ZdalStatement>();
 
@@ -128,7 +126,6 @@ public class ZdalConnection implements Connection {
         //stmt.setRuleController(ruleController);
         stmt.setAutoCommit(autoCommit);
         stmt.setReadOnly(readOnly);
-        stmt.setTimeoutThreshold(timeoutThreshold);
         stmt.setConnectionProxy(this);
         stmt.setEnableProfileRealDBAndTables(enableProfileRealDBAndTables);
         stmt.setRetryingTimes(retryingTimes);
@@ -165,7 +162,6 @@ public class ZdalConnection implements Connection {
         stmt.setDataSourcePool(dbSelectors);
         stmt.setAutoCommit(autoCommit);
         stmt.setReadOnly(readOnly);
-        stmt.setTimeoutThreshold(timeoutThreshold);
         stmt.setConnectionProxy(this);
         stmt.setSql(sql);
         stmt.setEnableProfileRealDBAndTables(enableProfileRealDBAndTables);
@@ -516,10 +512,6 @@ public class ZdalConnection implements Connection {
 
     public void setTxTarget(String txTarget) {
         this.txTarget = txTarget;
-    }
-
-    public void setTimeoutThreshold(long timeoutThreshold) {
-        this.timeoutThreshold = timeoutThreshold;
     }
 
     public void setWriteDispatcher(SqlDispatcher writeDispatcher) {

@@ -313,10 +313,10 @@ public class ZdalV3Utils {
                     logDsNameList.add(dsEntry.getKey());
                 }
             }
-            if (null != configSet.getValue().getMasterLogicPhysicsDsNames()
-                && !configSet.getValue().getMasterLogicPhysicsDsNames().isEmpty()) {
+            if (null != configSet.getValue().getLogicPhysicsDsNames()
+                && !configSet.getValue().getLogicPhysicsDsNames().isEmpty()) {
                 for (Entry<String, String> dsEntry : configSet.getValue()
-                    .getMasterLogicPhysicsDsNames().entrySet()) {
+                    .getLogicPhysicsDsNames().entrySet()) {
                     logDsNameList = masterLogicPhysicsDsNameMap.get(dsEntry.getValue());
                     if (null == logDsNameList) {
                         logDsNameList = new ArrayList<String>();
@@ -499,24 +499,24 @@ public class ZdalV3Utils {
         }
         if (zdalConfig.getDataSourceConfigType() == DataSourceConfigType.SHARD_FAILOVER) {
             zdalDataSource.setDataSourcePoolConfig(getFailoverDataSourcePoolConfig(zdalDataSource,
-                zdalConfig.getMasterLogicPhysicsDsNames(),
+                zdalConfig.getLogicPhysicsDsNames(),
                 zdalConfig.getFailoverLogicPhysicsDsNames()));
             if (zdalDataSource.getKeyWeightConfig() == null || zdalDataSource.getKeyWeightConfig().isEmpty()) {
                 zdalDataSource.setKeyWeightConfig(getFailoverRules(
-                    zdalConfig.getMasterLogicPhysicsDsNames(),
+                    zdalConfig.getLogicPhysicsDsNames(),
                     zdalConfig.getFailoverLogicPhysicsDsNames()));
             } 
             zdalDataSource.setAppRule(getAppRule(zdalDataSource, zdalConfig.getDbType(),
                 convertTableRule(zdalDataSource, zdalConfig.getShardTableRules()), false));
         } else if (zdalConfig.getDataSourceConfigType() == DataSourceConfigType.SHARD_GROUP) {
-            zdalDataSource.setRwDataSourcePoolConfig(zdalConfig.getReadWriteRules());
+            zdalDataSource.setRwDataSourcePoolConfig(zdalConfig.getGroupRules());
             zdalDataSource.setAppRule(getAppRule(zdalDataSource, zdalConfig.getDbType(),
                 convertTableRule(zdalDataSource, zdalConfig.getShardTableRules()), false));
             if (zdalConfig.isDocument()) {
                 DocumentShardingRule.setHotspot(zdalConfig.getHotspots());
             }
         } else if (zdalConfig.getDataSourceConfigType() == DataSourceConfigType.GROUP) {
-            zdalDataSource.setRwDataSourcePoolConfig(zdalConfig.getReadWriteRules());
+            zdalDataSource.setRwDataSourcePoolConfig(zdalConfig.getGroupRules());
             
         } else {
             throw new ZdalClientException("ERROR ## the dbConfigType is invalidate");

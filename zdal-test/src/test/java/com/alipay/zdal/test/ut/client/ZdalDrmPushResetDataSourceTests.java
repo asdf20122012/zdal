@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
-import com.alipay.zdal.client.config.drm.ZdalDrmPushListener;
-import com.alipay.zdal.client.config.drm.ZdalSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalDrmPushListener;
+import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
 import com.alipay.zdal.client.scalable.DataSourceBindingChangeException;
 import com.alipay.zdal.common.DBType;

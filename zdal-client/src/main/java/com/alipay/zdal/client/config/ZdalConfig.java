@@ -22,22 +22,18 @@ public class ZdalConfig {
 
     private String                           dbmode;
 
-    private DBType                           dbType                      = DBType.MYSQL;
+    private DBType                           dbType               = DBType.MYSQL;
 
     /** key=dsName;value=DataSourceParameter 第一次初始化时的所有物理数据源的配置项 */
-    private Map<String, DataSourceParameter> dataSourceParameters        = new ConcurrentHashMap<String, DataSourceParameter>();
+    private Map<String, DataSourceParameter> dataSourceParameters = new ConcurrentHashMap<String, DataSourceParameter>();
 
-    /**key=logicTableName ; value=TableRule  表的分库规则*/
-    private Map<String, ShardTableRule>      shardTableRules             = new ConcurrentHashMap<String, ShardTableRule>();
-
-    /** 主库逻辑数据源和物理数据源的对应关系:key=logicDsName,value=physicDsName */
-    private Map<String, String>              masterLogicPhysicsDsNames   = new ConcurrentHashMap<String, String>();
-
-    /** failover库逻辑数据源和物理数据源的对应关系:key=logicDsName,value=physicDsName */
-    private Map<String, String>              failoverLogicPhysicsDsNames = new ConcurrentHashMap<String, String>();
+    /** 逻辑数据源和物理数据源的对应关系:key=logicDsName,value=physicDsName */
+    private Map<String, String>              logicPhysicsDsNames  = new ConcurrentHashMap<String, String>();
 
     /** key=dsName;value=readwriteRule */
-    private Map<String, String>              readWriteRules              = new ConcurrentHashMap<String, String>();
+    private Map<String, String>              groupRules           = new ConcurrentHashMap<String, String>();
+
+    private Map<String, String>              failoverRules        = new ConcurrentHashMap<String, String>();
 
     private AppRule                          appRootRule;
 
@@ -51,21 +47,12 @@ public class ZdalConfig {
         this.dataSourceParameters = dataSources;
     }
 
-    public Map<String, ShardTableRule> getShardTableRules() {
-
-        return shardTableRules;
+    public Map<String, String> getGroupRules() {
+        return groupRules;
     }
 
-    public void setShardTableRules(Map<String, ShardTableRule> shardTableRules) {
-        this.shardTableRules = shardTableRules;
-    }
-
-    public Map<String, String> getReadWriteRules() {
-        return readWriteRules;
-    }
-
-    public void setReadWriteRules(Map<String, String> readWriteRules) {
-        this.readWriteRules = readWriteRules;
+    public void setGroupRules(Map<String, String> readWriteRules) {
+        this.groupRules = readWriteRules;
     }
 
     public DBType getDbType() {
@@ -100,20 +87,12 @@ public class ZdalConfig {
         this.dbmode = dbmode;
     }
 
-    public Map<String, String> getMasterLogicPhysicsDsNames() {
-        return masterLogicPhysicsDsNames;
+    public Map<String, String> getLogicPhysicsDsNames() {
+        return logicPhysicsDsNames;
     }
 
-    public void setMasterLogicPhysicsDsNames(Map<String, String> logicPhysicsDsNames) {
-        this.masterLogicPhysicsDsNames = logicPhysicsDsNames;
-    }
-
-    public Map<String, String> getFailoverLogicPhysicsDsNames() {
-        return failoverLogicPhysicsDsNames;
-    }
-
-    public void setFailoverLogicPhysicsDsNames(Map<String, String> failoverLogicPhysicsDsNames) {
-        this.failoverLogicPhysicsDsNames = failoverLogicPhysicsDsNames;
+    public void setLogicPhysicsDsNames(Map<String, String> logicPhysicsDsNames) {
+        this.logicPhysicsDsNames = logicPhysicsDsNames;
     }
 
     public AppRule getAppRootRule() {
@@ -130,6 +109,14 @@ public class ZdalConfig {
 
     public void setDataSourceConfigType(DataSourceConfigType dataSourceConfigType) {
         this.dataSourceConfigType = dataSourceConfigType;
+    }
+
+    public Map<String, String> getFailoverRules() {
+        return failoverRules;
+    }
+
+    public void setFailoverRules(Map<String, String> failoverRules) {
+        this.failoverRules = failoverRules;
     }
 
 }

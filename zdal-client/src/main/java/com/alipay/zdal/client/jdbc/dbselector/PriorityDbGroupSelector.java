@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
 import com.alipay.zdal.common.WeightRandom;
-import com.alipay.zdal.common.operationDBType;
+import com.alipay.zdal.common.OperationDBType;
 import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
 
 
@@ -139,7 +139,7 @@ public class PriorityDbGroupSelector extends AbstractDBSelector {
     }
 
     //默认读写库都可以进行重试
-    public boolean isSupportRetry(operationDBType type) {
+    public boolean isSupportRetry(OperationDBType type) {
         return true;
     }
 

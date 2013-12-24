@@ -1,4 +1,4 @@
-package com.alipay.zdal.client.config.drm;
+package com.alipay.zdal.client.config.controller;
 
 import java.util.HashMap;
 import java.util.Map;

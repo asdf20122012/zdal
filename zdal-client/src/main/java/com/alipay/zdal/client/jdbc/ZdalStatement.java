@@ -1,17 +1,5 @@
 package com.alipay.zdal.client.jdbc;
 
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_A_SQL_EXCEPTION;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_A_SQL_SUCCESS;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_A_SQL_TIMEOUT;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_SUCCESS_DB;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_SUCCESS_ZDAL;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_TIMEOUT_DB;
-import static com.alipay.zdal.common.Monitor.KEY3_EXECUTE_TIMEOUT_ZDAL;
-import static com.alipay.zdal.common.Monitor.add;
-import static com.alipay.zdal.common.Monitor.buildExecuteDBAndTableKey1;
-import static com.alipay.zdal.common.Monitor.buildExecuteSqlKey2;
-import static com.alipay.zdal.common.Monitor.buildTableKey1;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -150,8 +138,6 @@ public class ZdalStatement implements Statement {
     protected Set<ResultSet>       openResultSets       = new HashSet<ResultSet>();
 
     protected List<Object>         batchedArgs;
-
-    private long                   timeoutThreshold;
 
     private long                   timeoutForEachTable  = DEFAULT_TIMEOUT_FOR_EACH_TABLE;
 
@@ -896,51 +882,6 @@ public class ZdalStatement implements Statement {
         return stmt;
     }
 
-    protected void profile(String virtualTableName, String sql, long elapsed4tddl, long elapsedTime) {
-        long elapsedTime4db = elapsedTime - elapsed4tddl;
-        if (elapsedTime > timeoutThreshold) {
-            //超时的情况下，分为总时间，tddl 耗费的，db 耗费的
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_A_SQL_TIMEOUT, elapsedTime, 1);
-            //记录tddl耗费时间
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_TIMEOUT_ZDAL, elapsed4tddl, 1);
-            //记录db耗费时间
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_TIMEOUT_DB, elapsedTime4db, 1);
-            //add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-            //   KEY3_EXECUTE_A_SQL_TIMEOUT_DBTAB, databaseSize, targetTablesSize);
-        } else {
-            //normal time consuming in Write or Read DB divide total time
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_A_SQL_SUCCESS, elapsedTime, 1);
-            //记录tddl耗费时间
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_SUCCESS_ZDAL, elapsed4tddl, 1);
-            //记录db耗费时间
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_SUCCESS_DB, elapsedTime4db, 1);
-            // add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-            //   KEY3_EXECUTE_A_SQL_SUCCESS_DBTAB, databaseSize, targetTablesSize);
-        }
-    }
-
-    /**
-     * 异常情况下的profile，只有当exception链不为空，并且内部也非空list的情况下才会输出。
-     * @param exceptions
-     * @param virtualTableName
-     * @param sql
-     * @param elapsedTime
-     */
-    protected void profileWithException(List<SQLException> exceptions, String virtualTableName,
-                                        String sql, long elapsedTime) {
-        if (exceptions != null && !exceptions.isEmpty()) {
-            add(buildTableKey1(virtualTableName), buildExecuteSqlKey2(sql),
-                KEY3_EXECUTE_A_SQL_EXCEPTION, elapsedTime, 1);
-        }
-
-    }
-
     public Connection getConnection() throws SQLException {
         return connectionProxy;
     }
@@ -1121,14 +1062,12 @@ public class ZdalStatement implements Statement {
 
     public ResultSet executeQuery(String sql) throws SQLException {
 
-        if (this.dbConfigType.equals(DataSourceConfigType.GROUP)) {
+        if (this.dbConfigType == DataSourceConfigType.GROUP) {
             SqlType sqlType = getSqlType(sql);
             return this.executeQuery0(sql, sqlType);
         }
 
         checkClosed();
-
-        long startTime = System.currentTimeMillis();
 
         SqlExecutionContext context = getExecutionContext(sql, null);
         /*
@@ -1140,7 +1079,6 @@ public class ZdalStatement implements Statement {
             this.results = emptyResultSet;
             return emptyResultSet;
         }
-        long elapsedTime4Tddl = System.currentTimeMillis() - startTime;
 
         //        int tablesSize = 0;
         dumpSql(sql, context.getTargetSqls());
@@ -1152,7 +1090,6 @@ public class ZdalStatement implements Statement {
             .entrySet()) {
             for (SqlAndTable targetSql : entry.getValue()) {
                 //                tablesSize++;
-                long start = System.currentTimeMillis();
                 try {
                     //RetringContext retringContext = context.getRetringContext();
                     String dbSelectorId = entry.getKey();
@@ -1163,15 +1100,10 @@ public class ZdalStatement implements Statement {
 
                     queryAndAddResultToCollection(dbSelectorId, actualResultSets, targetSql, stmt,
                         context.getFailedDataSources());
-                    //TODO:目前只能统计执行查询的时间，但实际时间应该是result关闭以后的时间，在rs重构时添加
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTables(entry.getKey(), targetSql, during);
 
                 } catch (SQLException e) {
 
                     //异常处理
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTablesWithException(entry.getKey(), targetSql, during);
                     if (exceptions == null) {
                         exceptions = new ArrayList<SQLException>();
                     }
@@ -1181,9 +1113,6 @@ public class ZdalStatement implements Statement {
             }
         }
 
-        long elapsedTime = System.currentTimeMillis() - startTime;
-
-        profileWithException(exceptions, context.getVirtualTableName(), sql, elapsedTime);
         ExceptionUtils.throwSQLException(exceptions, sql, Collections.emptyList());
 
         DummyTResultSet resultSet = mergeResultSets(context, actualResultSets);
@@ -1192,8 +1121,6 @@ public class ZdalStatement implements Statement {
         this.results = resultSet;
         this.moreResults = false;
         this.updateCount = -1;
-
-        profile(context.getVirtualTableName(), sql, elapsedTime4Tddl, elapsedTime);
 
         return this.results;
     }
@@ -1235,26 +1162,6 @@ public class ZdalStatement implements Statement {
             map.put(appDsName + "." + dbSelector.getSelectedDSName(), ds);
         }
         return map;
-    }
-
-    protected void profileRealDatabaseAndTablesWithException(String database,
-                                                             SqlAndTable targetSql, long during) {
-        if (enableProfileRealDBAndTables) {
-            add(buildExecuteDBAndTableKey1(database, targetSql.table),
-                buildExecuteSqlKey2(targetSql.sql), KEY3_EXECUTE_A_SQL_EXCEPTION, during, 1);
-        }
-    }
-
-    protected void profileRealDatabaseAndTables(String database, SqlAndTable targetSql, long during) {
-        if (enableProfileRealDBAndTables) {
-            if (during >= timeoutForEachTable) {
-                add(buildExecuteDBAndTableKey1(database, targetSql.table),
-                    buildExecuteSqlKey2(targetSql.sql), KEY3_EXECUTE_A_SQL_TIMEOUT, during, 1);
-            } else {
-                add(buildExecuteDBAndTableKey1(database, targetSql.table),
-                    buildExecuteSqlKey2(targetSql.sql), KEY3_EXECUTE_A_SQL_SUCCESS, during, 1);
-            }
-        }
     }
 
     protected DummyTResultSet mergeResultSets(SqlExecutionContext context,
@@ -1365,19 +1272,11 @@ public class ZdalStatement implements Statement {
                                       String[] columnNames) throws SQLException {
         checkClosed();
 
-        long startTime = System.currentTimeMillis();
-
         SqlExecutionContext context = getExecutionContext(sql, null);
 
         if (context.mappingRuleReturnNullValue()) {
             return 0;
         }
-
-        long elapsedTime4Tddl = System.currentTimeMillis() - startTime;
-
-        //        int tablesSize = 0;
-
-        //int databaseSize = context.getTargetSqls().size();
 
         dumpSql(sql, context.getTargetSqls());
 
@@ -1387,7 +1286,6 @@ public class ZdalStatement implements Statement {
         for (Entry<String, SqlAndTable[]> entry : context.getTargetSqls().entrySet()) {
             for (SqlAndTable targetSql : entry.getValue()) {
                 //                tablesSize++;
-                long start = System.currentTimeMillis();
                 try {
                     String dbSelectorId = entry.getKey();
                     Statement stmt = createStatementByDataSourceSelectorID(dbSelectorId, context
@@ -1409,11 +1307,7 @@ public class ZdalStatement implements Statement {
                         affectedRows += stmt.executeUpdate(targetSql.sql);
                     }
 
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTables(entry.getKey(), targetSql, during);
                 } catch (SQLException e) {
-                    long during = System.currentTimeMillis() - start;
-                    profileRealDatabaseAndTablesWithException(entry.getKey(), targetSql, during);
                     if (exceptions == null) {
                         exceptions = new ArrayList<SQLException>();
                     }
@@ -1422,17 +1316,11 @@ public class ZdalStatement implements Statement {
             }
         }
 
-        long elapsedTime = System.currentTimeMillis() - startTime;
-
         this.results = null;
         this.moreResults = false;
         this.updateCount = affectedRows;
 
-        profileWithException(exceptions, context.getVirtualTableName(), sql, elapsedTime);
-
         ExceptionUtils.throwSQLException(exceptions, sql, Collections.emptyList());
-
-        profile(context.getVirtualTableName(), sql, elapsedTime4Tddl, elapsedTime);
 
         return affectedRows;
     }
@@ -1580,7 +1468,7 @@ public class ZdalStatement implements Statement {
             Map<String/*数据源ID*/, List<String>/*数据源上执行的SQL*/> targetSqls = new HashMap<String, List<String>>();
 
             for (Object arg : batchedArgs) {
-                if (dbConfigType == DataSourceConfigType.GROUP) {
+                if (this.dbConfigType == DataSourceConfigType.GROUP) {
                     sortBatch0((String) arg, targetSqls);
                 } else {
                     sortBatch((String) arg, targetSqls);
@@ -1867,18 +1755,6 @@ public class ZdalStatement implements Statement {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
-
-    public void setTimeoutThreshold(long timeoutThreshold) {
-        this.timeoutThreshold = timeoutThreshold;
-    }
-
-    //	public void setWriteDispatcher(SqlDispatcher writeDispatcher) {
-    //		this.writeDispatcher = writeDispatcher;
-    //	}
-    //
-    //	public void setReadDispatcher(SqlDispatcher readDispatcher) {
-    //		this.readDispatcher = readDispatcher;
-    //	}
 
     public long getTimeoutForEachTable() {
         return timeoutForEachTable;

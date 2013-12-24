@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
 import com.alipay.zdal.client.util.ThreadLocalMap;
-import com.alipay.zdal.common.operationDBType;
+import com.alipay.zdal.common.OperationDBType;
 
 /**
  * 只有一个数据源的DBSelector
@@ -91,7 +91,7 @@ public class OneDBSelector extends AbstractDBSelector {
         }
     }
 
-    public boolean isSupportRetry(operationDBType type) {
+    public boolean isSupportRetry(OperationDBType type) {
         return false;
     }
 

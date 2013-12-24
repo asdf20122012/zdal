@@ -19,9 +19,9 @@ import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
 import com.alipay.zdal.client.util.ThreadLocalMap;
 import com.alipay.zdal.common.Constants;
+import com.alipay.zdal.common.OperationDBType;
 import com.alipay.zdal.common.RuntimeConfigHolder;
 import com.alipay.zdal.common.WeightRandom;
-import com.alipay.zdal.common.operationDBType;
 import com.alipay.zdal.common.lang.StringUtil;
 
 /**
@@ -63,9 +63,10 @@ public class EquityDbManager extends AbstractDBSelector {
          * @param dataSources
          * @return
          */
-        public Map<String, DataSourceHolder> getDataSourceHolders(Map<String, DataSource> dataSources) {
-            Map<String, DataSourceHolder> map = new HashMap<String, DataSourceHolder>(
-                dataSources.size());
+        public Map<String, DataSourceHolder> getDataSourceHolders(
+                                                                  Map<String, DataSource> dataSources) {
+            Map<String, DataSourceHolder> map = new HashMap<String, DataSourceHolder>(dataSources
+                .size());
             for (Map.Entry<String, DataSource> entry : dataSources.entrySet()) {
                 map.put(entry.getKey(), new DataSourceHolder(entry.getValue()));
 
@@ -196,36 +197,14 @@ public class EquityDbManager extends AbstractDBSelector {
         String name = null;
         //如果指定了某个读库
         Integer dbIndex = (Integer) ThreadLocalMap.get(ThreadLocalString.DATABASE_INDEX);
-        //如果进入重试阶段，如果指定写库读但不允许重试，则抛异常
-        String dataBaseReadOnly = (String) ThreadLocalMap
-            .get(ThreadLocalString.WRITE_DATABASE_READ_RETRY);
-        //判断线程变量是否存在，如果存在就获取该名字
-        String groupSqlDB = (String) ThreadLocalMap.get(ThreadLocalString.SET_GROUP_SQL_DATABASE);
 
         for (int i = 0; i < times; i++) {
-
-            if (i != 0 && StringUtil.isNotBlank(dataBaseReadOnly)) {
-                exceptions.add(new NoMoreDataSourceException("在指定写库读失败后，不允许重试到其他读库进行读！"));
-                break;
-            }
-
-            //如果是使用缓存的某个库
-            String dbNameUsedByGroupSQL = (String) ThreadLocalMap
-                .get(ThreadLocalString.DB_NAME_USED_BY_GROUP_SQL);
-            if (i == 0 && groupSqlDB != null && StringUtil.isNotBlank(dbNameUsedByGroupSQL)) {
-                name = dbNameUsedByGroupSQL;
-            } else if (i == 0 && dbIndex != null) {
+            if (i == 0 && dbIndex != null) {
                 //如果是指定了库读
                 name = this.getId() + Constants.DBINDEX_DSKEY_CONN_CHAR + dbIndex;
             } else {
                 //随机选库
                 name = wr.select(excludeKeys);
-                if (StringUtil.isNotBlank(groupSqlDB)) {
-                    ThreadLocalMap.put(ThreadLocalString.DB_NAME_USED_BY_GROUP_SQL, name);
-                } else {
-                    ThreadLocalMap.put(ThreadLocalString.SET_GROUP_SQL_DATABASE, null);
-                    ThreadLocalMap.put(ThreadLocalString.DB_NAME_USED_BY_GROUP_SQL, null);
-                }
             }
             if (name == null) {
                 exceptions.add(new NoMoreDataSourceException("在执行sql的过程中，没有可用数据源了！"));
@@ -248,7 +227,7 @@ public class EquityDbManager extends AbstractDBSelector {
             }
             if (failedDataSources != null && failedDataSources.containsKey(selectedDS.getDs())) {
                 excludeKeys.add(name);
-                if (dbIndex == null && groupSqlDB == null) {
+                if (dbIndex == null) {
                     i--;
                 }
                 continue;
@@ -298,8 +277,8 @@ public class EquityDbManager extends AbstractDBSelector {
             logger.warn("新权重的数据源名称个数小于原有数据源！");
             return false; //这种情况不被允许更安全一些
         }
-        Map<String, DataSource> dataSources = new HashMap<String, DataSource>(
-            dbrt.dataSources.size());
+        Map<String, DataSource> dataSources = new HashMap<String, DataSource>(dbrt.dataSources
+            .size());
         dataSources.putAll(dbrt.dataSources);
         DbRuntime newrt = new DbRuntime(dataSources, weightRandom);
         EquityDbManager.this.dbHolder.set(newrt);
@@ -309,10 +288,10 @@ public class EquityDbManager extends AbstractDBSelector {
     /*
      * 对等库默认不读重试，只有读库才进行读重试，写库不进行写重试；
      */
-    public boolean isSupportRetry(operationDBType type) {
+    public boolean isSupportRetry(OperationDBType type) {
         boolean flag = false;
         String dbSelectorId = getId();
-        if (dbSelectorId.endsWith("_r") || (type == operationDBType.readFromDb)) {
+        if (dbSelectorId.endsWith("_r") || (type == OperationDBType.readFromDb)) {
             flag = true;
         }
         return flag;

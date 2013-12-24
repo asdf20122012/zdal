@@ -12,7 +12,7 @@ import com.alipay.ats.annotation.Subject;
 import com.alipay.ats.assertion.TestAssertion;
 import com.alipay.ats.enums.PriorityLevel;
 import com.alipay.ats.junit.ATSJUnitRunner;
-import com.alipay.zdal.client.config.drm.ZdalLdcSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalLdcSignalResource;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
 import static com.alipay.ats.internal.domain.ATS.Step;
 

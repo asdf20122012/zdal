@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import com.alipay.sofa.service.api.drm.DRMClient;
 import com.alipay.zdal.client.config.ZdalConfigListener;
-import com.alipay.zdal.client.config.drm.ZdalLdcSignalResource;
-import com.alipay.zdal.client.config.drm.ZdalSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalLdcSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.client.scalable.DataSourceBindingChangeException;
 import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.lang.StringUtil;

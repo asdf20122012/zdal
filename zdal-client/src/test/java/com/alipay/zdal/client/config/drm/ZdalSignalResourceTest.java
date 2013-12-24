@@ -11,6 +11,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.alipay.zdal.client.config.ZdalConfigListener;
+import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.common.DBType;
 
 /**

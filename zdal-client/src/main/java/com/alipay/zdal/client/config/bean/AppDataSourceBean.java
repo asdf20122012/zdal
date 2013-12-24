@@ -7,8 +7,10 @@ package com.alipay.zdal.client.config.bean;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.util.Assert;
+import org.springframework.beans.factory.InitializingBean;
 
+import com.alipay.zdal.client.config.DataSourceConfigType;
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.rule.config.beans.AppRule;
 
@@ -17,23 +19,34 @@ import com.alipay.zdal.rule.config.beans.AppRule;
  * @author <a href="mailto:xiang.yangx@alipay.com">Yang Xiang</a>
  *
  */
-public class AppDataSourceBean extends DataSourceBean {
+public class AppDataSourceBean implements InitializingBean {
 
-    private String              appDataSourceName;
-    private String              dataBaseType;
-    private String              configType;
-    private String              zoneError;
-    private Set<String>         zoneDSSet;
+    /** 数据源名称 */
+    private String                      appDataSourceName;
 
-    private Map<String, String> groupDataSourceRuleMap;
+    /** 数据库类型 */
+    private String                      dataBaseType;
 
-    private Map<String, String> failOverGroupRuleMap;
+    /** 配置转化后的的dbtype. */
+    private DBType                      dbType;
 
-    private String              ruleBeanId;
+    /** 数据源配置类型 */
+    private String                      configType;
 
-    private AppRule             appRule;
+    /** 配置转化后的dataSourceConfigType. */
+    private DataSourceConfigType        dataSourceConfigType;
 
-    private boolean             diffMasterSlaveRule;
+    /** 物理数据源列表. */
+    private Set<PhysicalDataSourceBean> physicalDataSourceSet;
+
+    /** shard+group类型中的group分组定义. */
+    private Map<String, String>         groupDataSourceRuleMap;
+
+    /** shard+failover类型中的group分组定义. */
+    private Map<String, String>         failOverGroupRuleMap;
+
+    /**  分库分表的规则.*/
+    private AppRule                     appRule;
 
     /**
      * @return the appRule
@@ -47,20 +60,6 @@ public class AppDataSourceBean extends DataSourceBean {
      */
     public void setAppRule(AppRule appRule) {
         this.appRule = appRule;
-    }
-
-    /**
-     * @return the ruleBeanId
-     */
-    public String getRuleBeanId() {
-        return ruleBeanId;
-    }
-
-    /**
-     * @param ruleBeanId the ruleBeanId to set
-     */
-    public void setRuleBeanId(String ruleBeanId) {
-        this.ruleBeanId = ruleBeanId;
     }
 
     public String getAppDataSourceName() {
@@ -85,22 +84,6 @@ public class AppDataSourceBean extends DataSourceBean {
 
     public void setConfigType(String configType) {
         this.configType = configType;
-    }
-
-    public String getZoneError() {
-        return zoneError;
-    }
-
-    public void setZoneError(String zoneError) {
-        this.zoneError = zoneError;
-    }
-
-    public Set<String> getZoneDSSet() {
-        return zoneDSSet;
-    }
-
-    public void setZoneDSSet(Set<String> zoneDSs) {
-        this.zoneDSSet = zoneDSs;
     }
 
     /**
@@ -131,18 +114,105 @@ public class AppDataSourceBean extends DataSourceBean {
         this.failOverGroupRuleMap = failOverGroupRuleMap;
     }
 
-    public boolean isDiffMasterSlaveRule() {
-        return diffMasterSlaveRule;
+    public Set<PhysicalDataSourceBean> getPhysicalDataSourceSet() {
+        return physicalDataSourceSet;
     }
 
-    public void setDiffMasterSlaveRule(boolean diffMasterSlaveRule) {
-        this.diffMasterSlaveRule = diffMasterSlaveRule;
+    public void setPhysicalDataSourceSet(Set<PhysicalDataSourceBean> physicalDataSourceSet) {
+        this.physicalDataSourceSet = physicalDataSourceSet;
+    }
+
+    public DBType getDbType() {
+        return dbType;
+    }
+
+    public void setDbType(DBType dbType) {
+        this.dbType = dbType;
+    }
+
+    public DataSourceConfigType getDataSourceConfigType() {
+        return dataSourceConfigType;
+    }
+
+    public void setDataSourceConfigType(DataSourceConfigType dataSourceConfigType) {
+        this.dataSourceConfigType = dataSourceConfigType;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((appDataSourceName == null) ? 0 : appDataSourceName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AppDataSourceBean other = (AppDataSourceBean) obj;
+        if (appDataSourceName == null) {
+            if (other.appDataSourceName != null)
+                return false;
+        } else if (!appDataSourceName.equals(other.appDataSourceName))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "AppDataSourceBean [appDataSourceName=" + appDataSourceName + ", appRule=" + appRule
+               + ", configType=" + configType + ", dataBaseType=" + dataBaseType
+               + ", dataSourceConfigType=" + dataSourceConfigType + ", dbType=" + dbType
+               + ", failOverGroupRuleMap=" + failOverGroupRuleMap + ", groupDataSourceRuleMap="
+               + groupDataSourceRuleMap + ", physicalDataSourceSet=" + physicalDataSourceSet + "]";
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.isTrue(!StringUtil.isEmpty(appDataSourceName));
-        Assert.isTrue(!StringUtil.isEmpty(configType));
+        if (StringUtil.isBlank(appDataSourceName)) {
+            throw new IllegalArgumentException("ERROR ## the appDataSourceName is null");
+        }
+
+        if (StringUtil.isBlank(dataBaseType)) {
+            throw new IllegalArgumentException("ERROR ## the dataBaseType is null");
+        }
+        this.dbType = DBType.convert(dataBaseType);
+
+        if (StringUtil.isBlank(configType)) {
+            throw new IllegalArgumentException("ERROR ## the configType is null");
+        }
+        this.dataSourceConfigType = DataSourceConfigType.typeOf(configType);
+
+        if (physicalDataSourceSet == null || physicalDataSourceSet.isEmpty()) {
+            throw new IllegalArgumentException("ERROR ## the physicalDataSourceSet is empty");
+        }
+
+        if (this.dataSourceConfigType.isShardGroup()) {
+            if (groupDataSourceRuleMap == null || groupDataSourceRuleMap.isEmpty()) {
+                throw new IllegalArgumentException(
+                    "ERROR ## the dataSourceConfigType is Shard_Group,must have groupDataSourceRuleMap properties");
+            }
+        }
+
+        if (this.dataSourceConfigType.isShardFailover()) {
+            if (failOverGroupRuleMap == null || failOverGroupRuleMap.isEmpty()) {
+                throw new IllegalArgumentException(
+                    "ERROR ## the dataSourceConfigType is Shard_failover,must have failOverGroupRuleMap properties");
+            }
+        }
+
+        if (this.dataSourceConfigType.isShard() || this.dataSourceConfigType.isShardFailover()
+            || this.dataSourceConfigType.isShardGroup()) {
+            if (appRule == null) {
+                throw new IllegalArgumentException(
+                    "ERROR ## the dataSourceConfigType is Shard,Shard_group,shard_failover must have sharding rule of AppRule properties");
+            }
+        }
     }
 
 }

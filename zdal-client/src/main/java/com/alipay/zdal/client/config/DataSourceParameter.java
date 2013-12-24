@@ -15,11 +15,11 @@ import com.alipay.zdal.client.config.bean.PhysicalDataSourceBean;
  */
 public class DataSourceParameter {
 
-    private String              jdbcUrl     = "";
+    private String              jdbcUrl               = "";
 
-    private String              userName    = "";
+    private String              userName              = "";
 
-    private String              password    = "";
+    private String              password              = "";
 
     /** 连接池中活动的最小连接数 */
     private int                 minConn;
@@ -28,24 +28,15 @@ public class DataSourceParameter {
 
     private int                 maxConn;
 
-    private String              driverClass = "";
+    private String              driverClass           = "";
 
-    private int                 blockingTimeoutMillis;
+    private int                 blockingTimeoutMillis = 180;
 
-    private int                 idleTimeoutMinutes;
+    private int                 idleTimeoutMinutes    = 30;
 
     private int                 preparedStatementCacheSize;
 
-    private int                 queryTimeout;
-
-    /** 1000,10 10秒内通过1000条sql*/
-    private String              sqlValve;
-
-    /** 1000,10 10秒内通过1000个事务*/
-    private String              transactionValve;
-
-    /** table1,100,60;table2,10,1  table1在60秒内通过100个sql，table2在1秒内通过1个sql */
-    private String              tableValve;
+    private int                 queryTimeout          = 30;
 
     private boolean             prefill;
 
@@ -137,30 +128,6 @@ public class DataSourceParameter {
 
     public void setQueryTimeout(int queryTimeout) {
         this.queryTimeout = queryTimeout;
-    }
-
-    public String getSqlValve() {
-        return sqlValve;
-    }
-
-    public void setSqlValve(String sqlValve) {
-        this.sqlValve = sqlValve;
-    }
-
-    public String getTransactionValve() {
-        return transactionValve;
-    }
-
-    public void setTransactionValve(String transactionValve) {
-        this.transactionValve = transactionValve;
-    }
-
-    public String getTableValve() {
-        return tableValve;
-    }
-
-    public void setTableValve(String tableValve) {
-        this.tableValve = tableValve;
     }
 
     public static DataSourceParameter valueOf(PhysicalDataSourceBean bean) {

@@ -8,7 +8,7 @@ import com.alipay.ats.annotation.Subject;
 import com.alipay.ats.assertion.TestAssertion;
 import com.alipay.ats.enums.PriorityLevel;
 import com.alipay.ats.junit.ATSJUnitRunner;
-import com.alipay.zdal.client.config.drm.ZdalSignalResource;
+import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
 import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.jdbc.sorter.MySQLExceptionSorter;

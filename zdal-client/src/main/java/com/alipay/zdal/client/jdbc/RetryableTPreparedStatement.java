@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
-import com.alipay.zdal.common.operationDBType;
+import com.alipay.zdal.common.OperationDBType;
 
 public class RetryableTPreparedStatement extends ZdalPreparedStatement {
     private static final Log logger = LogFactory.getLog(RetryableTPreparedStatement.class);
@@ -52,7 +52,7 @@ public class RetryableTPreparedStatement extends ZdalPreparedStatement {
         } catch (SQLException e) {
             logger.warn("tddl欲进入读重试状态，重复执行executeQueryAndAddIntoCollection()方法, targetSql="
                         + targetSql, e);
-            validRetryable(dbSelectorId, e, operationDBType.readFromDb);
+            validRetryable(dbSelectorId, e, OperationDBType.readFromDb);
             if (failedDataSources != null) {
                 ConnectionAndDatasource connectionAndDatasource = getConnectionProxy()
                     .getConnectionAndDatasourceByDBSelectorID(dbSelectorId);

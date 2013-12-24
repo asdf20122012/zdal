@@ -4,10 +4,11 @@
  */
 package com.alipay.zdal.client.config.bean;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Assert;
 
 import com.alipay.zdal.common.lang.StringUtil;
 
@@ -17,11 +18,13 @@ import com.alipay.zdal.common.lang.StringUtil;
  */
 public class ZdalAppBean implements InitializingBean {
 
+    /** 应用名称. */
     private String                  appName;
 
+    /**数据库环境.  */
     private String                  dbmode;
-    private String                  idcName;
 
+    /** 数据源列表. */
     private List<AppDataSourceBean> appDataSourceList;
 
     public String getAppName() {
@@ -40,14 +43,6 @@ public class ZdalAppBean implements InitializingBean {
         this.dbmode = dbmode;
     }
 
-    public String getIdcName() {
-        return idcName;
-    }
-
-    public void setIdcName(String idcName) {
-        this.idcName = idcName;
-    }
-
     public List<AppDataSourceBean> getAppDataSourceList() {
         return appDataSourceList;
     }
@@ -61,9 +56,65 @@ public class ZdalAppBean implements InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.isTrue(null != appName && !appName.equals(""));
-        Assert.isTrue(!StringUtil.isEmpty(dbmode));
-        Assert.isTrue(!StringUtil.isEmpty(dbmode));
+        if (StringUtil.isBlank(appName)) {
+            throw new IllegalArgumentException("ERROR ## the appName is null");
+        }
+        if (StringUtil.isBlank(dbmode)) {
+            throw new IllegalArgumentException("ERROR ## the dbmode is null");
+        }
+        if (appDataSourceList == null || appDataSourceList.isEmpty()) {
+            throw new IllegalArgumentException("ERROR ## the appDataSource is empty");
+        } else {
+            //校验是否有同名的appDataSourceName,借助于AppDataSourceBean.equeals,hashcode.
+            Set<AppDataSourceBean> tmp = new HashSet<AppDataSourceBean>(appDataSourceList);
+            if (tmp.size() != appDataSourceList.size()) {
+                throw new IllegalArgumentException(
+                    "ERROR ## the appDataSourceList has same appDataSourceName");
+            }
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((appDataSourceList == null) ? 0 : appDataSourceList.hashCode());
+        result = prime * result + ((appName == null) ? 0 : appName.hashCode());
+        result = prime * result + ((dbmode == null) ? 0 : dbmode.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ZdalAppBean other = (ZdalAppBean) obj;
+        if (appDataSourceList == null) {
+            if (other.appDataSourceList != null)
+                return false;
+        } else if (!appDataSourceList.equals(other.appDataSourceList))
+            return false;
+        if (appName == null) {
+            if (other.appName != null)
+                return false;
+        } else if (!appName.equals(other.appName))
+            return false;
+        if (dbmode == null) {
+            if (other.dbmode != null)
+                return false;
+        } else if (!dbmode.equals(other.dbmode))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ZdalAppBean [appDataSourceList=" + appDataSourceList + ", appName=" + appName
+               + ", dbmode=" + dbmode + "]";
     }
 
 }
