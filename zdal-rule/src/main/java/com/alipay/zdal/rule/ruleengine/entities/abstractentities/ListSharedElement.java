@@ -102,10 +102,9 @@ public abstract class ListSharedElement extends SharedElement {
         this.subSharedElement = subSharedElement;
     }
 
-    /* (non-Javadoc)
-     * @see com.taobao.tddl.rule.ruleengine.entities.abstractentities.SharedElement#init()
+    /** 
+     * @see com.alipay.zdal.rule.ruleengine.entities.abstractentities.SharedElement#init()
      * 如果有databaseMapProvider =>初始化databaseMap
-     * 
      */
     public void init() {
 

@@ -32,14 +32,9 @@ public abstract class AbstractMappingRule extends CartesianProductBasedListResul
      */
     private String                 targetKey  = null;
 
-    /* (non-Javadoc)
-     * @see com.taobao.tddl.rule.ruleengine.rule.CartesianProductBasedListResultRule#evalueateSamplingField(com.taobao.tddl.rule.ruleengine.cartesianproductcalculator.SamplingField)
-     * 
+    /** 
      * 测试了通过映射规则，正常返回结果和映射后数据这个testCase,对应在分库时取数据这个逻辑。
-     * @Test void com.taobao.tddl.rule.intergration.TairBasedMappingRuleIntegrationTest.test_正常映射_2个数据_走tair_走tair以后会将targetKey也记录下来_放入targtKey和targetValueSet中()
-     * 
-     * 
-     * 
+     * @see com.alipay.zdal.rule.ruleengine.rule.CartesianProductBasedListResultRule#evalueateSamplingField(com.alipay.zdal.rule.ruleengine.cartesianproductcalculator.SamplingField)
      */
     @Override
     public ResultAndMappingKey evalueateSamplingField(SamplingField samplingField) {

@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 
 import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
-import com.alipay.zdal.client.jdbc.ZdalPrefill;
 import com.alipay.zdal.client.util.ThreadLocalMap;
 
 /**
@@ -113,7 +112,6 @@ public class ZdalDataSourcePrefillTest {
 
                     //InitializingBean机制进行数据初始化可能发生在TradeDalAccessInterceptor初始化之前，
                     //故出现DB异常放到threadLocal中的可能不会被清除，此处主动清空线程中的condition，防止其他查询使用不属于自己的condition
-                    //                    TddlHelper.clearTddlCondition();
                 }
             }
         }

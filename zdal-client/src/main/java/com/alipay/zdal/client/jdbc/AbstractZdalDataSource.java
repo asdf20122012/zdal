@@ -25,7 +25,6 @@ import com.alipay.zdal.client.config.ZdalConfigListener;
 import com.alipay.zdal.client.config.ZdalDataSourceConfig;
 import com.alipay.zdal.client.config.controller.ZdalSignalResource;
 import com.alipay.zdal.client.controller.SpringBasedDispatcherImpl;
-import com.alipay.zdal.client.datasource.keyweight.GetDataSourceSequenceRules;
 import com.alipay.zdal.client.datasource.keyweight.ZdalDataSourceKeyWeightRandom;
 import com.alipay.zdal.client.datasource.keyweight.ZdalDataSourceKeyWeightRumtime;
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
@@ -254,8 +253,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             if (keyWeightMapConfig == null) {
                 throw new IllegalStateException("数据源key按分组权重配置错误,zdal初始化失败！");
             }
-            GetDataSourceSequenceRules.getKeyWeightRuntimeConfigHoder().set(
-                new ZdalDataSourceKeyWeightRumtime(keyWeightMapConfig));
         }
         this.initForDispatcher(appRule);
     }
@@ -279,7 +276,7 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                 LogicTable logicTable = toLogicTable(e.getValue());
                 logicTable.setLogicTableName(e.getKey());
                 logicTable.setDBType(shardRule.getDbType());
-                // logicTable.init(); //tddlRoot.init()包含了logicTable.init()
+                // logicTable.init(); //ZdalRoot.init()包含了logicTable.init()
                 logicTableMap.put(e.getKey(), logicTable);
             }
         }
@@ -300,7 +297,7 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                 throw new IllegalArgumentException("规则配置错误：[" + dbIndex + "]在dataSourcePool中没有配置");
             }
             dbs.setDbType(dbType);
-            // bug fixed by fanzeng. 因为tddl默认的dbType 是mysql，而在
+            // bug fixed by fanzeng. 因为zdal默认的dbType 是mysql，而在
             // 按优先级进行选择db的时候，如果连接db出现异常，
             // priorityDbGroupSelector会利用内部包装的对等库的 dbtype去选择
             // excetptionSorter,如果db类型是oracle的，
@@ -415,11 +412,11 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         return st;
     }
 
-    private SpringBasedDispatcherImpl buildSqlDispatcher(SQLParser parser, ZdalRoot tddlRoot) {
-        if (tddlRoot != null) {
+    private SpringBasedDispatcherImpl buildSqlDispatcher(SQLParser parser, ZdalRoot zdalRoot) {
+        if (zdalRoot != null) {
             SpringBasedDispatcherImpl dispatcher = new SpringBasedDispatcherImpl();
             dispatcher.setParser(parser);
-            dispatcher.setRoot(tddlRoot);
+            dispatcher.setRoot(zdalRoot);
             return dispatcher;
         } else {
             return null;
@@ -921,8 +918,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                 weightKeys, weights);
             keyWeightMapHolder.put(groupKey, TDataSourceKeyWeightRandom);
         }
-        GetDataSourceSequenceRules.getKeyWeightRuntimeConfigHoder().set(
-            new ZdalDataSourceKeyWeightRumtime(keyWeightMapHolder));
         // 设置本地的keyWeightMapCofig属性，全活策略会依赖于该配置
         this.keyWeightMapConfig = keyWeightMapHolder;
     }

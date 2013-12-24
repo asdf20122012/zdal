@@ -8,7 +8,7 @@ import com.alipay.zdal.common.Constants;
 import com.alipay.zdal.common.lang.StringUtil;
 
 /**
- * mysql/oracle/tair各种数据源的配置加载.
+ * mysql/oracle/db2各种数据源的配置加载.
  * 
  * @author 伯牙
  * @version $Id: ZdalDataSourceConfig.java, v 0.1 2013-1-18 下午03:48:28 Exp $

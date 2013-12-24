@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 public class GroovyRuleUtils {
     public static final String RULE_CONTEXT         = "context";
-    public static final String IMPORT_STATIC_METHOD = "import static com.taobao.tddl.rule.groovy.staticmethod.GroovyStaticMethod.*;";
+    public static final String IMPORT_STATIC_METHOD = "import static com.alipay.zdal.rule.groovy.staticmethod.GroovyStaticMethod.*;";
 
     protected static String buildArgumentsOutput(Map<Object, Object> var) {
         StringBuilder sb = new StringBuilder();

@@ -50,7 +50,7 @@ public class RetryableTPreparedStatement extends ZdalPreparedStatement {
             super.executeQueryAndAddIntoCollection(dbSelectorId, targetSql, failedDataSources,
                 connection, actualResultSets);
         } catch (SQLException e) {
-            logger.warn("tddl欲进入读重试状态，重复执行executeQueryAndAddIntoCollection()方法, targetSql="
+            logger.warn("zdal欲进入读重试状态，重复执行executeQueryAndAddIntoCollection()方法, targetSql="
                         + targetSql, e);
             validRetryable(dbSelectorId, e, OperationDBType.readFromDb);
             if (failedDataSources != null) {
@@ -60,7 +60,7 @@ public class RetryableTPreparedStatement extends ZdalPreparedStatement {
             } else {
                 //当在事务中时不需要重试，failedDataSources为null 值，直接将异常抛出
                 //added by fanzeng.
-                logger.warn("事务中failedDataSources=null, tddl并未进入读重试状态,targetSql=" + targetSql);
+                logger.warn("事务中failedDataSources=null, zdal并未进入读重试状态,targetSql=" + targetSql);
                 throw e;
             }
             //为什么不现在判断是否为非fatal后抛出，而要退后，这样影响阅读和理解
@@ -93,7 +93,7 @@ public class RetryableTPreparedStatement extends ZdalPreparedStatement {
              } else {
                  //在事务中不需要重试，failedDataSources为null值，直接将异常抛出
                  //added by fanzeng.
-                 logger.warn("事务中failedDataSources=null， tddl并未进入写重试状态,targetSql=" + targetSql);
+                 logger.warn("事务中failedDataSources=null， zdal并未进入写重试状态,targetSql=" + targetSql);
                  throw e;
              }
              //为什么不现在判断是否为非fatal后抛出，而要退后，这样影响阅读和理解

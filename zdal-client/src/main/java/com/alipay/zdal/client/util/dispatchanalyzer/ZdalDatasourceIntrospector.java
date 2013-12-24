@@ -38,7 +38,7 @@ import com.alipay.zdal.rule.ruleengine.util.RuleUtils;
  * 由于全活策略需要获取一个可用的db序号，之前的方案是每次有业务请求到达，都要通过select from dual 
  * 进行db可用性的校验， 造成 dba 发现dual表的访问次数太高，导致load升高；优化后大大降低了对dual表的访问次数，db的load随之降低。
  * 简单描述方案：
- * 由之前的业务线程检测db 可用性，改变为 由tddl的异步线程检测，每隔一定的时间段（假设10ms，可配置）
+ * 由之前的业务线程检测db 可用性，改变为 由zdal的异步线程检测，每隔一定的时间段（假设10ms，可配置）
  * 检测一次所有db的状态，但只有发现和上次的检测结果存在差异的情况下才去刷新变更db的状态，该方案很好的实现了全活策略数据源的自动剔除和恢复。
  * 
  * @author zhaofeng.wang
@@ -202,7 +202,7 @@ public class ZdalDatasourceIntrospector {
 
     /**
      * 随机的选择一个可用db<br>
-     * 如果 isCheckConnection 为 false，则默认 采用轮训机制，即tddl的异步线程间隔一段时间进行检测，
+     * 如果 isCheckConnection 为 false，则默认 采用轮训机制，即zdal的异步线程间隔一段时间进行检测，
      * 如果为true，则表示每次都检查一下，耗费性能的说；
      * 
      * @param    groupNum   组号<br>
@@ -547,9 +547,9 @@ public class ZdalDatasourceIntrospector {
     }
 
     /**
-     * 获取tddl数据源
+     * 获取zdal数据源
      * 
-     * @return  tddl封装后的数据源
+     * @return  zdal封装后的数据源
      */
     public AbstractZdalDataSource getTargetDataSource() {
         if (targetDataSource == null) {

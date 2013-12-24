@@ -7,7 +7,7 @@ package com.alipay.zdal.client.jdbc.test;
 /**
  * 
  * @author xiaoqing.zhouxq
- * @version $Id: TddlInit.java, v 0.1 2012-5-15 ионГ09:18:16 xiaoqing.zhouxq Exp $
+ * @version $Id: ZdalInit.java, v 0.1 2012-5-15 ионГ09:18:16 xiaoqing.zhouxq Exp $
  */
 public interface ZdalInit {
 

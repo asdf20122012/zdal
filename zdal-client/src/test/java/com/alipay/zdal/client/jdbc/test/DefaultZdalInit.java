@@ -17,7 +17,7 @@ import com.alipay.zdal.common.lang.StringUtil;
 /**
  * 
  * @author xiaoqing.zhouxq
- * @version $Id: DefaultTddlInit.java, v 0.1 2012-5-15 ионГ09:20:23 xiaoqing.zhouxq Exp $
+ * @version $Id: DefaultZdalInit.java, v 0.1 2012-5-15 ионГ09:20:23 xiaoqing.zhouxq Exp $
  */
 public class DefaultZdalInit implements ZdalInit {
 
@@ -46,7 +46,7 @@ public class DefaultZdalInit implements ZdalInit {
     }
 
     /** 
-     * @see com.taobao.ZdalInit.zhouxiaoqing.TddlInit#initDatabase(int, int, int)
+     * @see com.taobao.ZdalInit.zhouxiaoqing.ZdalInit#initDatabase(int, int, int)
      */
     public void initDatabase(DbInfo[] dbInfos, int tableCount, int tableSuffixWidth) {
         if (dbInfos == null || dbInfos.length == 0) {

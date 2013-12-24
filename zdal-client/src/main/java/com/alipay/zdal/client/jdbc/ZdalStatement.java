@@ -40,8 +40,8 @@ import com.alipay.zdal.client.jdbc.resultset.OrderByTResultSet;
 import com.alipay.zdal.client.jdbc.resultset.SimpleTResultSet;
 import com.alipay.zdal.client.jdbc.resultset.SumTResultSet;
 import com.alipay.zdal.client.util.ExceptionUtils;
-import com.alipay.zdal.client.util.LogUtils;
 import com.alipay.zdal.client.util.ThreadLocalMap;
+import com.alipay.zdal.common.Constants;
 import com.alipay.zdal.common.SqlType;
 import com.alipay.zdal.common.exception.checked.ZdalCheckedExcption;
 import com.alipay.zdal.common.exception.sqlexceptionwrapper.ZdalCommunicationException;
@@ -62,8 +62,7 @@ public class ZdalStatement implements Statement {
     private static final Logger       log                            = Logger
                                                                          .getLogger(ZdalStatement.class);
     private static final Logger       sqlLog                         = Logger
-                                                                         .getLogger(LogUtils.TDDL_SQL_LOG);
-    //	private static final Log profilerLog = LogFactory.getLog(LogUtils.TDDL_PROFILER_LOG);
+                                                                         .getLogger(Constants.CONFIG_LOG_NAME_LOGNAME);
 
     /**
      * 用于判断是否是一个select ... for update的sql
@@ -404,10 +403,10 @@ public class ZdalStatement implements Statement {
             //因为RUleRuntimeException也是个RuntimeException,所以排在后续runtimeException前面
             SQLException sqlException = e.getSqlException();
             if (sqlException instanceof ZdalCommunicationException) {
-                //不重复的进行包装，这个异常是tddl查询走分库时，分库重试次数到达上限时，自己会抛出的。业务需要这个异常
+                //不重复的进行包装，这个异常是zdal查询走分库时，分库重试次数到达上限时，自己会抛出的。业务需要这个异常
                 throw e;
             } else {
-                //对于非TDDL作为规则引擎中mapping rule 低层数据库查询的场景，要对sqlException进行包装后抛出
+                //对于非zdal作为规则引擎中mapping rule 低层数据库查询的场景，要对sqlException进行包装后抛出
                 throw new ZdalCommunicationException("rule sql exceptoin.", sqlException);
             }
 
@@ -542,7 +541,7 @@ public class ZdalStatement implements Statement {
          * 如果在事务中，就将此次计算的值缓存起来，然后该事务中的其他sql执行随机算法时，直接将该值返回
          * 以达到在一个事务中禁止两次随机而有可能选择不同的db
          */
-        ThreadLocalMap.put(ThreadLocalString.GET_AUTOCOMMIT_PROPERTY, autoCommit);
+        //        ThreadLocalMap.put(ThreadLocalString.GET_AUTOCOMMIT_PROPERTY, autoCommit);
         try {
             metaData = getExecutionMetaData(originalSql, parameters, rc, sqlDispatcher);
             targets = metaData.getTarget();
@@ -609,7 +608,7 @@ public class ZdalStatement implements Statement {
                 if (actualTables.size() != 1) {
                     if (actualTables.isEmpty()) {
                         throw new SQLException(
-                            "TDDL need at least one table, but There is none selected ");
+                            "Zdal need at least one table, but There is none selected ");
                     }
 
                     throw new SQLException("mapping many actual tables");
@@ -618,7 +617,7 @@ public class ZdalStatement implements Statement {
 
             if (!autoCommit && !dbIndex.equals(getConnectionProxy().getTxTarget())
                 && sqlType != SqlType.SELECT) {
-                throw new SQLException("tddl只支持单库的事务：dbIndex=" + dbIndex + ",txTarget="
+                throw new SQLException("zdal只支持单库的事务：dbIndex=" + dbIndex + ",txTarget="
                                        + getConnectionProxy().getTxTarget() + ",originalSql="
                                        + originalSql);
             }
@@ -777,7 +776,7 @@ public class ZdalStatement implements Statement {
                                                                                          } else {
                                                                                              //正常情况下的处理
                                                                                              int lastElementIndex = size - 1;
-                                                                                             //取最后一个exception.判断是否是数据库不可用异常.如果是，去掉最后一个异常，并将头异常包装为TDDLCommunicationException抛出
+                                                                                             //取最后一个exception.判断是否是数据库不可用异常.如果是，去掉最后一个异常，并将头异常包装为ZdalCommunicationException抛出
                                                                                              SQLException lastSQLException = exceptions
                                                                                                  .get(lastElementIndex);
                                                                                              if (exceptionSorter
@@ -788,7 +787,7 @@ public class ZdalStatement implements Statement {
                                                                                                      .add(
                                                                                                          0,
                                                                                                          new ZdalCommunicationException(
-                                                                                                             "tddl communicationException ",
+                                                                                                             "zdal communicationException ",
                                                                                                              lastSQLException));
                                                                                              }
                                                                                          }

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.alipay.zdal.common.DBType;
 
-
-
 /**
  * 一份完整的分库分表规则配置，一套库一份
  *  
@@ -33,12 +31,6 @@ public class ShardRule implements Cloneable {
         this.dbtype = DBType.valueOf(dbtype);
     }
 
-
-    public void setDbtype(int dbtype) {
-        this.dbtype = DBType.valueOf(dbtype);
-    }
-    
-    
     /**
      * 无逻辑的getter/setter
      */

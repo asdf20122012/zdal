@@ -110,12 +110,8 @@ public class LogicTable extends ListSharedElement implements Cloneable, LogicTab
         return ruleChainSet;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.taobao.tddl.rule.ruleengine.entities.abstractentities.ListSharedElement
-     * #init()
+    /** 
+     * @see com.alipay.zdal.rule.ruleengine.entities.abstractentities.ListSharedElement#init()
      */
     public void init() {
         // 初始化数据库节点

@@ -19,12 +19,12 @@ public class ExceptionUtils {
         if (exceptions != null && !exceptions.isEmpty()) {
             SQLException first = exceptions.get(0);
             if (sql != null) {
-                log.warn(("TDDL SQL EXECUTE ERROR REPORTER:" + getErrorContext(sql, args,
+                log.warn(("ZDAL SQL EXECUTE ERROR REPORTER:" + getErrorContext(sql, args,
                     SQL_EXECUTION_ERROR_CONTEXT_MESSAGE)), first);
             }
             for (int i = 1, n = exceptions.size(); i < n; i++) {
                 if (sql != null) {
-                    log.warn(("layer:" + n + "TDDL SQL EXECUTE ERROR REPORTER :" + getErrorContext(
+                    log.warn(("layer:" + n + "ZDAL SQL EXECUTE ERROR REPORTER :" + getErrorContext(
                         sql, args, SQL_EXECUTION_ERROR_CONTEXT_MESSAGE)), exceptions.get(i));
                 }
             }
@@ -60,7 +60,7 @@ public class ExceptionUtils {
     public static void throwSQLException(SQLException exception, String sql, List<Object> args)
                                                                                                throws SQLException {
         if (sql != null) {
-            log.warn(("TDDL SQL EXECUTE ERROR REPORTER:" + getErrorContext(sql, args,
+            log.warn(("ZDAL SQL EXECUTE ERROR REPORTER:" + getErrorContext(sql, args,
                 SQL_EXECUTION_ERROR_CONTEXT_MESSAGE))
                      + "nest Exceptions is " + exception.getMessage(), exception);
         }

@@ -347,7 +347,7 @@ public class DataSourceHolder {
      * @param exceptionSorter
      * @throws SQLException
      */
-    public void throwTddlCommnicationException(List<SQLException> exceptions,
+    public void throwZdalCommnicationException(List<SQLException> exceptions,
                                                ExceptionSorter exceptionSorter) throws SQLException {
 
         int size = exceptions.size();
@@ -356,11 +356,11 @@ public class DataSourceHolder {
         } else {
             //正常情况下的处理
             int lastElementIndex = size - 1;
-            //取最后一个exception.判断是否是数据库不可用异常.如果是，去掉最后一个异常，并将头异常包装为TDDLCommunicationException抛出
+            //取最后一个exception.判断是否是数据库不可用异常.如果是，去掉最后一个异常，并将头异常包装为ZdalCommunicationException抛出
             SQLException lastSQLException = exceptions.get(lastElementIndex);
             if (exceptionSorter.isExceptionFatal(lastSQLException)) {
                 exceptions.remove(lastElementIndex);
-                exceptions.add(0, new ZdalCommunicationException("tddl communicationException:",
+                exceptions.add(0, new ZdalCommunicationException("zdal communicationException:",
                     lastSQLException));
             }
         }

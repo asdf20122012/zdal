@@ -33,7 +33,7 @@ import com.alipay.zdal.parser.sql.visitor.SchemaStatVisitor;
 /**
  * 基于druid的sqlparser的一个扩展，用于实现zdal的parser模块在解析以后返回解析后的对象树.
  * @author xiaoqing.zhouxq
- * @version $Id: TDDLSchemaStatVisitor.java, v 0.1 2012-5-25 上午08:58:02 xiaoqing.zhouxq Exp $
+ * @version $Id: ZdalSchemaStatVisitor.java, v 0.1 2012-5-25 上午08:58:02 xiaoqing.zhouxq Exp $
  */
 public class ZdalSchemaStatVisitor extends SchemaStatVisitor implements SQLASTVisitor {
 

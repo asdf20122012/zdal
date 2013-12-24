@@ -25,11 +25,9 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.config.DataSourceConfigType;
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
 import com.alipay.zdal.client.util.ExceptionUtils;
-import com.alipay.zdal.client.util.ThreadLocalMap;
 
 public class ZdalConnection implements Connection {
     private static final Logger                  logger                       = Logger
@@ -99,10 +97,6 @@ public class ZdalConnection implements Connection {
         this.autoCommit = autoCommit;
         this.txStart = !autoCommit;
 
-        if (!this.autoCommit) {
-            //added by fanzeng. 用于在每次事务开启之前清除掉缓存的内容
-            ThreadLocalMap.put(ThreadLocalString.GET_DB_ORDER_IN_GROUP, null);
-        }
     }
 
     public int getTransactionIsolation() throws SQLException {
@@ -263,8 +257,6 @@ public class ZdalConnection implements Connection {
 
         ExceptionUtils.throwSQLException(exceptions, null, null);
 
-        //added by fanzeng. 用于在每次事务开启之前清除掉缓存的内容
-        ThreadLocalMap.put(ThreadLocalString.GET_DB_ORDER_IN_GROUP, null);
     }
 
     public void rollback() throws SQLException {
@@ -295,8 +287,6 @@ public class ZdalConnection implements Connection {
                     .toString(), e);
             }
         }
-        //added by fanzeng. 用于在每次事务开启之前清除掉缓存的内容
-        ThreadLocalMap.put(ThreadLocalString.GET_DB_ORDER_IN_GROUP, null);
         ExceptionUtils.throwSQLException(exceptions, null, null);
     }
 

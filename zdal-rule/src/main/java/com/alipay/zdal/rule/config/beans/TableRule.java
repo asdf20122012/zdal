@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alipay.zdal.common.FailoverDBRuleKey;
 import com.alipay.zdal.common.lang.StringUtil;
 import com.alipay.zdal.common.util.SimpleNamedMessageFormat;
 import com.alipay.zdal.common.util.TableSuffixTypeEnum;
@@ -22,9 +21,9 @@ import com.alipay.zdal.common.util.TableSuffixTypeEnum;
  *
  */
 public class TableRule implements Cloneable {
-	
-	private String       logicTableName;
-	
+
+    private String       logicTableName;
+
     private String[]     dbIndexes;
     private String       dbIndexPrefix;
     private int          dbIndexCount;
@@ -50,7 +49,7 @@ public class TableRule implements Cloneable {
     private GroovyShell  shell                = new GroovyShell(binding);
 
     private List<String> dbRuleList;
-    
+
     private enum DBINDEX_TYPE {
         SETBYPOOL("SETBYPOOL"), SETBYRULE("SETBYRULE"), SETBYGROOVY("SETBYGROOVY");
         private String value;
@@ -202,31 +201,6 @@ public class TableRule implements Cloneable {
                 throw new IllegalArgumentException("The dbIndexes set error!");
             }
             dbIndexes = temp[1].trim();
-        } else if (DBINDEX_TYPE.SETBYRULE.getValue().equals(temp[0].trim())) {
-            if (temp.length != 2) {
-                throw new IllegalArgumentException("The dbIndexes set error!");
-            }
-            String temp1 = temp[1].trim();
-            String temp2[] = temp1.split(",");
-            if (!temp2[0].startsWith("M[") || !temp2[0].endsWith("]")) {
-                throw new IllegalArgumentException("The dbIndexes M[ ] set error!");
-            }
-            //parse one range
-            String masterDBIndex[] = parseOneRange(temp2[0], true);
-            if (temp2.length != 2) {
-                this.dbIndexes = masterDBIndex;
-            } else if (temp2.length == 2) {
-                if (!temp2[1].startsWith("F[") || !temp2[1].endsWith("]")) {
-                    throw new IllegalArgumentException("The dbIndexes F[ ] set error!");
-                }
-                String failoverDBIndexes[] = parseOneRange(temp2[0], false);
-                this.dbIndexes = new String[2 * masterDBIndex.length];
-                for (int i = 0; i < masterDBIndex.length; i++) {
-                    this.dbIndexes[2 * i] = masterDBIndex[i];
-                    this.dbIndexes[2 * i + 1] = failoverDBIndexes[i];
-                }
-            }
-            return;
         } else if (DBINDEX_TYPE.SETBYGROOVY.getValue().equals(temp[0].trim())) {
             String expression = temp[1].trim();
             //shell.parse(expression);
@@ -251,95 +225,10 @@ public class TableRule implements Cloneable {
     }
 
     public void setDbIndexes(String[] dbIndexes) {
-//    	List<String> finaDbIndexList = new ArrayList<String>();
-        for( String dbIndex : dbIndexes ){
-        	setDbIndexes(dbIndex);
+        //    	List<String> finaDbIndexList = new ArrayList<String>();
+        for (String dbIndex : dbIndexes) {
+            setDbIndexes(dbIndex);
         }
-    }
-    
-    private String[] parseOneRange(String part, boolean isMaster) {
-        String dbIndexes[];
-        //去掉*[]
-        part = part.substring(2, part.length() - 1);
-
-        String[] temp = part.split("-");
-        if (temp.length != 2) {
-            throw new IllegalArgumentException();
-        }
-        temp[0] = temp[0].trim();
-        temp[1] = temp[1].trim();
-        int firstNumFrom = firstNum(temp[0]);
-        int firstNot0From = firstNot0(temp[0], firstNumFrom);
-        int firstNumTo = firstNum(temp[1]);
-        int firstNot0To = firstNot0(temp[1], firstNumTo);
-        if (firstNumFrom == -1 || firstNumTo == -1) {
-            throw new IllegalArgumentException();
-        }
-        if (firstNumFrom != firstNumTo) {
-            throw new IllegalArgumentException("padding width different");
-        }
-        if (temp[0].length() != temp[1].length() && !(
-        //_0-_16
-            (firstNot0From == -1 && firstNumFrom == temp[0].length() - 1 && firstNot0To == firstNumTo)
-            //_1-_16
-            || (firstNot0From == firstNumFrom && firstNot0To == firstNumTo))) {
-            throw new IllegalArgumentException("dbindex width different");
-        }
-        if (firstNumFrom != 0) {
-            String fromPadding = temp[0].substring(0, firstNumFrom);
-            String toPadding = temp[1].substring(0, firstNumTo);
-            if (!fromPadding.equals(toPadding)) {
-                throw new IllegalArgumentException("padding different");
-            }
-
-        }
-        int tbSuffixFrom = firstNot0From == -1 ? 0 //_0-_16
-            : Integer.parseInt(temp[0].substring(firstNot0From));
-
-        int tbSuffixTo = Integer.parseInt(temp[1].substring(firstNot0To));
-
-        if (tbSuffixTo <= tbSuffixFrom) {
-            throw new IllegalArgumentException("length is error");
-        }
-
-        int tbSuffixWidth = temp[0].length() != temp[1].length() ? 0 : temp[0].length()
-                                                                       - firstNumFrom;
-        dbIndexes = new String[tbSuffixTo - tbSuffixFrom + 1];
-        for (int i = tbSuffixFrom; i <= tbSuffixTo; i++) {
-            String dbIndex = "";
-            if (isMaster) {
-                dbIndex = FailoverDBRuleKey.MASTER_KEY.getValue()
-                          + StringUtil.alignRight(String.valueOf(i), tbSuffixWidth, '0');
-            } else {
-                dbIndex = FailoverDBRuleKey.FAILOVER_KEY.getValue()
-                          + StringUtil.alignRight(String.valueOf(i), tbSuffixWidth, '0');
-            }
-            dbIndexes[i] = dbIndex;
-        }
-
-        return dbIndexes;
-    }
-
-    private static int firstNum(String str) {
-        char c;
-        for (int i = 0; i < str.length(); i++) {
-            c = str.charAt(i);
-            if (c >= '0' && c <= '9') {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private static int firstNot0(String str, int start) {
-        char c;
-        for (int i = start; i < str.length(); i++) {
-            c = str.charAt(i);
-            if (c != '0') {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public String getDbIndexes() {
@@ -388,7 +277,7 @@ public class TableRule implements Cloneable {
             this.dbRules = dbRules.split("\\|");
         }
     }
-    
+
     public Object[] getTbRuleArray() {
         return tbRules;
     }
@@ -534,34 +423,34 @@ public class TableRule implements Cloneable {
         return shardingRules;
     }
 
-	/**
-	 * @return the logicTableName
-	 */
-	public String getLogicTableName() {
-		return logicTableName;
-	}
+    /**
+     * @return the logicTableName
+     */
+    public String getLogicTableName() {
+        return logicTableName;
+    }
 
-	/**
-	 * @param logicTableName the logicTableName to set
-	 */
-	public void setLogicTableName(String logicTableName) {
-		this.logicTableName = logicTableName;
-	}
+    /**
+     * @param logicTableName the logicTableName to set
+     */
+    public void setLogicTableName(String logicTableName) {
+        this.logicTableName = logicTableName;
+    }
 
-	public List<String> getDbRuleList() {
-		return dbRuleList;
-	}
+    public List<String> getDbRuleList() {
+        return dbRuleList;
+    }
 
-	public void setDbRuleList(List<String> dbRuleList) {
-		this.dbRuleList = dbRuleList;
-		if( null != dbRuleList && !dbRuleList.isEmpty() ){
-			dbRules = new String[dbRuleList.size()];
-			int index = 0;
-			for( String rule : this.dbRuleList){
-				dbRules[index++] = rule.trim();
-			}
-		}
-	}
+    public void setDbRuleList(List<String> dbRuleList) {
+        this.dbRuleList = dbRuleList;
+        if (null != dbRuleList && !dbRuleList.isEmpty()) {
+            dbRules = new String[dbRuleList.size()];
+            int index = 0;
+            for (String rule : this.dbRuleList) {
+                dbRules[index++] = rule.trim();
+            }
+        }
+    }
 
     /* //暴露得有问题
     public void setSuffixManager(SuffixManager suffixManager) {

@@ -56,7 +56,7 @@ public interface DispatcherResult extends Result {
 
     /**
      * 获取skip值
-     * 因为TDDL不是数据库，所以这里做了一个假定：
+     * 因为Zdal不是数据库，所以这里做了一个假定：
      * 在所有含义为skip的数据中，最大的那个永远是有意义的。
      * 
      * 多层嵌套中也是如此。
@@ -66,7 +66,7 @@ public interface DispatcherResult extends Result {
 
     /**
      * 获取max值。
-     * 因为TDDL不是数据库，所以这里做了一个假定：
+     * 因为Zdal不是数据库，所以这里做了一个假定：
      * 在所有含义为max的数据中，最大的那个永远是有意义的。
      * 
      * 多层嵌套中也是如此。

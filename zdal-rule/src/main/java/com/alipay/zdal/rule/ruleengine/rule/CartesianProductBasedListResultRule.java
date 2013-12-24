@@ -33,14 +33,9 @@ public abstract class CartesianProductBasedListResultRule extends ListAbstractRe
 
     /**
      * 是否需要对交集内的数据取抽样点
+     *
+     * @see com.alipay.zdal.rule.ruleengine.rule.ListAbstractResultRule#eval(java.util.Map)
      */
-    // protected boolean needMergeValueInCloseInterval = false;
-
-    /* (non-Javadoc)
-     * @see com.taobao.tddl.rule.ruleengine.rule.ListAbstractResultRule#eval(java.util.Map)
-     * @Tested
-     */
-
     public Map<String/*结果的值，如db的index或table的index */, Field> eval(
 
     Map<String, Comparative> argumentsMap) {
@@ -79,10 +74,8 @@ public abstract class CartesianProductBasedListResultRule extends ListAbstractRe
         return enumeratedMap;
     }
 
-    /* (non-Javadoc)
-     * @see com.taobao.tddl.rule.ruleengine.rule.ListAbstractResultRule#evalWithoutSourceTrace(java.util.Map)
-     * 
-     * 
+    /** 
+     * @see com.alipay.zdal.rule.ruleengine.rule.ListAbstractResultRule#evalWithoutSourceTrace(java.util.Map, java.lang.String, java.util.Set)
      */
     public Set<String> evalWithoutSourceTrace(Map<String, Set<Object>> enumeratedMap,
                                               String mappingTargetColumn, Set<Object> mappingKeys) {
@@ -198,7 +191,6 @@ public abstract class CartesianProductBasedListResultRule extends ListAbstractRe
      * @param set
      * @param enumeratedValues
      * @param samplingField
-     * @Test evalWithMappingKey 方法测试在com.taobao.tddl.rule.groovy.GroovyListRuleEngineUnitTest
      * 
      * 
      */

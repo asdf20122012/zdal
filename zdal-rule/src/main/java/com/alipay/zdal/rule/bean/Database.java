@@ -49,12 +49,9 @@ public class Database extends ListSharedElement implements TablePropertiesSetter
 
     private TableMapProvider             tableMapProvider;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.taobao.tddl.rule.ruleengine.entities.abstractentities.ListSharedElement
-     * #init() 这里主要是先初始化整个subTable，然后才能做相应的动作。
+    /** 
+     * @see com.alipay.zdal.rule.ruleengine.entities.abstractentities.ListSharedElement#init()
+     * 这里主要是先初始化整个subTable，然后才能做相应的动作。
      */
     public void init() {
         initTableRuleChain();
