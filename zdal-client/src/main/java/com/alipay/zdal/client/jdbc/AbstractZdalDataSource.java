@@ -954,7 +954,8 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         dsDo.setDsName(dsName);
         dsDo.setConnectionURL(parameter.getJdbcUrl());
         dsDo.setUserName(parameter.getUserName());
-        dsDo.setEncPassword(parameter.getPassword());
+        //        dsDo.setEncPassword(parameter.getPassword());
+        dsDo.setPassWord(parameter.getPassword());//设置明文的密码.
         dsDo.setMinPoolSize(parameter.getMinConn());
         dsDo.setMaxPoolSize(parameter.getMaxConn());
         dsDo.setDriverClass(parameter.getDriverClass());

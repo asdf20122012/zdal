@@ -4,6 +4,7 @@
  */
 package com.alipay.zdal.client.config.bean;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -126,10 +127,6 @@ public class PhysicalDataSourceBean implements InitializingBean {
         return driverClass;
     }
 
-    public void setDriverClass(String driverClass) {
-        this.driverClass = driverClass;
-    }
-
     public int getBlockingTimeoutMillis() {
         return blockingTimeoutMillis;
     }
@@ -191,7 +188,8 @@ public class PhysicalDataSourceBean implements InitializingBean {
         }
 
         if (logicDbNameSet == null || logicDbNameSet.isEmpty()) {
-            throw new IllegalArgumentException("ERROR ## the logicDbNameSet is empty");
+            logicDbNameSet = new HashSet<String>();
+            logicDbNameSet.add(name);
         }
 
         if (StringUtil.isBlank(jdbcUrl)) {

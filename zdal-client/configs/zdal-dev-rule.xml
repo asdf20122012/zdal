@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+		<bean id="test1Rule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="masterRule" ref="test1MasterRule" />
+		<property name="slaveRule" ref="test1SlaveRule" />
+	</bean>
+	
+	<bean id="test1MasterRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="test1_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="test1SlaveRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="test1_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="test1_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>througAllDB:[_00-_07]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				SETBYRULE:M[_0-_3]
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				(Integer.valueOf(#USER_ID#)%8)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				(Integer.valueOf(#USER_ID#)%8).intdiv(2)
+			</value>
+		</property>
+	</bean>
+	<bean id="testRule" class="com.alipay.zdal.rule.config.beans.AppRule"
+		init-method="init">
+		<property name="readwriteRule" ref="testReadWriteRule" />
+	</bean>
+	
+	
+	<bean id="testReadWriteRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
+		<property name="dbtype" value="MYSQL" />
+		<property name="tableRules">
+			<map>
+				<entry key="user" value-ref="test_user" />
+			</map>
+		</property>
+		<property name="defaultDbIndex" value="" />
+	</bean>
+	
+	<bean id="test_user" class="com.alipay.zdal.rule.config.beans.TableRule"
+		init-method="init">
+		<property name="logicTableName" value="user" />
+		<property name="tbSuffix">
+			<value>througAllDB:[_00-_07]</value>
+		</property>
+		<property name="dbIndexes">
+			<value>
+				group_00,group_01,group_02,group_03
+			</value>
+		</property>
+		<property name="tbRules">
+			<value>
+				(Integer.valueOf(#USER_ID#)%8)%2
+			</value>
+		</property>
+		<property name="dbRules">
+			<value>
+				(Integer.valueOf(#USER_ID#)%8).intdiv(2)
+			</value>
+		</property>
+	</bean>
+</beans>
