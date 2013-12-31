@@ -62,23 +62,23 @@ import com.alipay.zdal.parser.sql.stat.TableStat.SELECTMODE;
  */
 public class SchemaStatVisitor extends SQLASTVisitorAdapter {
 
-    protected final HashMap<TableStat.Name, TableStat> tableStats     = new LinkedHashMap<TableStat.Name, TableStat>();
-    protected final Set<Column>                        columns        = new LinkedHashSet<Column>();
-    protected final List<Condition>                    conditions     = new ArrayList<Condition>();
-    protected final Set<Relationship>                  relationships  = new LinkedHashSet<Relationship>();
-    protected final List<Column>                       orderByColumns = new ArrayList<Column>();
-    protected final Set<Column>                        groupByColumns = new LinkedHashSet<Column>();
+    protected final HashMap<TableStat.Name, TableStat> tableStats      = new LinkedHashMap<TableStat.Name, TableStat>();
+    protected final Set<Column>                        columns         = new LinkedHashSet<Column>();
+    protected final List<Condition>                    conditions      = new ArrayList<Condition>();
+    protected final Set<Relationship>                  relationships   = new LinkedHashSet<Relationship>();
+    protected final List<Column>                       orderByColumns  = new ArrayList<Column>();
+    protected final Set<Column>                        groupByColumns  = new LinkedHashSet<Column>();
 
-    protected final Map<String, SQLObject>             subQueryMap    = new LinkedHashMap<String, SQLObject>();
+    protected final Map<String, SQLObject>             subQueryMap     = new LinkedHashMap<String, SQLObject>();
 
-    protected final Map<String, SQLObject>             variants       = new LinkedHashMap<String, SQLObject>();
+    protected final Map<String, SQLObject>             variants        = new LinkedHashMap<String, SQLObject>();
 
-    protected Map<String, String>                      aliasMap       = new HashMap<String, String>();
+    protected Map<String, String>                      aliasMap        = new HashMap<String, String>();
 
     protected String                                   currentTable;
 
-    public final static String                         ATTR_TABLE     = "_table_";
-    public final static String                         ATTR_COLUMN    = "_column_";
+    public final static String                         ATTR_TABLE      = "_table_";
+    public final static String                         ATTR_COLUMN     = "_column_";
 
     private List<Object>                               parameters;
 
@@ -86,6 +86,9 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
 
     /** 保留select count,select min,select max,select sum格式的查询语句. */
     private SELECTMODE                                 selectMode;
+
+    /**从DB2的sql语句中中获取分页字段.  */
+    protected String                                   limitColumnName = null;
 
     public SELECTMODE getSelectMode() {
         return selectMode;
@@ -585,6 +588,15 @@ public class SchemaStatVisitor extends SQLASTVisitorAdapter {
                     .equalsIgnoreCase(aggregateExpr.getMethodName())) {
                     if (getSelectMode() == null) {
                         setSelectMode(SELECTMODE.SUM);
+                    }
+                } else if (SELECTMODE.ROWNUMBER.toString().equalsIgnoreCase(
+                    aggregateExpr.getMethodName())) {
+                    if (aggregateExpr.getParent() != null
+                        && aggregateExpr.getParent() instanceof SQLSelectItem) {
+                        SQLSelectItem sqlSelectItem = (SQLSelectItem) aggregateExpr.getParent();
+                        if (this.limitColumnName == null) {
+                            this.limitColumnName = sqlSelectItem.getAlias();
+                        }
                     }
                 } else {
                     //                    setSelectMode(null);

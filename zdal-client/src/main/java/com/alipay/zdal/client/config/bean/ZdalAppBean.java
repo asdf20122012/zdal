@@ -4,6 +4,7 @@
  */
 package com.alipay.zdal.client.config.bean;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class ZdalAppBean implements InitializingBean {
     private String                  dbmode;
 
     /** 数据源列表. */
-    private List<AppDataSourceBean> appDataSourceList;
+    private List<AppDataSourceBean> appDataSourceList = new ArrayList<AppDataSourceBean>();
 
     public String getAppName() {
         return appName;

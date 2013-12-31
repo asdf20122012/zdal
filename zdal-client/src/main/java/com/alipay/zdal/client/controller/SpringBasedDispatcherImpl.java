@@ -62,12 +62,9 @@ public class SpringBasedDispatcherImpl implements SqlDispatcher {
      */
     public DispatcherResult getDBAndTables(String sql, List<Object> args)
                                                                          throws ZdalCheckedExcption {
-        // 因为只有mysql和oracle实现，暂时不考虑其他实现。3年内用不到
-        DBType dbType = getDBType();
-        boolean isMySQL = DBType.MYSQL.equals(dbType);
 
-        // 解析sql得到sql本身的结构化信息
-        SqlParserResult sqlParserResult = parser.parse(sql, isMySQL);
+        DBType dbType = getDBType();
+        SqlParserResult sqlParserResult = parser.parse(sql, dbType);
         // TODO: 反向查找，也就是先拿sql里面的一列表名，然后去规则里
         // 查看哪个表名match，如果有一个表示单表操作。
         // 如果有多个表示要join，join里有两种情况是可以支持但没有支持的

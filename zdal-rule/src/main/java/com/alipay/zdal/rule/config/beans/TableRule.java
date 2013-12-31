@@ -51,7 +51,7 @@ public class TableRule implements Cloneable {
     private List<String> dbRuleList;
 
     private enum DBINDEX_TYPE {
-        SETBYPOOL("SETBYPOOL"), SETBYRULE("SETBYRULE"), SETBYGROOVY("SETBYGROOVY");
+        SETBYPOOL("SETBYPOOL"), SETBYGROOVY("SETBYGROOVY");
         private String value;
 
         private DBINDEX_TYPE(String value) {
@@ -219,9 +219,6 @@ public class TableRule implements Cloneable {
             dbIndexes = temp[0].trim();
         }
         this.dbIndexes = dbIndexes.split(",");
-        for (int i = 0; i < this.dbIndexes.length; i++) {
-            this.dbIndexes[i] = this.dbIndexes[i].trim();
-        }
     }
 
     public void setDbIndexes(String[] dbIndexes) {

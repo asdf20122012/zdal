@@ -1,5 +1,9 @@
 package com.alipay.zdal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.sql.DataSource;
 
 import org.junit.BeforeClass;
@@ -24,9 +28,9 @@ public class ZdsTestMysql {
         LocalTxDataSourceDO dsDo = new LocalTxDataSourceDO();
         dsDo.setDsName("test");
         dsDo
-            .setConnectionURL("jdbc:mysql://localhost:3306/binlog?useUnicode=true&amp;characterEncoding=gbk");
-        dsDo.setUserName("root");
-        dsDo.setPassWord("root");
+            .setConnectionURL("jdbc:mysql://10.209.104.188:9999/cmsp?useUnicode=true&amp;characterEncoding=gbk");
+        dsDo.setUserName("garuda");
+        dsDo.setPassWord("ali88");
         dsDo.setDriverClass("com.mysql.jdbc.Driver");
         dsDo.setMinPoolSize(0);
         dsDo.setMaxPoolSize(5);
@@ -38,8 +42,21 @@ public class ZdsTestMysql {
 
     @Test
     public void test1() {
-        System.out.println(jt.update("insert into test1(id,name) values(1,'zhouxiaoqing')"));
-        System.out.println(jt.update("insert into test1(id,name) values(1,'zhouxiaoqing')"));
+        //        jt.execute("select * from cmsp.chg_app_user_coords_dd ");
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            conn = dataSource.getConnection();
+            pst = conn.prepareStatement("select * from cmsp.chg_app_user_coords_dd ");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //        System.out.println(jt.update("insert into test1(id,name) values(1,'zhouxiaoqing')"));
         //        System.out.println(jt.queryForInt("select id from zdstest where name=?",
         //            new Object[] { "sb" }));
         //        System.out.println(jt.queryForList("select * from zdstest where name=?",

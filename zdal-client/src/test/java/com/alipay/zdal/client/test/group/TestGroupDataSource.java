@@ -2,7 +2,7 @@
  * Alipay.com Inc.
  * Copyright (c) 2004-2013 All Rights Reserved.
  */
-package com.alipay.zdal.client.test;
+package com.alipay.zdal.client.test.group;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.jdbc.ZdalDataSource;
+import com.alipay.zdal.client.test.BaseTest;
 import com.alipay.zdal.client.util.ThreadLocalMap;
 
 /**
@@ -29,7 +30,7 @@ public class TestGroupDataSource extends BaseTest {
 
     private static final String DBMODE     = "dev";
 
-    private static final String CONFIGPATH = "./configs/group";
+    private static final String CONFIGPATH = "./configs/Group";
 
     @Test
     public void testGroupDataSource() {

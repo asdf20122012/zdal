@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.parser.result.DefaultSqlParserResult;
 import com.alipay.zdal.parser.result.SqlParserResult;
@@ -38,7 +39,7 @@ public class SQLParserOfMysqlWithDeleteTest {
     @Test
     public void testParseWithPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -66,7 +67,7 @@ public class SQLParserOfMysqlWithDeleteTest {
     //    @Test(expected = SqlParserException.class)
     public void testParserWithoutPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -94,7 +95,7 @@ public class SQLParserOfMysqlWithDeleteTest {
     //    @Test
     public void testParserWithMultiPartinations() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -127,7 +128,7 @@ public class SQLParserOfMysqlWithDeleteTest {
     //    @Test
     public void testParserWithNoBindPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE_NOBIND, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE_NOBIND, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());

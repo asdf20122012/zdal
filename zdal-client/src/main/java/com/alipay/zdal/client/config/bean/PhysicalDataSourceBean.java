@@ -4,6 +4,7 @@
  */
 package com.alipay.zdal.client.config.bean;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -62,7 +63,7 @@ public class PhysicalDataSourceBean implements InitializingBean {
     private int                 queryTimeout          = 30;
 
     /** 建立连接的参数，由数据库产商支持. */
-    private Map<String, String> connectionProperties;
+    private Map<String, String> connectionProperties  = new HashMap<String, String>();
 
     /** 在物理数据源初始化时，是否建立最小连接数. */
     private boolean             prefill;

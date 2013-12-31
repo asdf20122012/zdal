@@ -586,8 +586,6 @@ public class ZdalStatement implements Statement {
 
             Set<String> actualTables = target.getTableNames();
 
-            printLog(dbIndex, actualTables);
-
             if (dbIndex == null || dbIndex.length() < 1) {
                 throw new SQLException("invalid dbIndex:" + dbIndex);
             }
@@ -724,27 +722,6 @@ public class ZdalStatement implements Statement {
                 log.debug("缓存事务数据库标识:Set the txStart property to false, and the dbIndex="
                           + targets.get(0).getDbIndex() + ",originalSql=" + originalSql);
             }
-        }
-    }
-
-    private void printLog(String dbIndex, Set<String> actualTables) {
-        if (log.isDebugEnabled()) {
-            log.debug("pool: " + dbIndex);
-
-            StringBuilder buffer = new StringBuilder("actualTables: [");
-            boolean firstElement = true;
-            for (String tab : actualTables) {
-                if (!firstElement) {
-                    buffer.append(", ");
-                } else {
-                    firstElement = false;
-                }
-
-                buffer.append(tab);
-            }
-            buffer.append("]");
-
-            log.debug(buffer.toString());
         }
     }
 

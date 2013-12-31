@@ -4,6 +4,7 @@
  */
 package com.alipay.zdal.client.config;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.alipay.zdal.client.config.bean.PhysicalDataSourceBean;
@@ -40,7 +41,7 @@ public class DataSourceParameter {
 
     private boolean             prefill;
 
-    private Map<String, String> connectionProperties;
+    private Map<String, String> connectionProperties  = new HashMap<String, String>();
 
     public Map<String, String> getConnectionProperties() {
         return connectionProperties;

@@ -103,6 +103,10 @@ public class Keywords {
         map.put("WHERE", Token.WHERE);
         map.put("XOR", Token.XOR);
 
+        map.put("RR", Token.RR);
+        map.put("RS", Token.RS);
+        map.put("UR", Token.UR);
+
         DEFAULT_KEYWORDS = new Keywords(map);
     }
 

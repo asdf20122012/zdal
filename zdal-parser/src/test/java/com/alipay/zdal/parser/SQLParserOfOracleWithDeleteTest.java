@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.parser.result.DefaultSqlParserResult;
 import com.alipay.zdal.parser.result.SqlParserResult;
@@ -37,7 +38,7 @@ public class SQLParserOfOracleWithDeleteTest {
     //    @Test
     public void testParseWithPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, DBType.ORACLE);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -65,7 +66,7 @@ public class SQLParserOfOracleWithDeleteTest {
     //    @Test(expected = SqlParserException.class)
     public void testParserWithoutPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, DBType.ORACLE);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -93,7 +94,7 @@ public class SQLParserOfOracleWithDeleteTest {
     //    @Test
     public void testParserWithMultiPartinations() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE, DBType.ORACLE);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -126,7 +127,7 @@ public class SQLParserOfOracleWithDeleteTest {
     //    @Test
     public void testParserWithNoBindPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE_NOBIND, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_DELETE_NOBIND, DBType.ORACLE);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -158,7 +159,7 @@ public class SQLParserOfOracleWithDeleteTest {
                      + "or relative_no in ('2012010100013000000000000001') "
                      + "or (service_type='TRADE' and service_target in ('2012010100013000000000000001','r2','r3','r4')) "
                      + "or rate_id='3255691'";
-        SqlParserResult parserResult = sqlParser.parse(sql, false);
+        SqlParserResult parserResult = sqlParser.parse(sql, DBType.ORACLE);
         //        Assert.assertEquals("users", parserResult.getTableName());
         //        Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         //        Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());

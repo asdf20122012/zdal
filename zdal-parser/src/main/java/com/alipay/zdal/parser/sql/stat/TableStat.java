@@ -428,6 +428,6 @@ public class TableStat {
     }
 
     public static enum SELECTMODE {
-        COUNT, MIN, MAX, SUM;
+        COUNT, MIN, MAX, SUM, ROWNUMBER;
     }
 }

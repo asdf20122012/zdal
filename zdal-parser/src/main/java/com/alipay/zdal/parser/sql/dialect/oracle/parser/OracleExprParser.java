@@ -71,7 +71,7 @@ public class OracleExprParser extends SQLExprParser {
             "PERCENTILE_DISC", "RANK", "RATIO_TO_REPORT", "REGR_SLOPE", "REGR_INTERCEPT",
             "REGR_COUNT", "REGR_R2", "REGR_AVGX", "REGR_AVGY", "REGR_SXX", "REGR_SYY", "REGR_SXY",
             "ROW_NUMBER", "STDDEV", "STDDEV_POP", "STDDEV_SAMP", "SUM", "VAR_POP", "VAR_SAMP",
-            "VARIANCE"                               };
+            "VARIANCE", "ROW_NUMBER", "ROWNUMBER"    };
 
     public OracleExprParser(Lexer lexer) {
         super(lexer);
@@ -251,7 +251,8 @@ public class OracleExprParser extends SQLExprParser {
                         break;
                     case BINARY_DOUBLE:
                         sqlExpr = new OracleBinaryDoubleExpr(Double.parseDouble(lexer
-                            .numberString()) * -1);
+                            .numberString())
+                                                             * -1);
                         lexer.nextToken();
                         break;
                     case VARIANT:

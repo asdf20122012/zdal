@@ -4,6 +4,8 @@
  */
 package com.alipay.zdal.client.config.bean;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,13 +39,13 @@ public class AppDataSourceBean implements InitializingBean {
     private DataSourceConfigType        dataSourceConfigType;
 
     /** 物理数据源列表. */
-    private Set<PhysicalDataSourceBean> physicalDataSourceSet;
+    private Set<PhysicalDataSourceBean> physicalDataSourceSet  = new HashSet<PhysicalDataSourceBean>();
 
     /** shard+group类型中的group分组定义. */
-    private Map<String, String>         groupDataSourceRuleMap;
+    private Map<String, String>         groupDataSourceRuleMap = new HashMap<String, String>();
 
     /** shard+failover类型中的group分组定义. */
-    private Map<String, String>         failOverGroupRuleMap;
+    private Map<String, String>         failOverGroupRuleMap   = new HashMap<String, String>();
 
     /**  分库分表的规则.*/
     private AppRule                     appRule;

@@ -146,7 +146,7 @@ public class SecureIdentityLoginModule {
                                           NoSuchAlgorithmException, BadPaddingException,
                                           IllegalBlockSizeException {
         //        System.out.println(encode("ali88"));
-        //                System.out.println(decode("-19c84bf1dcbecee0917eaefd81d23fbf"));
+        System.out.println(decode("-19c84bf1dcbecee0917eaefd81d23fbf"));
     }
 
 }

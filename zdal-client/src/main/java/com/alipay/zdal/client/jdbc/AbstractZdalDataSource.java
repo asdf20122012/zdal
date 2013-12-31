@@ -184,18 +184,21 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             this.dataSourcePoolConfig = getFailoverDataSourcePoolConfig(zdalConfig
                 .getLogicPhysicsDsNames());//建立逻辑和物理的对应关系.
             this.appRule = zdalConfig.getAppRootRule();
+            this.appRule.init();
             initForAppRule(appRule);
         } else if (dbConfigType.isShardFailover()) {
             this.dataSourcePoolConfig = getFailoverDataSourcePoolConfig(zdalConfig
                 .getLogicPhysicsDsNames());//建立逻辑和物理的对应关系.
             this.keyWeightConfig = zdalConfig.getFailoverRules();
             this.appRule = zdalConfig.getAppRootRule();
+            this.appRule.init();
             initForAppRule(appRule);
             CONFIG_LOGGER.warn("WARN ## the shardFailoverWeight of " + appDsName + " is :"
                                + getReceivDataStr(keyWeightConfig));
         } else if (dbConfigType.isShardGroup()) {
             this.rwDataSourcePoolConfig = zdalConfig.getGroupRules();
             this.appRule = zdalConfig.getAppRootRule();
+            this.appRule.init();
             initForAppRule(appRule);
             CONFIG_LOGGER.warn("WARN ## the shardRWWeight of " + appDsName + " is :"
                                + getReceivDataStr(zdalConfig.getGroupRules()));

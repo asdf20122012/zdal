@@ -315,12 +315,12 @@ public class ZdalSchemaStatVisitor extends SchemaStatVisitor implements SQLASTVi
             bindVarCondition.setValue(right.getText());
             noBindVarConditions.add(bindVarCondition);
         } else if (x.getRight() instanceof SQLMethodInvokeExpr) {//value = null
-            SQLIdentifierExpr left = (SQLIdentifierExpr) x.getLeft();
-            BindVarCondition bindVarCondition = new BindVarCondition();
-            bindVarCondition.setColumnName(left.getName());
-            bindVarCondition.setTableName(getCurrentTable());
-            bindVarCondition.setOperator(x.getOperator().name);
-            noBindVarConditions.add(bindVarCondition);
+            //            SQLIdentifierExpr left = (SQLIdentifierExpr) x.getLeft();
+            //            BindVarCondition bindVarCondition = new BindVarCondition();
+            //            bindVarCondition.setColumnName(left.getName());
+            //            bindVarCondition.setTableName(getCurrentTable());
+            //            bindVarCondition.setOperator(x.getOperator().name);
+            //            noBindVarConditions.add(bindVarCondition);
         }
     }
 

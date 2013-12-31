@@ -10,6 +10,7 @@ import java.util.concurrent.FutureTask;
 
 import org.apache.log4j.Logger;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.parser.exceptions.SqlParserException;
 import com.alipay.zdal.parser.result.SqlParserResult;
 import com.alipay.zdal.parser.result.SqlParserResultFactory;
@@ -19,6 +20,7 @@ import com.alipay.zdal.parser.sql.dialect.mysql.visitor.MySqlOutputVisitor;
 import com.alipay.zdal.parser.sql.dialect.oracle.parser.OracleStatementParser;
 import com.alipay.zdal.parser.sql.dialect.oracle.visitor.OracleOutputVisitor;
 import com.alipay.zdal.parser.sql.visitor.SQLASTOutputVisitor;
+import com.alipay.zdal.parser.visitor.ZdalDB2SchemaStatVisitor;
 import com.alipay.zdal.parser.visitor.ZdalMySqlSchemaStatVisitor;
 import com.alipay.zdal.parser.visitor.ZdalOracleSchemaStatVisitor;
 import com.alipay.zdal.parser.visitor.ZdalSchemaStatVisitor;
@@ -36,13 +38,13 @@ public class DefaultSQLParser implements SQLParser {
 
     private static final ParserCache GLOBALCACHE = ParserCache.instance();
 
-    public SqlParserResult parse(String sql, boolean isMySQL) {
-        this.parseSQL(sql, isMySQL);
+    public SqlParserResult parse(String sql, DBType dbType) {
+        this.parseSQL(sql, dbType);
         ZdalSchemaStatVisitor visitor = getStatement(sql);
         try {
             if (visitor == null) {
                 // 如果没取到，尝试分析sql并初始化
-                this.parseSQL(sql, isMySQL);
+                this.parseSQL(sql, dbType);
                 visitor = getStatement(sql);
 
             }
@@ -50,7 +52,7 @@ public class DefaultSQLParser implements SQLParser {
             throw new SqlParserException("the sql = " + sql + " is not support yet "
                                          + e.getMessage());
         }
-        return SqlParserResultFactory.createSqlParserResult(visitor, isMySQL);
+        return SqlParserResultFactory.createSqlParserResult(visitor, dbType);
     }
 
     /**
@@ -62,14 +64,14 @@ public class DefaultSQLParser implements SQLParser {
      * @param sql
      */
     public void parseSQL(String sql) {
-        this.nestedParseSql(sql, true);
+        this.nestedParseSql(sql, DBType.MYSQL);
     }
 
-    public void parseSQL(String sql, boolean isMysql) {
-        this.nestedParseSql(sql, isMysql);
+    public void parseSQL(String sql, DBType dbType) {
+        this.nestedParseSql(sql, dbType);
     }
 
-    private void nestedParseSql(final String sql, final boolean isMysql) {
+    private void nestedParseSql(final String sql, final DBType dbType) {
         if (sql == null) {
             throw new SqlParserException("sql must not be null");
         }
@@ -78,7 +80,7 @@ public class DefaultSQLParser implements SQLParser {
         if (future == null) {
             Callable<ZdalSchemaStatVisitor> parserHandler = new Callable<ZdalSchemaStatVisitor>() {
                 public ZdalSchemaStatVisitor call() throws Exception {
-                    final List<SQLStatement> parserResults = getSqlStatements(sql, isMysql);
+                    final List<SQLStatement> parserResults = getSqlStatements(sql, dbType);
                     if (parserResults == null || parserResults.isEmpty()) {
                         LOG.error("ERROR ## the sql parser result is null,the sql = " + sql);
                         return null;
@@ -90,12 +92,18 @@ public class DefaultSQLParser implements SQLParser {
                     }
                     SQLStatement statement = parserResults.get(0);
                     ZdalSchemaStatVisitor visitor = null;
-                    if (isMysql == true) {
+                    if (dbType.isMysql()) {
                         visitor = new ZdalMySqlSchemaStatVisitor();
                         statement.accept(visitor);
-                    } else {
+                    } else if (dbType.isOracle()) {
                         visitor = new ZdalOracleSchemaStatVisitor();
                         statement.accept(visitor);
+                    } else if (dbType.isDB2()) {
+                        visitor = new ZdalDB2SchemaStatVisitor();
+                        statement.accept(visitor);
+                    } else {
+                        throw new IllegalArgumentException("ERROR ## dbType = " + dbType
+                                                           + " is not support");
                     }
                     return visitor;
                 }
@@ -132,13 +140,18 @@ public class DefaultSQLParser implements SQLParser {
      * @param isMysql
      * @return
      */
-    private List<SQLStatement> getSqlStatements(final String sql, final boolean isMysql) {
-        if (isMysql == true) {
+    private List<SQLStatement> getSqlStatements(final String sql, final DBType dbType) {
+        if (dbType.isMysql()) {
             MySqlStatementParser parser = new MySqlStatementParser(sql);
             return parser.parseStatementList();
-        } else {
+        } else if (dbType.isOracle()) {
             OracleStatementParser parser = new OracleStatementParser(sql);
             return parser.parseStatementList();
+        } else if (dbType.isDB2()) {
+            OracleStatementParser parser = new OracleStatementParser(sql);
+            return parser.parseStatementList();
+        } else {
+            throw new IllegalArgumentException("ERROR ## dbType = " + dbType + " is not support");
         }
     }
 

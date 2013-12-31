@@ -200,6 +200,12 @@ public class OracleSelectParser extends SQLSelectParser {
                 }
 
                 select.setRestriction(checkOption);
+            } else if (lexer.token() == Token.RR) {
+                lexer.nextToken();
+            } else if (lexer.token() == Token.RS) {
+                lexer.nextToken();
+            } else if (lexer.token() == Token.UR) {
+                lexer.nextToken();
             } else {
                 throw new ParserException("syntax error");
             }
