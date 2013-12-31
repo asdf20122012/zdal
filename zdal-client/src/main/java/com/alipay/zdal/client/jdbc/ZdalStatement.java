@@ -71,6 +71,12 @@ public class ZdalStatement implements Statement {
                                                                          .compile(
                                                                              "^select\\s+.*\\s+for\\s+update.*$",
                                                                              Pattern.CASE_INSENSITIVE);
+
+    /**从DB2的系统表中获取sequence和事件的sql.  */
+    private static final Pattern      SELECT_FROM_SYSTEMIBM          = Pattern
+                                                                         .compile(
+                                                                             "^select\\s+.*\\s+from\\s+sysibm.*$",
+                                                                             Pattern.CASE_INSENSITIVE);
     private static final Pattern      SELECT_FROM_DUAL_PATTERN       = Pattern
                                                                          .compile(
                                                                              "^select\\s+.*\\s+from\\s+dual.*$",
@@ -195,6 +201,8 @@ public class ZdalStatement implements Statement {
                     sqlType = SqlType.SELECT_FROM_DUAL;
                 } else if (SELECT_FOR_UPDATE_PATTERN.matcher(noCommentsSql).matches()) {
                     sqlType = SqlType.SELECT_FOR_UPDATE;
+                } else if (SELECT_FROM_SYSTEMIBM.matcher(noCommentsSql).matches()) {
+                    sqlType = SqlType.SELECT_FROM_SYSTEMIBM;
                 } else {
                     sqlType = SqlType.SELECT;
                 }
