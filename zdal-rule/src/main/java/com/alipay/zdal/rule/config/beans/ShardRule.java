@@ -3,33 +3,14 @@ package com.alipay.zdal.rule.config.beans;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alipay.zdal.common.DBType;
-
 /**
  * 一份完整的分库分表规则配置，一套库一份
  *  
  * @author linxuan
  */
 public class ShardRule implements Cloneable {
-    private DBType                          dbtype;
     private Map<String/*逻辑表名*/, TableRule> tableRules;
     private String                          defaultDbIndex;
-
-    /**
-     * 有逻辑的getter/setter
-     * spring的bug：当getter返回值和setter参数类型不同时会报错
-     */
-    public DBType getDbType() {
-        return dbtype;
-    }
-
-    public String getDbtype() {
-        return dbtype.toString();
-    }
-
-    public void setDbtype(String dbtype) {
-        this.dbtype = DBType.valueOf(dbtype);
-    }
 
     /**
      * 无逻辑的getter/setter
@@ -89,9 +70,6 @@ public class ShardRule implements Cloneable {
     	    }*/
 
     public boolean equals(Object obj) {
-        if (dbtype == null) {
-            return false;
-        }
         //  tableRules
         ShardRule shardRule = (ShardRule) obj;
         Map<String/*逻辑表名*/, TableRule> tableRules = shardRule.getTableRules();

@@ -25,7 +25,7 @@ public abstract class ZdalDataSourceConfig {
     /** 数据源的名称. */
     protected String               appDsName     = null;
 
-    /** 数据库环境参数,先从bean的参数里面获取,再从System.getProperty中获取,如果都不存在,就抛出异常(都默认转化成小写字母). */
+    /** 连接数据库的环境,开发,测试,线上环境等. */
     protected String               dbmode;
 
     /** 本地配置文件存放的路径. */

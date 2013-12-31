@@ -82,16 +82,12 @@ public class ZdalRoot {
         }
     }
 
-    public Object getDBType() {
+    public DBType getDBType() {
         return dbType;
     }
 
-    public void setDBType(Object dbType) {
-        if (dbType instanceof DBType) {
-            this.dbType = (DBType) dbType;
-        } else if (dbType instanceof String) {
-            this.dbType = DBType.valueOf(((String) dbType).toUpperCase());
-        }
+    public void setDBType(DBType dbType) {
+        this.dbType = dbType;
     }
 
     public String getDefaultDBSelectorID() {

@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	classpath:spring/spring-beans-2.5.xsd"
 	default-autowire="byName">
 		<bean id="testRule" class="com.alipay.zdal.rule.config.beans.AppRule">
 		<property name="masterRule" ref="testRWRule" />
@@ -10,7 +10,6 @@
 	</bean>
 	
 	<bean id="testRWRule" class="com.alipay.zdal.rule.config.beans.ShardRule">
-		<property name="dbtype" value="MYSQL" />
 		<property name="tableRules">
 			<map>
 				<entry key="user" value-ref="userTableRule" />

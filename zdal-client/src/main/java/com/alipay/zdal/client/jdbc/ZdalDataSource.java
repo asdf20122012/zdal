@@ -22,19 +22,18 @@ import com.alipay.zdal.common.Closable;
  * @author ²®ÑÀ
  * @version $Id: ZdalDataSource.java, v 0.1 2012-11-17 ÏÂÎç4:08:43 Exp $
  */
-public class ZdalDataSource extends AbstractZdalDataSource implements
-		DataSource, Closable {
+public class ZdalDataSource extends AbstractZdalDataSource implements DataSource, Closable {
 
-	public void init() {
-		if (super.inited.get() == true) {
-			throw new ZdalClientException("ERROR ## init twice");
-		}
-		try {
-			super.initZdalDataSource();
-		} catch (Exception e) {
-			CONFIG_LOGGER.error("zdal init fail,config:" + this.toString(), e);
-			throw new ZdalClientException(e);
-		}
+    public void init() {
+        if (super.inited.get() == true) {
+            throw new ZdalClientException("ERROR ## init twice");
+        }
+        try {
+            super.initZdalDataSource();
+        } catch (Exception e) {
+            CONFIG_LOGGER.error("zdal init fail,config:" + this.toString(), e);
+            throw new ZdalClientException(e);
+        }
 
-	}
+    }
 }

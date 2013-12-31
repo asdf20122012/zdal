@@ -36,7 +36,7 @@ import com.alipay.zdal.rule.ruleengine.entities.retvalue.TargetDB;
  * 
  * 最后返回需要的结果
  * 
- * @author shenxun
+ * @author xiaoqing.zhouxq
  * 
  */
 public class SpringBasedDispatcherImpl implements SqlDispatcher {
@@ -239,7 +239,7 @@ public class SpringBasedDispatcherImpl implements SqlDispatcher {
     }
 
     public DBType getDBType() {
-        return (DBType) root.getDBType();
+        return root.getDBType();
     }
 
 }

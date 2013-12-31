@@ -271,14 +271,14 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             return null;
 
         ZdalRoot zdalRoot = new ZdalRoot();
-        zdalRoot.setDBType(shardRule.getDbType());
+        zdalRoot.setDBType(this.dbType);
         Map<String/* key */, LogicTable> logicTableMap = new HashMap<String, LogicTable>();
         if (shardRule.getTableRules() != null) {
             for (Map.Entry<String/* 逻辑表名 */, TableRule> e : shardRule.getTableRules().entrySet()) {
-                setDbTypeForDbIndex(shardRule.getDbType(), e.getValue().getDbIndexArray());
+                setDbTypeForDbIndex(this.dbType, e.getValue().getDbIndexArray());
                 LogicTable logicTable = toLogicTable(e.getValue());
                 logicTable.setLogicTableName(e.getKey());
-                logicTable.setDBType(shardRule.getDbType());
+                logicTable.setDBType(this.dbType);
                 // logicTable.init(); //ZdalRoot.init()包含了logicTable.init()
                 logicTableMap.put(e.getKey(), logicTable);
             }
@@ -975,7 +975,7 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
         } else if (dbType.isDB2()) {
             dsDo.setExceptionSorterClassName(DB2ExceptionSorter.class.getName());
         } else {
-            throw new ZdalClientException("ERROR ## the DbType must be mysql/oracle.");
+            throw new ZdalClientException("ERROR ## the DbType must be mysql/oracle/db2.");
         }
         dsDo.setConnectionProperties(parameter.getConnectionProperties());
         return dsDo;
