@@ -31,17 +31,6 @@
 				value="%d [%X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n" />
 		</layout>
 	</appender>
-	<!--zdal-monitor日志appender-->
-	<appender name="zdal.monitor"
-		class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="./logs/zdal-monitor.log" />
-		<param name="append" value="true" />
-		<param name="encoding" value="GBK" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern"
-				value="%d [%X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n" />
-		</layout>
-	</appender>
 	<!--zdal数据源配置管控日志logger-->
 	<logger name="zdal-client-config" additivity="false">
 		<level value="info" /><!--log级别请填写antx配置文件中指定的值-->
@@ -54,14 +43,6 @@
 		<appender-ref ref="zdal.datasource.pool" />
 		<appender-ref ref="STDOUT" />
 	</logger>
-	
-	<!--zdal-monitor日志logger-->
-	<logger name="zdal-monitor" additivity="false">
-		<level value="info" /><!--log级别请填写antx配置文件中指定的值-->
-		<appender-ref ref="zdal.monitor" />
-		<appender-ref ref="STDOUT" />
-	</logger>
-
 
 	<logger name="stdout" additivity="false">
 		<level value="warn" />

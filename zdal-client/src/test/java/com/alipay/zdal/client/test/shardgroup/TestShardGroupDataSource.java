@@ -20,7 +20,7 @@ public class TestShardGroupDataSource {
 
     private static final String   DBMODE     = "dev";
 
-    private static final String   CONFIGPATH = "./configs/ShardFailover";
+    private static final String   CONFIGPATH = "./configs/ShardGroup";
 
     private static final String[] USER_IDS   = new String[] { "201312268302803810",
             "201312268302803811", "201312268302803812", "201312268302803813", "201312268302803814",
