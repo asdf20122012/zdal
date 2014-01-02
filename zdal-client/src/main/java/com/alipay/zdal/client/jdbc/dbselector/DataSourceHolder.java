@@ -28,7 +28,6 @@ import com.alipay.zdal.common.jdbc.sorter.OracleExceptionSorter;
  */
 public class DataSourceHolder {
 
-    //    private static final Log    logger              = LogFactory.getLog(DataSourceHolder.class);
     private static final Logger logger              = Logger
                                                         .getLogger(Constants.CONFIG_LOG_NAME_LOGNAME);
 

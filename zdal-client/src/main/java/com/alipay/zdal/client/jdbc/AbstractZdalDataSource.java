@@ -200,12 +200,12 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             this.appRule = zdalConfig.getAppRootRule();
             this.appRule.init();
             initForAppRule(appRule);
-            CONFIG_LOGGER.warn("WARN ## the shardRWWeight of " + appDsName + " is :"
+            CONFIG_LOGGER.warn("WARN ## the shardGroupWeight of " + appDsName + " is :"
                                + getReceivDataStr(zdalConfig.getGroupRules()));
         } else if (dbConfigType.isGroup()) {
             this.rwDataSourcePoolConfig = zdalConfig.getGroupRules();
             this.initForLoadBalance(zdalConfig.getDbType());
-            CONFIG_LOGGER.warn("WARN ## the RWWeight of " + appDsName + " is :"
+            CONFIG_LOGGER.warn("WARN ## the GroupWeight of " + appDsName + " is :"
                                + getReceivDataStr(zdalConfig.getGroupRules()));
         }
 
