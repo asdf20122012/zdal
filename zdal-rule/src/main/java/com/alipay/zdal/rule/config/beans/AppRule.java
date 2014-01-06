@@ -1,10 +1,13 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.config.beans;
 
 /**
  * 一份完整的读写分离和分库分表规则配置
  * 一个业务一份
  *  
- * @author linxuan
  */
 public class AppRule {
     public static final String DBINDEX_SUFFIX_READ  = "_r";

@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.util.condition;
 
 import java.util.HashMap;
@@ -32,8 +36,7 @@ public class TableShardingRuleImpl {
         }
         return retMap;
     }
-    
-  
+
     public void put(Map<String, String> parameters) {
         if (parameters == null) {
             throw new IllegalArgumentException("The parameters can't be null!");

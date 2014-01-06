@@ -23,7 +23,7 @@ public class PhysicalDataSourceBean implements InitializingBean {
 
     private static final String MYSQL_DRIVER_CLASS    = "com.mysql.jdbc.Driver";
 
-    private static final String DB2_DRIVER_CLASS      = "COM.ibm.db2.jdbc.app.DB2Driver";
+    private static final String DB2_DRIVER_CLASS      = "com.ibm.db2.jcc.DB2Driver";
 
     /** 物理数据源名称. */
     private String              name                  = "";
@@ -185,7 +185,7 @@ public class PhysicalDataSourceBean implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         if (StringUtil.isBlank(name)) {
-            throw new IllegalArgumentException("ERROR ## the name is null");
+            throw new IllegalArgumentException("ERROR ## the physicalDataSource's name is null");
         }
 
         if (logicDbNameSet == null || logicDbNameSet.isEmpty()) {
@@ -194,7 +194,7 @@ public class PhysicalDataSourceBean implements InitializingBean {
         }
 
         if (StringUtil.isBlank(jdbcUrl)) {
-            throw new IllegalArgumentException("ERROR ## the jdbcUrl is null");
+            throw new IllegalArgumentException("ERROR ## the jdbcUrl is null of " + name);
         }
         if (jdbcUrl.contains("oracle")) {
             this.driverClass = ORACLE_DRIVER_CLASS;
@@ -204,46 +204,49 @@ public class PhysicalDataSourceBean implements InitializingBean {
             this.driverClass = DB2_DRIVER_CLASS;
         } else {
             throw new IllegalArgumentException(
-                "ERROR ## the jdbcUrl is invalidate,must contain [oracle,mysql,db2]");
+                "ERROR ## the jdbcUrl is invalidate,must contain [oracle,mysql,db2] of " + name);
         }
 
         if (StringUtil.isBlank(userName)) {
-            throw new IllegalArgumentException("ERROR ## the userName is null");
+            throw new IllegalArgumentException("ERROR ## the userName is null of " + userName);
         }
 
         if (StringUtil.isBlank(password)) {
-            throw new IllegalArgumentException("ERROR ## the password is null");
+            throw new IllegalArgumentException("ERROR ## the password is null of " + password);
         }
 
         if (minConn < 0) {
-            throw new IllegalArgumentException("ERROR ## the minConn = " + minConn + " must >=0 ");
+            throw new IllegalArgumentException("ERROR ## the minConn = " + minConn
+                                               + " must >=0 of " + minConn);
         }
         if (maxConn < 0) {
-            throw new IllegalArgumentException("ERROR ## the maxConn = " + maxConn + " must >=0 ");
+            throw new IllegalArgumentException("ERROR ## the maxConn = " + maxConn
+                                               + " must >=0 of " + name);
         }
         if (minConn > maxConn) {
             throw new IllegalArgumentException("ERROR ## the maxConn[" + maxConn
-                                               + "] must >= minConn[" + minConn);
+                                               + "] must >= minConn[" + minConn + " of " + name);
         }
 
         if (blockingTimeoutMillis < 0) {
             throw new IllegalArgumentException("ERROR ## the blockingTimeoutMillis = "
-                                               + blockingTimeoutMillis + " must >= 0");
+                                               + blockingTimeoutMillis + " must >= 0 of " + name);
         }
 
         if (idleTimeoutMinutes <= 0) {
             throw new IllegalArgumentException("ERROR ## the idleTimeoutMinutes = "
-                                               + idleTimeoutMinutes + " must > 0");
+                                               + idleTimeoutMinutes + " must > 0 of " + name);
         }
 
         if (preparedStatementCacheSize < 0) {
             throw new IllegalArgumentException("ERROR ## the preparedStatementCacheSize = "
-                                               + preparedStatementCacheSize + " must >=0");
+                                               + preparedStatementCacheSize + " must >=0 of "
+                                               + name);
         }
 
         if (queryTimeout <= 0) {
             throw new IllegalArgumentException("ERROR ## the queryTimeout  = " + queryTimeout
-                                               + " must > 0 ");
+                                               + " must > 0 of " + name);
         }
     }
 

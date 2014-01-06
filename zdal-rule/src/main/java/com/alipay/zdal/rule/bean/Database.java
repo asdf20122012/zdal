@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.bean;
 
 import java.util.ArrayList;
@@ -26,7 +30,6 @@ import com.alipay.zdal.rule.ruleengine.util.RuleUtils;
 /**
  * 一个数据库的抽象
  * 
- * @author shenxun
  * 
  */
 public class Database extends ListSharedElement implements TablePropertiesSetter {

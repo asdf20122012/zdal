@@ -1,7 +1,13 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common;
 
 /**
- * @author linxuan
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: DBType.java, v 0.1 2014-1-6 ÏÂÎç05:17:17 Exp $
  */
 public enum DBType {
     ORACLE, MYSQL, DB2;

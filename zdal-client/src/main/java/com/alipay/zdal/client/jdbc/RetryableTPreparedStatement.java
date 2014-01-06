@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.Connection;
@@ -8,14 +12,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
 import com.alipay.zdal.common.OperationDBType;
 
 public class RetryableTPreparedStatement extends ZdalPreparedStatement {
-    private static final Log logger = LogFactory.getLog(RetryableTPreparedStatement.class);
+    private static final Logger logger = Logger.getLogger(RetryableTPreparedStatement.class);
 
     public RetryableTPreparedStatement(SqlDispatcher writeDispatcher, SqlDispatcher readDispatcher) {
         super(writeDispatcher, readDispatcher);

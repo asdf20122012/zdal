@@ -61,16 +61,16 @@ public class ZdalAppBean implements InitializingBean {
             throw new IllegalArgumentException("ERROR ## the appName is null");
         }
         if (StringUtil.isBlank(dbmode)) {
-            throw new IllegalArgumentException("ERROR ## the dbmode is null");
+            throw new IllegalArgumentException("ERROR ## the dbmode is null of " + appName);
         }
         if (appDataSourceList == null || appDataSourceList.isEmpty()) {
-            throw new IllegalArgumentException("ERROR ## the appDataSource is empty");
+            throw new IllegalArgumentException("ERROR ## the appDataSource is empty of " + appName);
         } else {
             //校验是否有同名的appDataSourceName,借助于AppDataSourceBean.equeals,hashcode.
             Set<AppDataSourceBean> tmp = new HashSet<AppDataSourceBean>(appDataSourceList);
             if (tmp.size() != appDataSourceList.size()) {
                 throw new IllegalArgumentException(
-                    "ERROR ## the appDataSourceList has same appDataSourceName");
+                    "ERROR ## the appDataSourceList has same appDataSourceName of " + appName);
             }
         }
     }

@@ -1,7 +1,13 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common;
 
 /**
- * @author linxuan
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: SqlType.java, v 0.1 2014-1-6 ÏÂÎç05:17:36 Exp $
  */
 public enum SqlType {
     SELECT(0), INSERT(1), UPDATE(2), DELETE(3), SELECT_FOR_UPDATE(4), SELECT_FROM_DUAL(5), SELECT_FROM_SYSTEMIBM(

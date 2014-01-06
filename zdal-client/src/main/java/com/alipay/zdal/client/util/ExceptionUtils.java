@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.util;
 
 import java.sql.SQLException;
@@ -8,6 +12,11 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: ExceptionUtils.java, v 0.1 2014-1-6 ÏÂÎç05:15:12 Exp $
+ */
 public class ExceptionUtils {
     public static final String  SQL_EXECUTION_ERROR_CONTEXT_LOG     = "SQL_EXECUTION_ERROR_CONTEXT_LOG";
     private static final String SQL_EXECUTION_ERROR_CONTEXT_MESSAGE = "SQLException ,context is ";

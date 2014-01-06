@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.config.beans;
 
 import groovy.lang.Binding;
@@ -17,7 +21,6 @@ import com.alipay.zdal.common.util.TableSuffixTypeEnum;
 /**
  * 一个逻辑表怎样分库分表
  * 
- * @author linxuan
  *
  */
 public class TableRule implements Cloneable {

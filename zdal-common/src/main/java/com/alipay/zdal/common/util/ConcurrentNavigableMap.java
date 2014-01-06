@@ -1,12 +1,12 @@
-/*
- * @(#)ConcurrentNavigableMap.java	1.5 06/05/10
- *
- * Copyright 2006 Sun Microsystems, Inc. All rights reserved.
- * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
  */
-
 package com.alipay.zdal.common.util;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -17,57 +17,52 @@ import java.util.concurrent.ConcurrentMap;
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
  *
- * @author Doug Lea
- * @param <K> the type of keys maintained by this map
- * @param <V> the type of mapped values
- * @since 1.6
+ * @author ²®ÑÀ
+ * @version $Id: ConcurrentNavigableMap.java, v 0.1 2014-1-6 ÏÂÎç05:22:10 Exp $
  */
-public interface ConcurrentNavigableMap<K,V>
-    extends ConcurrentMap<K,V>, NavigableMap<K,V>
-{
+public interface ConcurrentNavigableMap<K, V> extends ConcurrentMap<K, V>, NavigableMap<K, V> {
     /**
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    ConcurrentNavigableMap<K,V> subMap(K fromKey, boolean fromInclusive,
-                                       K toKey,   boolean toInclusive);
+    ConcurrentNavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey,
+                                        boolean toInclusive);
 
     /**
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    ConcurrentNavigableMap<K,V> headMap(K toKey, boolean inclusive);
-
-
-    /**
-     * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     {@inheritDoc}
-     * @throws IllegalArgumentException {@inheritDoc}
-     */
-    ConcurrentNavigableMap<K,V> tailMap(K fromKey, boolean inclusive);
+    ConcurrentNavigableMap<K, V> headMap(K toKey, boolean inclusive);
 
     /**
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    ConcurrentNavigableMap<K,V> subMap(K fromKey, K toKey);
+    ConcurrentNavigableMap<K, V> tailMap(K fromKey, boolean inclusive);
 
     /**
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    ConcurrentNavigableMap<K,V> headMap(K toKey);
+    ConcurrentNavigableMap<K, V> subMap(K fromKey, K toKey);
 
     /**
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    ConcurrentNavigableMap<K,V> tailMap(K fromKey);
+    ConcurrentNavigableMap<K, V> headMap(K toKey);
+
+    /**
+     * @throws ClassCastException       {@inheritDoc}
+     * @throws NullPointerException     {@inheritDoc}
+     * @throws IllegalArgumentException {@inheritDoc}
+     */
+    ConcurrentNavigableMap<K, V> tailMap(K fromKey);
 
     /**
      * Returns a reverse order view of the mappings contained in this map.
@@ -81,7 +76,7 @@ public interface ConcurrentNavigableMap<K,V>
      *
      * @return a reverse order view of this map
      */
-    ConcurrentNavigableMap<K,V> descendingMap();
+    ConcurrentNavigableMap<K, V> descendingMap();
 
     /**
      * Returns a {@link NavigableSet} view of the keys contained in this map.

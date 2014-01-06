@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.SQLException;
@@ -12,13 +16,11 @@ import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.OperationDBType;
 import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
 
-
 /**
  * 对等数据库选择器。
  * 在数据完全相同的一组库中选择一个库
  * 用于对HA/RAC情况,多个读库中取一个读的操作
  * 
- * @author linxuan
  */
 public interface DBSelector {
 
@@ -87,7 +89,7 @@ public interface DBSelector {
      */
     <T> T tryExecute(Map<DataSource, SQLException> failedDataSources, DataSourceTryer<T> tryer,
                      int times, DB_OPERATION_TYPE operationType, Object... args)
-                                                                                 throws SQLException;
+                                                                                throws SQLException;
 
     /**
      * 是否支持重试

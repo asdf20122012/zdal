@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.rule;
 
 import java.util.HashMap;
@@ -17,7 +21,6 @@ import com.alipay.zdal.rule.ruleengine.cartesianproductcalculator.SamplingField;
  * 需要做映射的对象以后，调用get方法进行映射。
  * 然后将映射的结果带入targetRule进行运算
  * 
- * @author shenxun
  *
  */
 public abstract class AbstractMappingRule extends CartesianProductBasedListResultRule {

@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.SQLException;
@@ -11,121 +15,121 @@ import javax.sql.DataSource;
 import com.alipay.zdal.parser.GroupFunctionType;
 import com.alipay.zdal.parser.visitor.OrderByEle;
 
-
-
-
+/**
+ * sql执行的上下文.
+ * @author 伯牙
+ * @version $Id: SqlExecutionContext.java, v 0.1 2014-1-6 下午04:54:59 Exp $
+ */
 public class SqlExecutionContext {
-	private Map<String/*数据源ID*/, SqlAndTable[]/*数据源上要执行的SQL*/> targetSqls = new HashMap<String, SqlAndTable[]>();
-	private Map<Integer/*绑定参数编号，从0开始*/, Object/*绑定参数*/> changedParameters = Collections.emptyMap();
-	private List<OrderByEle> orderByColumns;
-	private int skip;
-	private int max;
-	private GroupFunctionType groupFunctionType;
-	/**
-	 * 决定是否使用空结果集，主要是为了mappring rule如果sql中虽然有可以被mappingrule使用的分库分表数据
-	 * 但数据库内没有数据的时候，业务方要求返回空的结果集。
-	 */
-	private boolean mappingRuleReturnNullValue = false;
-	
-	//private RetringContext retringContext;
-	//private boolean needRetry;
-	Map<DataSource,SQLException> failedDataSources;
+    private Map<String/*数据源ID*/, SqlAndTable[]/*数据源上要执行的SQL*/> targetSqls                 = new HashMap<String, SqlAndTable[]>();
+    private Map<Integer/*绑定参数编号，从0开始*/, Object/*绑定参数*/>        changedParameters          = Collections
+                                                                                                .emptyMap();
+    private List<OrderByEle>                                     orderByColumns;
+    private int                                                  skip;
+    private int                                                  max;
+    private GroupFunctionType                                    groupFunctionType;
+    /**
+     * 决定是否使用空结果集，主要是为了mappring rule如果sql中虽然有可以被mappingrule使用的分库分表数据
+     * 但数据库内没有数据的时候，业务方要求返回空的结果集。
+     */
+    private boolean                                              mappingRuleReturnNullValue = false;
 
-	private String virtualTableName;
-	
-	private List<SqlExecuteEvent> events;
+    //private RetringContext retringContext;
+    //private boolean needRetry;
+    Map<DataSource, SQLException>                                failedDataSources;
 
-	public Map<String, SqlAndTable[]> getTargetSqls() {
-		return targetSqls;
-	}
+    private String                                               virtualTableName;
 
-	public void setTargetSqls(Map<String, SqlAndTable[]> targetSqls) {
-		this.targetSqls = targetSqls;
-	}
+    private List<SqlExecuteEvent>                                events;
 
-	public Map<Integer, Object> getChangedParameters() {
-		return changedParameters;
-	}
+    public Map<String, SqlAndTable[]> getTargetSqls() {
+        return targetSqls;
+    }
 
-	public void setChangedParameters(Map<Integer, Object> changedParameters) {
-		this.changedParameters = changedParameters;
-	}
+    public void setTargetSqls(Map<String, SqlAndTable[]> targetSqls) {
+        this.targetSqls = targetSqls;
+    }
 
-	public List<OrderByEle> getOrderByColumns() {
-		return orderByColumns;
-	}
+    public Map<Integer, Object> getChangedParameters() {
+        return changedParameters;
+    }
 
-	public void setOrderByColumns(List<OrderByEle> orderByColumns) {
-		this.orderByColumns = orderByColumns;
-	}
+    public void setChangedParameters(Map<Integer, Object> changedParameters) {
+        this.changedParameters = changedParameters;
+    }
 
-	public int getSkip() {
-		return skip;
-	}
+    public List<OrderByEle> getOrderByColumns() {
+        return orderByColumns;
+    }
 
-	public void setSkip(int skip) {
-		this.skip = skip;
-	}
+    public void setOrderByColumns(List<OrderByEle> orderByColumns) {
+        this.orderByColumns = orderByColumns;
+    }
 
-	public int getMax() {
-		return max;
-	}
+    public int getSkip() {
+        return skip;
+    }
 
-	public void setMax(int max) {
-		this.max = max;
-	}
+    public void setSkip(int skip) {
+        this.skip = skip;
+    }
 
-	public List<SqlExecuteEvent> getEvents() {
-		return events;
-	}
+    public int getMax() {
+        return max;
+    }
 
-	public void setEvents(List<SqlExecuteEvent> events) {
-		this.events = events;
-	}
+    public void setMax(int max) {
+        this.max = max;
+    }
 
-	public void setGroupFunctionType(GroupFunctionType groupFunctionType) {
-		this.groupFunctionType = groupFunctionType;
-	}
+    public List<SqlExecuteEvent> getEvents() {
+        return events;
+    }
 
-	public GroupFunctionType getGroupFunctionType() {
-		return groupFunctionType;
-	}
+    public void setEvents(List<SqlExecuteEvent> events) {
+        this.events = events;
+    }
 
-	public String getVirtualTableName() {
-		return virtualTableName;
-	}
+    public void setGroupFunctionType(GroupFunctionType groupFunctionType) {
+        this.groupFunctionType = groupFunctionType;
+    }
 
-	public void setVirtualTableName(String virtualTableName) {
-		this.virtualTableName = virtualTableName;
-	}
+    public GroupFunctionType getGroupFunctionType() {
+        return groupFunctionType;
+    }
 
-	/*
-	public RetringContext getRetringContext() {
-		return retringContext;
-	}
+    public String getVirtualTableName() {
+        return virtualTableName;
+    }
 
-	public void setRetringContext(RetringContext retringContext) {
-		this.retringContext = retringContext;
-	}
-	*/
+    public void setVirtualTableName(String virtualTableName) {
+        this.virtualTableName = virtualTableName;
+    }
 
-	public Map<DataSource, SQLException> getFailedDataSources() {
-		return failedDataSources;
-	}
+    /*
+    public RetringContext getRetringContext() {
+    	return retringContext;
+    }
 
-	public void setFailedDataSources(Map<DataSource, SQLException> failedDataSources) {
-		this.failedDataSources = failedDataSources;
-	}
+    public void setRetringContext(RetringContext retringContext) {
+    	this.retringContext = retringContext;
+    }
+    */
 
-	public boolean mappingRuleReturnNullValue() {
-		return mappingRuleReturnNullValue;
-	}
-	
+    public Map<DataSource, SQLException> getFailedDataSources() {
+        return failedDataSources;
+    }
 
-	public void setRuleReturnNullValue(boolean needEmptyResultSet) {
-		this.mappingRuleReturnNullValue = needEmptyResultSet;
-	}
-	
-	
-	
+    public void setFailedDataSources(Map<DataSource, SQLException> failedDataSources) {
+        this.failedDataSources = failedDataSources;
+    }
+
+    public boolean mappingRuleReturnNullValue() {
+        return mappingRuleReturnNullValue;
+    }
+
+    public void setRuleReturnNullValue(boolean needEmptyResultSet) {
+        this.mappingRuleReturnNullValue = needEmptyResultSet;
+    }
+
 }

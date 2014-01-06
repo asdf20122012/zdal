@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.dbselector;
 
 import java.sql.SQLException;
@@ -8,14 +12,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
-import com.alipay.zdal.common.WeightRandom;
 import com.alipay.zdal.common.OperationDBType;
+import com.alipay.zdal.common.WeightRandom;
 import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
-
 
 /**
  * 按优先级选择的selector
@@ -32,22 +34,21 @@ import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
  * 2. 一个权重推送的信息中，。。。 
  * 3. 一个数据源只能在一个优先级组中？
  * 
- * @author linxuan
  * 
  */
 public class PriorityDbGroupSelector extends AbstractDBSelector {
-    private static final Log  logger = LogFactory.getLog(PriorityDbGroupSelector.class);
+    private static final Logger         logger = Logger.getLogger(PriorityDbGroupSelector.class);
 
     /**
      * 按优先级顺序存放数据库组。元素0优先级最高。每个EquityDbManager元素代表具有相同优先级的一组数据库
      */
     //private EquityDbManager[] priorityGroups;
-    
+
     private PriorityGroupsDataSources[] priorityGroupsDataSourceHolder;
 
     public PriorityDbGroupSelector(String id, EquityDbManager[] priorityGroups) {
         super(id);
-       // this.priorityGroups = priorityGroups;
+        // this.priorityGroups = priorityGroups;
         if (priorityGroupsDataSourceHolder == null) {
             priorityGroupsDataSourceHolder = new PriorityGroupsDataSources[priorityGroups.length];
         }
@@ -121,8 +122,7 @@ public class PriorityDbGroupSelector extends AbstractDBSelector {
      */
     public <T> T tryExecute(Map<DataSource, SQLException> failedDataSources,
                             DataSourceTryer<T> tryer, int times, DB_OPERATION_TYPE operationType,
-                            Object... args)
-                                                                                throws SQLException {
+                            Object... args) throws SQLException {
         final List<SQLException> historyExceptions = new ArrayList<SQLException>(0);
         DataSourceTryer<T> wrapperTryer = new DataSourceTryerWrapper<T>(tryer, historyExceptions);
 
@@ -150,7 +150,7 @@ public class PriorityDbGroupSelector extends AbstractDBSelector {
         }
         return priorityGroups;
     }
-    
+
     private EquityDbManager getEquityDbManager(int i) {
         if (priorityGroupsDataSourceHolder[i] == null
             || priorityGroupsDataSourceHolder[i].getEquityDbManager() == null) {

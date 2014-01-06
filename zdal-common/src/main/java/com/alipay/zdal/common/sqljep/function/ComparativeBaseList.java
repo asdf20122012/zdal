@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.sqljep.function;
 
 import java.lang.reflect.Constructor;
@@ -9,7 +13,6 @@ import java.util.List;
  * 
  * 是对and 节点和or节点的一种公共抽象。
  * 
- * @author shenxun
  *
  */
 public abstract class ComparativeBaseList extends Comparative {

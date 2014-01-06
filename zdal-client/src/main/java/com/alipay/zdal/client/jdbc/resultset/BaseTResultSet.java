@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.resultset;
 
 import java.io.InputStream;
@@ -19,501 +23,498 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.jdbc.ZdalStatement;
 
-
-
 public abstract class BaseTResultSet extends AbstractTResultSet {
-	public BaseTResultSet(ZdalStatement statementProxy, List<ResultSet> resultSets) {
-		super(statementProxy, resultSets);
-	}
+    public BaseTResultSet(ZdalStatement statementProxy, List<ResultSet> resultSets) {
+        super(statementProxy, resultSets);
+    }
 
-	private static final Log log = LogFactory.getLog(BaseTResultSet.class);
-	private int fetchSize;
-	private int fetchDirection = FETCH_FORWARD;
-	
-	protected int currentIndex;
-	
-	protected int limitTo = -1;
-	protected int limitFrom = 0;
+    private static final Logger log            = Logger.getLogger(BaseTResultSet.class);
+    private int                 fetchSize;
+    private int                 fetchDirection = FETCH_FORWARD;
 
-	public int getLimitTo() {
-		return limitTo;
-	}
+    protected int               currentIndex;
 
-	public void setLimitTo(int limitTo) {
-		this.limitTo = limitTo;
-	}
-	
-	public void setLimitFrom(int limitFrom) {
-		this.limitFrom = limitFrom;
-	}
+    protected int               limitTo        = -1;
+    protected int               limitFrom      = 0;
 
-	public int getLimitFrom() {
-		return limitFrom;
-	}
+    public int getLimitTo() {
+        return limitTo;
+    }
 
-	public int findColumn(String columnName) throws SQLException {
-		checkClosed();
+    public void setLimitTo(int limitTo) {
+        this.limitTo = limitTo;
+    }
 
-		return actualResultSets.get(currentIndex).findColumn(columnName);
-	}
+    public void setLimitFrom(int limitFrom) {
+        this.limitFrom = limitFrom;
+    }
 
-	public Array getArray(int i) throws SQLException {
-		checkClosed();
+    public int getLimitFrom() {
+        return limitFrom;
+    }
 
-		return actualResultSets.get(currentIndex).getArray(i);
-	}
+    public int findColumn(String columnName) throws SQLException {
+        checkClosed();
 
-	public Array getArray(String colName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).findColumn(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getArray(colName);
-	}
+    public Array getArray(int i) throws SQLException {
+        checkClosed();
 
-	public InputStream getAsciiStream(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getArray(i);
+    }
 
-		return actualResultSets.get(currentIndex).getAsciiStream(columnIndex);
-	}
+    public Array getArray(String colName) throws SQLException {
+        checkClosed();
 
-	public InputStream getAsciiStream(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getArray(colName);
+    }
 
-		return actualResultSets.get(currentIndex).getAsciiStream(columnName);
-	}
+    public InputStream getAsciiStream(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getAsciiStream(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getBigDecimal(columnIndex);
-	}
+    public InputStream getAsciiStream(String columnName) throws SQLException {
+        checkClosed();
 
-	public BigDecimal getBigDecimal(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getAsciiStream(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getBigDecimal(columnName);
-	}
+    public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
+        checkClosed();
 
-	@Deprecated
-	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBigDecimal(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getBigDecimal(columnIndex, scale);
-	}
+    public BigDecimal getBigDecimal(String columnName) throws SQLException {
+        checkClosed();
 
-	@Deprecated
-	public BigDecimal getBigDecimal(String columnName, int scale) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBigDecimal(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getBigDecimal(columnName, scale);
-	}
+    @Deprecated
+    public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
+        checkClosed();
 
-	public InputStream getBinaryStream(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBigDecimal(columnIndex, scale);
+    }
 
-		return actualResultSets.get(currentIndex).getBinaryStream(columnIndex);
-	}
+    @Deprecated
+    public BigDecimal getBigDecimal(String columnName, int scale) throws SQLException {
+        checkClosed();
 
-	public InputStream getBinaryStream(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBigDecimal(columnName, scale);
+    }
 
-		return actualResultSets.get(currentIndex).getBinaryStream(columnName);
-	}
+    public InputStream getBinaryStream(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Blob getBlob(int i) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBinaryStream(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getBlob(i);
-	}
+    public InputStream getBinaryStream(String columnName) throws SQLException {
+        checkClosed();
 
-	public Blob getBlob(String colName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBinaryStream(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getBlob(colName);
-	}
+    public Blob getBlob(int i) throws SQLException {
+        checkClosed();
 
-	public boolean getBoolean(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBlob(i);
+    }
 
-		return actualResultSets.get(currentIndex).getBoolean(columnIndex);
-	}
+    public Blob getBlob(String colName) throws SQLException {
+        checkClosed();
 
-	public boolean getBoolean(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBlob(colName);
+    }
 
-		return actualResultSets.get(currentIndex).getBoolean(columnName);
-	}
+    public boolean getBoolean(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public byte getByte(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBoolean(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getByte(columnIndex);
-	}
+    public boolean getBoolean(String columnName) throws SQLException {
+        checkClosed();
 
-	public byte getByte(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBoolean(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getByte(columnName);
-	}
+    public byte getByte(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public byte[] getBytes(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getByte(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getBytes(columnIndex);
-	}
+    public byte getByte(String columnName) throws SQLException {
+        checkClosed();
 
-	public byte[] getBytes(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getByte(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getBytes(columnName);
-	}
+    public byte[] getBytes(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Reader getCharacterStream(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBytes(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getCharacterStream(columnIndex);
-	}
+    public byte[] getBytes(String columnName) throws SQLException {
+        checkClosed();
 
-	public Reader getCharacterStream(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getBytes(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getCharacterStream(columnName);
-	}
+    public Reader getCharacterStream(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Clob getClob(int i) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getCharacterStream(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getClob(i);
-	}
+    public Reader getCharacterStream(String columnName) throws SQLException {
+        checkClosed();
 
-	public Clob getClob(String colName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getCharacterStream(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getClob(colName);
-	}
+    public Clob getClob(int i) throws SQLException {
+        checkClosed();
 
-	public int getConcurrency() throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getClob(i);
+    }
 
-		return actualResultSets.get(currentIndex).getConcurrency();
-	}
+    public Clob getClob(String colName) throws SQLException {
+        checkClosed();
 
-	public String getCursorName() throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getClob(colName);
+    }
 
-		return actualResultSets.get(currentIndex).getCursorName();
-	}
+    public int getConcurrency() throws SQLException {
+        checkClosed();
 
-	public Date getDate(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getConcurrency();
+    }
 
-		return actualResultSets.get(currentIndex).getDate(columnIndex);
-	}
+    public String getCursorName() throws SQLException {
+        checkClosed();
 
-	public Date getDate(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getCursorName();
+    }
 
-		return actualResultSets.get(currentIndex).getDate(columnName);
-	}
+    public Date getDate(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDate(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getDate(columnIndex, cal);
-	}
+    public Date getDate(String columnName) throws SQLException {
+        checkClosed();
 
-	public Date getDate(String columnName, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDate(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getDate(columnName, cal);
-	}
+    public Date getDate(int columnIndex, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public double getDouble(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDate(columnIndex, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getDouble(columnIndex);
-	}
+    public Date getDate(String columnName, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public double getDouble(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDate(columnName, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getDouble(columnName);
-	}
+    public double getDouble(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public float getFloat(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDouble(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getFloat(columnIndex);
-	}
+    public double getDouble(String columnName) throws SQLException {
+        checkClosed();
 
-	public float getFloat(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getDouble(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getFloat(columnName);
-	}
+    public float getFloat(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public int getInt(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getFloat(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getInt(columnIndex);
-	}
+    public float getFloat(String columnName) throws SQLException {
+        checkClosed();
 
-	public int getInt(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getFloat(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getInt(columnName);
-	}
+    public int getInt(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public long getLong(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getInt(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getLong(columnIndex);
-	}
+    public int getInt(String columnName) throws SQLException {
+        checkClosed();
 
-	public long getLong(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getInt(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getLong(columnName);
-	}
+    public long getLong(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public ResultSetMetaData getMetaData() throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getLong(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getMetaData();
-	}
+    public long getLong(String columnName) throws SQLException {
+        checkClosed();
 
-	public Object getObject(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getLong(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getObject(columnIndex);
-	}
+    public ResultSetMetaData getMetaData() throws SQLException {
+        checkClosed();
 
-	public Object getObject(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getMetaData();
+    }
 
-		return actualResultSets.get(currentIndex).getObject(columnName);
-	}
+    public Object getObject(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Object getObject(int i, Map<String, Class<?>> map) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getObject(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getObject(i, map);
-	}
+    public Object getObject(String columnName) throws SQLException {
+        checkClosed();
 
-	public Object getObject(String colName, Map<String, Class<?>> map) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getObject(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getObject(colName, map);
-	}
+    public Object getObject(int i, Map<String, Class<?>> map) throws SQLException {
+        checkClosed();
 
-	public Ref getRef(int i) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getObject(i, map);
+    }
 
-		return actualResultSets.get(currentIndex).getRef(i);
-	}
+    public Object getObject(String colName, Map<String, Class<?>> map) throws SQLException {
+        checkClosed();
 
-	public Ref getRef(String colName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getObject(colName, map);
+    }
 
-		return actualResultSets.get(currentIndex).getRef(colName);
-	}
+    public Ref getRef(int i) throws SQLException {
+        checkClosed();
 
-	public short getShort(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getRef(i);
+    }
 
-		return actualResultSets.get(currentIndex).getShort(columnIndex);
-	}
+    public Ref getRef(String colName) throws SQLException {
+        checkClosed();
 
-	public short getShort(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getRef(colName);
+    }
 
-		return actualResultSets.get(currentIndex).getShort(columnName);
-	}
+    public short getShort(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Statement getStatement() throws SQLException {
-		return statementProxy;
-	}
+        return actualResultSets.get(currentIndex).getShort(columnIndex);
+    }
 
-	public String getString(int columnIndex) throws SQLException {
-		checkClosed();
+    public short getShort(String columnName) throws SQLException {
+        checkClosed();
 
-		return actualResultSets.get(currentIndex).getString(columnIndex);
-	}
+        return actualResultSets.get(currentIndex).getShort(columnName);
+    }
 
-	public String getString(String columnName) throws SQLException {
-		checkClosed();
+    public Statement getStatement() throws SQLException {
+        return statementProxy;
+    }
 
-		return actualResultSets.get(currentIndex).getString(columnName);
-	}
+    public String getString(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Time getTime(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getString(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getTime(columnIndex);
-	}
+    public String getString(String columnName) throws SQLException {
+        checkClosed();
 
-	public Time getTime(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getString(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getTime(columnName);
-	}
+    public Time getTime(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTime(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getTime(columnIndex, cal);
-	}
+    public Time getTime(String columnName) throws SQLException {
+        checkClosed();
 
-	public Time getTime(String columnName, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTime(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getTime(columnName, cal);
-	}
+    public Time getTime(int columnIndex, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTime(columnIndex, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getTimestamp(columnIndex);
-	}
+    public Time getTime(String columnName, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public Timestamp getTimestamp(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTime(columnName, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getTimestamp(columnName);
-	}
+    public Timestamp getTimestamp(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTimestamp(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getTimestamp(columnIndex, cal);
-	}
+    public Timestamp getTimestamp(String columnName) throws SQLException {
+        checkClosed();
 
-	public Timestamp getTimestamp(String columnName, Calendar cal) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTimestamp(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getTimestamp(columnName, cal);
-	}
+    public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public int getType() throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTimestamp(columnIndex, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getType();
-	}
+    public Timestamp getTimestamp(String columnName, Calendar cal) throws SQLException {
+        checkClosed();
 
-	public URL getURL(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getTimestamp(columnName, cal);
+    }
 
-		return actualResultSets.get(currentIndex).getURL(columnIndex);
-	}
+    public int getType() throws SQLException {
+        checkClosed();
 
-	public URL getURL(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getType();
+    }
 
-		return actualResultSets.get(currentIndex).getURL(columnName);
-	}
+    public URL getURL(int columnIndex) throws SQLException {
+        checkClosed();
 
-	@Deprecated
-	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getURL(columnIndex);
+    }
 
-		return actualResultSets.get(currentIndex).getUnicodeStream(columnIndex);
-	}
+    public URL getURL(String columnName) throws SQLException {
+        checkClosed();
 
-	@Deprecated
-	public InputStream getUnicodeStream(String columnName) throws SQLException {
-		checkClosed();
+        return actualResultSets.get(currentIndex).getURL(columnName);
+    }
 
-		return actualResultSets.get(currentIndex).getUnicodeStream(columnName);
-	}
+    @Deprecated
+    public InputStream getUnicodeStream(int columnIndex) throws SQLException {
+        checkClosed();
 
-	public boolean next() throws SQLException {
-		checkClosed();
-		
-		if(actualResultSets.size() == 1) {
-			return actualResultSets.get(0).next();
-		}
-		
-		if(limitTo == 0) {
-			return false;
-		}
+        return actualResultSets.get(currentIndex).getUnicodeStream(columnIndex);
+    }
 
-		return internNext();
-	}
-	
-	protected abstract boolean internNext() throws SQLException;
-	
-	public static class CompareTypeUnsupported extends Exception {
-		private static final long serialVersionUID = 1L;
-	}
+    @Deprecated
+    public InputStream getUnicodeStream(String columnName) throws SQLException {
+        checkClosed();
 
-	/**
-	 * TODO: unused
-	 */
-	public int getFetchDirection() throws SQLException {
-		if (log.isDebugEnabled()) {
-			log.debug("invoke getFetchDirection");
-		}
+        return actualResultSets.get(currentIndex).getUnicodeStream(columnName);
+    }
 
-		checkClosed();
+    public boolean next() throws SQLException {
+        checkClosed();
 
-		return fetchDirection;
-	}
+        if (actualResultSets.size() == 1) {
+            return actualResultSets.get(0).next();
+        }
 
-	/**
-	 * TODO: unused
-	 */
-	public void setFetchDirection(int direction) throws SQLException {
-		if (log.isDebugEnabled()) {
-			log.debug("invoke setFetchDirection");
-		}
+        if (limitTo == 0) {
+            return false;
+        }
 
-		checkClosed();
+        return internNext();
+    }
 
-		if (direction != FETCH_FORWARD) {
-			throw new SQLException("only support fetch direction FETCH_FORWARD");
-		}
+    protected abstract boolean internNext() throws SQLException;
 
-		this.fetchDirection = direction;
-	}
+    public static class CompareTypeUnsupported extends Exception {
+        private static final long serialVersionUID = 1L;
+    }
 
-	/**
-	 * TODO: unused
-	 */
-	public int getFetchSize() throws SQLException {
-		if (log.isDebugEnabled()) {
-			log.debug("invoke getFetchSize");
-		}
+    /**
+     * TODO: unused
+     */
+    public int getFetchDirection() throws SQLException {
+        if (log.isDebugEnabled()) {
+            log.debug("invoke getFetchDirection");
+        }
 
-		checkClosed();
+        checkClosed();
 
-		return fetchSize;
-	}
+        return fetchDirection;
+    }
 
-	/**
-	 * TODO: unused
-	 */
-	public void setFetchSize(int rows) throws SQLException {
-		if (log.isDebugEnabled()) {
-			log.debug("invoke setFetchSize");
-		}
+    /**
+     * TODO: unused
+     */
+    public void setFetchDirection(int direction) throws SQLException {
+        if (log.isDebugEnabled()) {
+            log.debug("invoke setFetchDirection");
+        }
 
-		checkClosed();
+        checkClosed();
 
-		if (rows < 0) {
-			throw new SQLException("fetch size must greater than or equal 0");
-		}
+        if (direction != FETCH_FORWARD) {
+            throw new SQLException("only support fetch direction FETCH_FORWARD");
+        }
 
-		this.fetchSize = rows;
-	}
+        this.fetchDirection = direction;
+    }
 
-	public boolean wasNull() throws SQLException {
-		checkClosed();
+    /**
+     * TODO: unused
+     */
+    public int getFetchSize() throws SQLException {
+        if (log.isDebugEnabled()) {
+            log.debug("invoke getFetchSize");
+        }
 
-		return actualResultSets.get(currentIndex).wasNull();
-	}
+        checkClosed();
+
+        return fetchSize;
+    }
+
+    /**
+     * TODO: unused
+     */
+    public void setFetchSize(int rows) throws SQLException {
+        if (log.isDebugEnabled()) {
+            log.debug("invoke setFetchSize");
+        }
+
+        checkClosed();
+
+        if (rows < 0) {
+            throw new SQLException("fetch size must greater than or equal 0");
+        }
+
+        this.fetchSize = rows;
+    }
+
+    public boolean wasNull() throws SQLException {
+        checkClosed();
+
+        return actualResultSets.get(currentIndex).wasNull();
+    }
 
 }

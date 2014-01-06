@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.rule;
 
 import java.util.Arrays;
@@ -13,7 +17,6 @@ import com.alipay.zdal.rule.bean.AdvancedParameter;
 
 /**
  * 规则的总抽象 规则由参数和表达式组成
- * @author shenxun
  *
  */
 public abstract class AbstractRule {

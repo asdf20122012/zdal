@@ -145,6 +145,18 @@ public class AppDataSourceBean implements InitializingBean {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((appDataSourceName == null) ? 0 : appDataSourceName.hashCode());
+        result = prime * result + ((appRule == null) ? 0 : appRule.hashCode());
+        result = prime * result + ((configType == null) ? 0 : configType.hashCode());
+        result = prime * result + ((dataBaseType == null) ? 0 : dataBaseType.hashCode());
+        result = prime * result
+                 + ((dataSourceConfigType == null) ? 0 : dataSourceConfigType.hashCode());
+        result = prime * result + ((dbType == null) ? 0 : dbType.hashCode());
+        result = prime * result
+                 + ((failOverGroupRuleMap == null) ? 0 : failOverGroupRuleMap.hashCode());
+        result = prime * result
+                 + ((groupDataSourceRuleMap == null) ? 0 : groupDataSourceRuleMap.hashCode());
+        result = prime * result
+                 + ((physicalDataSourceSet == null) ? 0 : physicalDataSourceSet.hashCode());
         return result;
     }
 
@@ -161,6 +173,46 @@ public class AppDataSourceBean implements InitializingBean {
             if (other.appDataSourceName != null)
                 return false;
         } else if (!appDataSourceName.equals(other.appDataSourceName))
+            return false;
+        if (appRule == null) {
+            if (other.appRule != null)
+                return false;
+        } else if (!appRule.equals(other.appRule))
+            return false;
+        if (configType == null) {
+            if (other.configType != null)
+                return false;
+        } else if (!configType.equals(other.configType))
+            return false;
+        if (dataBaseType == null) {
+            if (other.dataBaseType != null)
+                return false;
+        } else if (!dataBaseType.equals(other.dataBaseType))
+            return false;
+        if (dataSourceConfigType == null) {
+            if (other.dataSourceConfigType != null)
+                return false;
+        } else if (!dataSourceConfigType.equals(other.dataSourceConfigType))
+            return false;
+        if (dbType == null) {
+            if (other.dbType != null)
+                return false;
+        } else if (!dbType.equals(other.dbType))
+            return false;
+        if (failOverGroupRuleMap == null) {
+            if (other.failOverGroupRuleMap != null)
+                return false;
+        } else if (!failOverGroupRuleMap.equals(other.failOverGroupRuleMap))
+            return false;
+        if (groupDataSourceRuleMap == null) {
+            if (other.groupDataSourceRuleMap != null)
+                return false;
+        } else if (!groupDataSourceRuleMap.equals(other.groupDataSourceRuleMap))
+            return false;
+        if (physicalDataSourceSet == null) {
+            if (other.physicalDataSourceSet != null)
+                return false;
+        } else if (!physicalDataSourceSet.equals(other.physicalDataSourceSet))
             return false;
         return true;
     }
@@ -181,30 +233,35 @@ public class AppDataSourceBean implements InitializingBean {
         }
 
         if (StringUtil.isBlank(dataBaseType)) {
-            throw new IllegalArgumentException("ERROR ## the dataBaseType is null");
+            throw new IllegalArgumentException("ERROR ## the dataBaseType is null of "
+                                               + appDataSourceName);
         }
         this.dbType = DBType.convert(dataBaseType);
 
         if (StringUtil.isBlank(configType)) {
-            throw new IllegalArgumentException("ERROR ## the configType is null");
+            throw new IllegalArgumentException("ERROR ## the configType is null of "
+                                               + appDataSourceName);
         }
         this.dataSourceConfigType = DataSourceConfigType.typeOf(configType);
 
         if (physicalDataSourceSet == null || physicalDataSourceSet.isEmpty()) {
-            throw new IllegalArgumentException("ERROR ## the physicalDataSourceSet is empty");
+            throw new IllegalArgumentException("ERROR ## the physicalDataSourceSet is empty of "
+                                               + appDataSourceName);
         }
 
         if (this.dataSourceConfigType.isShardGroup()) {
             if (groupDataSourceRuleMap == null || groupDataSourceRuleMap.isEmpty()) {
                 throw new IllegalArgumentException(
-                    "ERROR ## the dataSourceConfigType is Shard_Group,must have groupDataSourceRuleMap properties");
+                    "ERROR ## the dataSourceConfigType is Shard_Group,must have groupDataSourceRuleMap properties of "
+                            + appDataSourceName);
             }
         }
 
         if (this.dataSourceConfigType.isShardFailover()) {
             if (failOverGroupRuleMap == null || failOverGroupRuleMap.isEmpty()) {
                 throw new IllegalArgumentException(
-                    "ERROR ## the dataSourceConfigType is Shard_failover,must have failOverGroupRuleMap properties");
+                    "ERROR ## the dataSourceConfigType is Shard_failover,must have failOverGroupRuleMap properties of "
+                            + appDataSourceName);
             }
         }
 
@@ -212,7 +269,8 @@ public class AppDataSourceBean implements InitializingBean {
             || this.dataSourceConfigType.isShardGroup()) {
             if (appRule == null) {
                 throw new IllegalArgumentException(
-                    "ERROR ## the dataSourceConfigType is Shard,Shard_group,shard_failover must have sharding rule of AppRule properties");
+                    "ERROR ## the dataSourceConfigType is Shard,Shard_group,shard_failover must have sharding rule of AppRule properties of "
+                            + appDataSourceName);
             }
         }
     }

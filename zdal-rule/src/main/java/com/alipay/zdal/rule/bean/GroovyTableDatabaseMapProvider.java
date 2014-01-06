@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.bean;
 
 import groovy.lang.Binding;
@@ -17,7 +21,6 @@ import com.alipay.zdal.rule.ruleengine.entities.abstractentities.SharedElement;
 /**
  * 根据用户配置的一段groove脚本返回一个List<string> 直接拼成一个map返回
  * 
- * @author zuomou
  * 
  */
 public class GroovyTableDatabaseMapProvider extends SimpleTableMapProvider {

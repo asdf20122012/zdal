@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.resultset;
 
 import java.io.InputStream;
@@ -10,84 +14,85 @@ import java.sql.SQLXML;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.jdbc.ZdalStatement;
 import com.alipay.zdal.client.util.ExceptionUtils;
 
+public abstract class AbstractTResultSet extends DummyTResultSet {
 
-public class AbstractTResultSet extends DummyTResultSet {
-	
-	private static final Log log = LogFactory.getLog(AbstractTResultSet.class);
-	protected List<ResultSet> actualResultSets;
-	protected ZdalStatement statementProxy;
-	protected boolean closed = false;
-	
-	public AbstractTResultSet(ZdalStatement statementProxy, List<ResultSet> resultSets) {
-		this.statementProxy = statementProxy;
-		this.actualResultSets = resultSets;
-	}
-	/**
-	 * bug fix by shenxun : 原来会发生一个情况就是如果TStatement调用了close()方法
-	 * 而本身其管理的TResultSet没有closed时候。外部会使用iterator来遍历每一个
-	 * TResultSet，调用关闭的方法，但因为TResultSet的close方法会回调
-	 * TStatement里面用于创建iterator的Set<ResultSet>对象，并使用remove方法。
-	 * 这就会抛出一个concurrentModificationException。
-	 * 
-	 * @param removeThis
-	 * @throws SQLException
-	 */
-	public void closeInternal(boolean removeThis) throws SQLException{
-		if (log.isDebugEnabled()) {
-			log.debug("invoke close");
-		}
+    private static final Logger log    = Logger.getLogger(AbstractTResultSet.class);
+    protected List<ResultSet>   actualResultSets;
+    protected ZdalStatement     statementProxy;
+    protected boolean           closed = false;
 
-		if (closed) {
-			return;
-		}
+    public AbstractTResultSet(ZdalStatement statementProxy, List<ResultSet> resultSets) {
+        this.statementProxy = statementProxy;
+        this.actualResultSets = resultSets;
+    }
 
-		List<SQLException> exceptions = null;
+    /**
+     * 原来会发生一个情况就是如果TStatement调用了close()方法
+     * 而本身其管理的TResultSet没有closed时候。外部会使用iterator来遍历每一个
+     * TResultSet，调用关闭的方法，但因为TResultSet的close方法会回调
+     * TStatement里面用于创建iterator的Set<ResultSet>对象，并使用remove方法。
+     * 这就会抛出一个concurrentModificationException。
+     * 
+     * @param removeThis
+     * @throws SQLException
+     */
+    public void closeInternal(boolean removeThis) throws SQLException {
+        if (log.isDebugEnabled()) {
+            log.debug("invoke close");
+        }
 
-		try {
-			for (int i = 0; i < actualResultSets.size(); ++i) {
-				try {
-					actualResultSets.get(i).close();
-				} catch (SQLException e) {
-					if (exceptions == null) {
-						exceptions = new ArrayList<SQLException>();
-					}
-					exceptions.add(e);
-				}
-			}
-		} finally {
-			closed = true;
-			actualResultSets.clear();
-			//如果removeThis=true则从parent中移除当前节点。
-			if(removeThis){
-				if (!statementProxy.getTResultSets().remove(this)) {
-					log.warn("open result set does not exist");
-				}
-			}
-		}
+        if (closed) {
+            return;
+        }
 
-		ExceptionUtils.throwSQLException(exceptions,null,null);
-	}
-	public void close() throws SQLException {
-		
-		closeInternal(true);
-	}
-	
-	protected void checkClosed() throws SQLException {
-		if (closed) {
-			throw new SQLException("No operations allowed after result set closed.");
-		}
-	}
+        List<SQLException> exceptions = null;
 
-	@Override
-	public int getType() throws SQLException {
-		return ResultSet.TYPE_FORWARD_ONLY;
-	}
+        try {
+            for (int i = 0; i < actualResultSets.size(); ++i) {
+                try {
+                    actualResultSets.get(i).close();
+                } catch (SQLException e) {
+                    if (exceptions == null) {
+                        exceptions = new ArrayList<SQLException>();
+                    }
+                    exceptions.add(e);
+                }
+            }
+        } finally {
+            closed = true;
+            actualResultSets.clear();
+            //如果removeThis=true则从parent中移除当前节点。
+            if (removeThis) {
+                if (!statementProxy.getTResultSets().remove(this)) {
+                    log.warn("open result set does not exist");
+                }
+            }
+        }
+
+        ExceptionUtils.throwSQLException(exceptions, null, null);
+    }
+
+    public void close() throws SQLException {
+
+        closeInternal(true);
+    }
+
+    protected void checkClosed() throws SQLException {
+        if (closed) {
+            throw new SQLException("No operations allowed after result set closed.");
+        }
+    }
+
+    @Override
+    public int getType() throws SQLException {
+        return ResultSet.TYPE_FORWARD_ONLY;
+    }
+
     @Override
     public int getHoldability() throws SQLException {
         return 0;

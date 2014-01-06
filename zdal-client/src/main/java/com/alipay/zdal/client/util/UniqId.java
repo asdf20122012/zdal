@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.util;
 
 import java.io.IOException;
@@ -13,8 +17,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author huangshang
- *
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: UniqId.java, v 0.1 2014-1-6 ÏÂÎç05:15:47 Exp $
  */
 public class UniqId {
     private static char[]                  digits  = { '0', '1', '2', '3', '4', '5', '6', '7', '8',

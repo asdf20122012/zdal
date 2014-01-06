@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.entities.abstractentities;
 
 import java.util.ArrayList;
@@ -15,7 +19,6 @@ import org.apache.log4j.Logger;
  * 持有一个一对多的映射map,会根据输入的本节点所持有的规则链，
  * 以及运算结果，决定哪些节点是符合要求，然后计算并返回
  * 
- * @author shenxun
  *
  */
 public abstract class ListSharedElement extends SharedElement {

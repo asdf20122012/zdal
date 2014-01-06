@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.sqljep.function;
 
 /**
@@ -10,25 +14,27 @@ package com.alipay.zdal.common.sqljep.function;
  *             
  * 类似这样的节点出现
  * 
- * @author shenxun
  *
  */
-public class ComparativeOR extends ComparativeBaseList{
-	
-	public ComparativeOR(int function, Comparable<?> value) {
-		super(function, value);
-	}
-	
-	public ComparativeOR(){};
-	
-	public ComparativeOR(Comparative item){
-		super(item);
-	}
-	public ComparativeOR(int capacity){
-		super(capacity);
-	}
-	@Override
-	protected String getRelation() {
-		return " or ";
-	}
+public class ComparativeOR extends ComparativeBaseList {
+
+    public ComparativeOR(int function, Comparable<?> value) {
+        super(function, value);
+    }
+
+    public ComparativeOR() {
+    };
+
+    public ComparativeOR(Comparative item) {
+        super(item);
+    }
+
+    public ComparativeOR(int capacity) {
+        super(capacity);
+    }
+
+    @Override
+    protected String getRelation() {
+        return " or ";
+    }
 }

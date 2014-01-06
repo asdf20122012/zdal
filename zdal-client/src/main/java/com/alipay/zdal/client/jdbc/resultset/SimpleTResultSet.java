@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.resultset;
 
 import java.sql.ResultSet;
@@ -6,45 +10,47 @@ import java.util.List;
 
 import com.alipay.zdal.client.jdbc.ZdalStatement;
 
-
-
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: SimpleTResultSet.java, v 0.1 2014-1-6 ÏÂÎç05:15:00 Exp $
+ */
 public class SimpleTResultSet extends BaseTResultSet {
-	
-	private boolean inited;
 
-	public SimpleTResultSet(ZdalStatement statementProxy,
-			List<ResultSet> resultSets) {
-		super(statementProxy, resultSets);
-	}
+    private boolean inited;
 
-	@Override
-	protected boolean internNext() throws SQLException {
-		if(!inited) {
-			inited = true;
-			reducer();
-		}
-		for (int i = currentIndex; i < actualResultSets.size(); ++i) {
-			if (actualResultSets.get(i).next()) {
-				currentIndex = i;
-				limitTo--;
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	protected ResultSet reducer() throws SQLException {
-		if(actualResultSets.size() == 0) {
-			throw new RuntimeException("This should not happen!!");
-		}
-		if(actualResultSets.size() == 1) {
-			return actualResultSets.get(0);
-		}
-		for(int i = 0; i < limitFrom; i++) {
-			next();
-		}
-		return null;
-	}
+    public SimpleTResultSet(ZdalStatement statementProxy, List<ResultSet> resultSets) {
+        super(statementProxy, resultSets);
+    }
+
+    @Override
+    protected boolean internNext() throws SQLException {
+        if (!inited) {
+            inited = true;
+            reducer();
+        }
+        for (int i = currentIndex; i < actualResultSets.size(); ++i) {
+            if (actualResultSets.get(i).next()) {
+                currentIndex = i;
+                limitTo--;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected ResultSet reducer() throws SQLException {
+        if (actualResultSets.size() == 0) {
+            throw new RuntimeException("This should not happen!!");
+        }
+        if (actualResultSets.size() == 1) {
+            return actualResultSets.get(0);
+        }
+        for (int i = 0; i < limitFrom; i++) {
+            next();
+        }
+        return null;
+    }
 
 }

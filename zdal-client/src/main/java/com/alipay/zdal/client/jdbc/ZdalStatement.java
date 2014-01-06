@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.Connection;
@@ -57,6 +61,11 @@ import com.alipay.zdal.rule.ruleengine.exception.RuleRuntimeExceptionWrapper;
 import com.alipay.zdal.rule.ruleengine.exception.ZdalRuleCalculateException;
 import com.alipay.zdal.rule.ruleengine.rule.EmptySetRuntimeException;
 
+/**
+ * 
+ * @author 伯牙
+ * @version $Id: ZdalStatement.java, v 0.1 2014-1-6 下午01:19:26 Exp $
+ */
 public class ZdalStatement implements Statement {
     //TODO: 添加一个选项boolean值，来对statlog进行检测
     private static final Logger       log                            = Logger
@@ -89,8 +98,6 @@ public class ZdalStatement implements Statement {
 
     private static final ParserCache  globalCache                    = ParserCache.instance();
 
-    protected boolean                 enableProfileRealDBAndTables;
-    //protected Map<String, DataSource> dataSourcePool;
     protected Map<String, DBSelector> dbSelectors;
     protected DBSelector              groupDBSelector                = null;
     protected RuleController          ruleController;
@@ -138,7 +145,7 @@ public class ZdalStatement implements Statement {
     private boolean                readOnly;
 
     /**
-     * bugfix by shenxun :将原来ResultSet接口下放到Dummy级别。这样才能支持自定义方法
+     * 将原来ResultSet接口下放到Dummy级别。这样才能支持自定义方法
      */
     protected Set<ResultSet>       openResultSets       = new HashSet<ResultSet>();
 
@@ -1746,14 +1753,6 @@ public class ZdalStatement implements Statement {
 
     public void setTimeoutForEachTable(long timeoutForEachTable) {
         this.timeoutForEachTable = timeoutForEachTable;
-    }
-
-    public boolean isEnableProfileRealDBAndTables() {
-        return enableProfileRealDBAndTables;
-    }
-
-    public void setEnableProfileRealDBAndTables(boolean enableProfileRealDBAndTables) {
-        this.enableProfileRealDBAndTables = enableProfileRealDBAndTables;
     }
 
     public int getRetryingTimes() {

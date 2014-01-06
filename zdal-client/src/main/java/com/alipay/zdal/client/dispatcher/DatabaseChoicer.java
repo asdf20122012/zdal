@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.dispatcher;
 
 import java.util.List;
@@ -11,8 +15,6 @@ import com.alipay.zdal.common.exception.checked.ZdalCheckedExcption;
  * 
  * Result结构和内部实现无关，业务方可以进行修改 不会影响到Zdal内部实现。
  * 
- * @author shenxun
- * @author xiaoqing.zhouxq
  *
  */
 public interface DatabaseChoicer {

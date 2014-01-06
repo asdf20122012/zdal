@@ -7,8 +7,7 @@ package com.alipay.zdal.client.datasource.keyweight;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.common.lang.StringUtil;
 
@@ -19,8 +18,8 @@ import com.alipay.zdal.common.lang.StringUtil;
  */
 public class ZdalDataSourceKeyWeightRumtime {
 
-    private static Log                                 logger                    = LogFactory
-                                                                                     .getLog(ZdalDataSourceKeyWeightRumtime.class);
+    private static Logger                              logger                    = Logger
+                                                                                     .getLogger(ZdalDataSourceKeyWeightRumtime.class);
     private static final int                           DEFAULT_DATASOURCE_WEIGHT = 10;
     private Map<String, ZdalDataSourceKeyWeightRandom> keyWeightMapHolder;
 

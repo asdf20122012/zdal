@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource;
 
 import java.io.PrintWriter;
@@ -10,7 +14,6 @@ import javax.sql.DataSource;
 /**
  * ZDataSourc的抽象类，将javax.sql.DataSource中的方法集中到一起
  * 
- * @author qihao
  */
 public abstract class AbstractDataSource implements DataSource {
 

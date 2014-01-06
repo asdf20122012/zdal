@@ -1,6 +1,7 @@
-/* Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-* 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource.resource;
 
 import javax.naming.Reference;
@@ -16,12 +17,16 @@ import javax.naming.Reference;
  * implement both the java.io.Serializable and the javax.resource.Referenceable
  * interfaces to support JNDI registration.
  */
-public interface Referenceable extends javax.naming.Referenceable
-{
-   /**
-	 * Sets the reference instance
-	 * 
-	 * @param reference the reference
-	 */
-   void setReference(Reference reference);
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: Referenceable.java, v 0.1 2014-1-6 ÏÂÎç05:26:49 Exp $
+ */
+public interface Referenceable extends javax.naming.Referenceable {
+    /**
+     * Sets the reference instance
+     * 
+     * @param reference the reference
+     */
+    void setReference(Reference reference);
 }

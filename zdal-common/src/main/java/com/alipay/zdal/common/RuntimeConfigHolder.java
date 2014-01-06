@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common;
 
 /**
@@ -7,24 +11,23 @@ package com.alipay.zdal.common;
  * 运行时配置信息动态修改时，协助使用者完成copyonwrite实现：
  * 。。。
  * 
- * @author linxuan
  *
  * @param <T> 包含运行时配置信息的对象的类型
  */
 public class RuntimeConfigHolder<T> {
-	private volatile T runtime;
+    private volatile T runtime;
 
-	/**
-	 * @return 上一次设入的包含运行时配置信息的对象。
-	 */
-	public T get() {
-		return runtime;
-	}
+    /**
+     * @return 上一次设入的包含运行时配置信息的对象。
+     */
+    public T get() {
+        return runtime;
+    }
 
-	/**
-	 * @param runtime 包含运行时配置信息的对象。
-	 */
-	public void set(T runtime) {
-		this.runtime = runtime;
-	}
+    /**
+     * @param runtime 包含运行时配置信息的对象。
+     */
+    public void set(T runtime) {
+        this.runtime = runtime;
+    }
 }

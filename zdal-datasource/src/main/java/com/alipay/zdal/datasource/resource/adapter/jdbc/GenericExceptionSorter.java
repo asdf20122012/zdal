@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource.resource.adapter.jdbc;
 
 import java.sql.SQLException;
@@ -7,8 +11,8 @@ import com.alipay.zdal.common.jdbc.sorter.ExceptionSorter;
 /**
  * A GenericExceptionSorter returning true for all exceptions.
  * 
- * @author <a href="mailto:weston.price@jboss.org>Weston Price</a>
- * @version $Revision: 1.1 $
+ * @author ²®ÑÀ
+ * @version $Id: GenericExceptionSorter.java, v 0.1 2014-1-6 ÏÂÎç05:28:18 Exp $
  */
 public class GenericExceptionSorter implements ExceptionSorter {
 

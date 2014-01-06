@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.dbselector;
 
 import java.sql.SQLException;
@@ -6,15 +10,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.jdbc.DBSelector.DataSourceTryer;
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
 
 public class PriorityGroupsDataSources {
-    private static final Log      logger              = LogFactory
-                                                          .getLog(PriorityGroupsDataSources.class);
+    private static final Logger   logger              = Logger
+                                                          .getLogger(PriorityGroupsDataSources.class);
     private final EquityDbManager equityDbManager;
 
     /**
@@ -110,22 +113,16 @@ public class PriorityGroupsDataSources {
         //每间隔两秒，只会有一个业务线程继续使用这个优先级的数据源。
         if (toTry && lock.tryLock()) {
             try {
-                if (logger.isWarnEnabled()) {
-                    logger.warn("线程" + Thread.currentThread().getName() + "在"
-                                + getCurrentDateTime(null) + "进入优先级" + i + "的单线程重试状态！");
-                }
+                logger.warn("线程" + Thread.currentThread().getName() + "在"
+                            + getCurrentDateTime(null) + "进入优先级" + i + "的单线程重试状态！");
                 Long beginTime = System.currentTimeMillis();
                 t = equityDbManager
                     .tryExecute(failedDataSources, tryer, times, operationType, args);
-                if (logger.isWarnEnabled()) {
-                    logger.warn("单线程" + Thread.currentThread().getName() + "去获取该优先级p" + i
-                                + "成功，耗时为：" + (System.currentTimeMillis() - beginTime));
-                }
+                logger.warn("单线程" + Thread.currentThread().getName() + "去获取该优先级p" + i + "成功，耗时为："
+                            + (System.currentTimeMillis() - beginTime));
                 this.isNotAvailable = false;
                 this.exceptionTimes = 0;
-                if (logger.isWarnEnabled()) {
-                    logger.warn("数据源优先级p" + i + "在" + getCurrentDateTime(null) + "已经恢复，标记为可用！");
-                }
+                logger.warn("数据源优先级p" + i + "在" + getCurrentDateTime(null) + "已经恢复，标记为可用！");
             } catch (NoMoreDataSourceException e) {
                 logger.error("单线程重试优先级 p" + i + "失败，现在去寻找其下一个优先级的数据源！", e);
                 throw e;
@@ -194,9 +191,7 @@ public class PriorityGroupsDataSources {
                 logger.error("优先级p" + i + "在时间" + getCurrentDateTime(null) + "被踢出！");
             }
         } else {
-            if (logger.isWarnEnabled()) {
-                logger.warn("统计异常次数超过单位时间间隔,上次单位时间间隔内异常次数为" + exceptionTimes + "次,现在开始重新计数！");
-            }
+            logger.warn("统计异常次数超过单位时间间隔,上次单位时间间隔内异常次数为" + exceptionTimes + "次,现在开始重新计数！");
             this.exceptionTimes = 0;
         }
     }

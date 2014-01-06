@@ -1,6 +1,8 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.sqljep.function;
-
-
 
 /**
  * 可比较的类
@@ -10,7 +12,6 @@ package com.alipay.zdal.common.sqljep.function;
  * 
  * 例如 [> 1] , [< 1] , [= 1]
  * 
- * @author shenxun
  *
  */
 @SuppressWarnings("unchecked")
@@ -138,8 +139,6 @@ public class Comparative implements Comparable, Cloneable {
         return -1;
     }
 
-
-
     public String toString() {
         if (value != null) {
             StringBuilder sb = new StringBuilder();
@@ -150,8 +149,6 @@ public class Comparative implements Comparable, Cloneable {
             return null;
         }
     }
-
-
 
     public Object clone() {
         return new Comparative(this.comparison, this.value);

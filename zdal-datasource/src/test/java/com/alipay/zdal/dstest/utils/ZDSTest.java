@@ -10,8 +10,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 
@@ -20,7 +19,7 @@ import com.alipay.zdal.datasource.ZDataSource;
 import com.alipay.zdal.datasource.resource.security.SecureIdentityLoginModule;
 
 public class ZDSTest {
-    private int                                      arrayLength               = 10;                                               //数组的长度
+    private int                                      arrayLength               = 10;                                              //数组的长度
     protected ZDSFactory                             zdsFactory                = new ZDSFactory();
     protected DataSource[]                           dataSources               = new DataSource[arrayLength];
     protected ZDataSource[]                          zDataSources              = new ZDataSource[arrayLength];
@@ -42,8 +41,8 @@ public class ZDSTest {
             "DataSource-Oracle", "DataSource-Mysql", "DataSource-MysqlChange",
             "DataSource-MysqlAPP"                                             };
 
-    public final static Log                          Logger                    = LogFactory
-                                                                                   .getLog(ZDSTest.class);
+    public final static Logger                       logger                    = Logger
+                                                                                   .getLogger(ZDSTest.class);
 
     /**
      * 

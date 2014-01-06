@@ -69,8 +69,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
                                                                          Closable,
                                                                          ZdalConfigListener {
 
-    protected DBType                                   dbType;
-
     private RuntimeConfigHolder<ZdalRuntime>           runtimeConfigHolder = new RuntimeConfigHolder<ZdalRuntime>();
     private SqlDispatcher                              writeDispatcher;
     private SqlDispatcher                              readDispatcher;
@@ -166,8 +164,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
             || zdalConfig.getDataSourceParameters().isEmpty()) {
             throw new ZdalClientException("ERROR ## the datasource parameter is empty");
         }
-        this.dbType = zdalConfig.getDbType();
-        this.dbConfigType = zdalConfig.getDataSourceConfigType();
 
         for (Entry<String, DataSourceParameter> entry : zdalConfig.getDataSourceParameters()
             .entrySet()) {
@@ -1112,10 +1108,6 @@ public abstract class AbstractZdalDataSource extends ZdalDataSourceConfig implem
 
     public Map<String, ? extends Object> getDataSourcePoolConfig() {
         return dataSourcePoolConfig;
-    }
-
-    public DBType getDbType() {
-        return dbType;
     }
 
 }

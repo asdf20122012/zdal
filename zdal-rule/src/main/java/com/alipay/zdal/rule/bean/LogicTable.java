@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.bean;
 
 import java.util.ArrayList;
@@ -33,7 +37,6 @@ import com.alipay.zdal.rule.ruleengine.rule.ListAbstractResultRule;
  * 
  * 
  * 
- * @author shenxun
  * 
  */
 public class LogicTable extends ListSharedElement implements Cloneable, LogicTableRule,

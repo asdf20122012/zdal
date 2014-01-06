@@ -1,12 +1,11 @@
-/*
- * @(#)NavigableSet.java	1.5 06/05/10
- *
- * Copyright 2006 Sun Microsystems, Inc. All rights reserved.
- * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
  */
-
 package com.alipay.zdal.common.util;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
 
@@ -53,10 +52,8 @@ import java.util.SortedSet;
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
  *
- * @author Doug Lea
- * @author Josh Bloch
- * @param <E> the type of elements maintained by this set
- * @since 1.6
+ * @author ²®ÑÀ
+ * @version $Id: NavigableSet.java, v 0.1 2014-1-6 ÏÂÎç05:22:47 Exp $
  */
 public interface NavigableSet<E> extends SortedSet<E> {
     /**
@@ -198,8 +195,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      *         has a restricted range, and {@code fromElement} or
      *         {@code toElement} lies outside the bounds of the range.
      */
-    NavigableSet<E> subSet(E fromElement, boolean fromInclusive,
-                           E toElement,   boolean toInclusive);
+    NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive);
 
     /**
      * Returns a view of the portion of this set whose elements are less than
@@ -278,7 +274,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      * @throws ClassCastException       {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
-na     */
+    na     */
     SortedSet<E> headSet(E toElement);
 
     /**

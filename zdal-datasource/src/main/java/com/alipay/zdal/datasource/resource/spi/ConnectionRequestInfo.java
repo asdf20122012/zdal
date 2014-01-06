@@ -1,24 +1,7 @@
-/*
-* JBoss, Home of Professional Open Source
-* Copyright 2005, JBoss Inc., and individual contributors as indicated
-* by the @authors tag. See the copyright.txt in the distribution for a
-* full listing of individual contributors.
-*
-* This is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License as
-* published by the Free Software Foundation; either version 2.1 of
-* the License, or (at your option) any later version.
-*
-* This software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this software; if not, write to the Free
-* Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-* 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource.resource.spi;
 
 /**
@@ -27,20 +10,19 @@ package com.alipay.zdal.datasource.resource.spi;
  * this functionality, a resource adapter needs to extend this interface and
  * add it's information.
  */
-public interface ConnectionRequestInfo
-{
-   /**
-	 * Tests object for equality
-    * 
-    * @param other the object to test
-    * @return true when equal, false otherwise
-	 */
-   public boolean equals(Object other);
+public interface ConnectionRequestInfo {
+    /**
+     * Tests object for equality
+     * 
+     * @param other the object to test
+     * @return true when equal, false otherwise
+     */
+    public boolean equals(Object other);
 
-   /**
-	 * Generates a hashCode for this object
-    * 
-    * @return the hash code
-	 */
-   public int hashCode();
+    /**
+     * Generates a hashCode for this object
+     * 
+     * @return the hash code
+     */
+    public int hashCode();
 }

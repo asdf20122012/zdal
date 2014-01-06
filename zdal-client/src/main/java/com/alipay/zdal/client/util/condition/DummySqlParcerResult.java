@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.util.condition;
 
 import java.util.Collections;
@@ -11,6 +15,11 @@ import com.alipay.zdal.parser.result.SqlParserResult;
 import com.alipay.zdal.parser.sqlobjecttree.ComparativeMapChoicer;
 import com.alipay.zdal.parser.visitor.OrderByEle;
 
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: DummySqlParcerResult.java, v 0.1 2014-1-6 ÏÂÎç05:16:27 Exp $
+ */
 public class DummySqlParcerResult implements SqlParserResult {
 
     final ComparativeMapChoicer choicer;

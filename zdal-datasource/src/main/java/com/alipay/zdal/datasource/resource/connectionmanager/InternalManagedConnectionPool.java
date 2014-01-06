@@ -1,23 +1,6 @@
-/*
- * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
- * as indicated by the @author tags. See the copyright.txt file in the
- * distribution for a full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
  */
 package com.alipay.zdal.datasource.resource.connectionmanager;
 
@@ -50,11 +33,8 @@ import com.alipay.zdal.datasource.resource.util.UnreachableStatementException;
 /**
  * The internal pool implementation
  *
- * @author <a href="mailto:d_jencks@users.sourceforge.net">David Jencks</a>
- * @author <a href="mailto:adrian@jboss.org">Adrian Brock</a>
- * @author <a href="weston.price@jboss.com">Weston Price</a>
- *
- * @version $Revision: 61055 $
+ * @author 伯牙
+ * @version $Id: InternalManagedConnectionPool.java, v 0.1 2014-1-6 下午05:34:47 Exp $
  */
 public class InternalManagedConnectionPool {
     private static final Logger             logger               = Logger
@@ -226,8 +206,8 @@ public class InternalManagedConnectionPool {
                     if (cl != null) {
                         //Yes, we retrieved a ManagedConnection from the pool. Does it match?
                         try {
-                            Object matchedMC = mcf.matchManagedConnections(
-                                Collections.singleton(cl.getManagedConnection()), subject, cri);
+                            Object matchedMC = mcf.matchManagedConnections(Collections.singleton(cl
+                                .getManagedConnection()), subject, cri);
                             if (matchedMC != null) {
                                 if (log.isDebugEnabled()) {
                                     log.debug("supplying ManagedConnection from pool: " + cl);
@@ -242,8 +222,9 @@ public class InternalManagedConnectionPool {
                             //connection died while being checked.  We need to
                             //distinguish these cases, but for now we always
                             //destroy the connection.
-                            log.warn("Destroying connection that could not be successfully matched: "
-                                     + cl);
+                            log
+                                .warn("Destroying connection that could not be successfully matched: "
+                                      + cl);
                             synchronized (connectionListeners) {
                                 checkedOut.remove(cl);
                             }
@@ -264,7 +245,8 @@ public class InternalManagedConnectionPool {
                         //We made it here, something went wrong and we should validate if we should continue attempting to acquire a connection
                         if (poolParams.useFastFail) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Fast failing for connection attempt. No more attempts will be made to acquire connection from pool and a new connection will be created immeadiately");
+                                log
+                                    .debug("Fast failing for connection attempt. No more attempts will be made to acquire connection from pool and a new connection will be created immeadiately");
                             }
 
                             break;
@@ -313,11 +295,15 @@ public class InternalManagedConnectionPool {
                     throw new ResourceException("当前数据库处于不可用状态,poolName = " + poolName,
                         ZConstants.ERROR_CODE_DB_NOT_AVAILABLE);
                 } else if (this.maxSize == this.maxUsedConnections) {
-                    throw new ResourceException(
-                        "数据源最大连接数已满，并且在超时时间范围内没有新的连接释放,poolName = " + poolName
-                                + " blocking timeout=" + poolParams.blockingTimeout
-                                + "(ms),now-time = " + sdf.format(new Date()) + ",connectionUrl = "
-                                + ((LocalManagedConnectionFactory) mcf).getConnectionURL(),
+                    throw new ResourceException("数据源最大连接数已满，并且在超时时间范围内没有新的连接释放,poolName = "
+                                                + poolName
+                                                + " blocking timeout="
+                                                + poolParams.blockingTimeout
+                                                + "(ms),now-time = "
+                                                + sdf.format(new Date())
+                                                + ",connectionUrl = "
+                                                + ((LocalManagedConnectionFactory) mcf)
+                                                    .getConnectionURL(),
                         ZConstants.ERROR_CODE_CONNECTION_NOT_AVAILABLE);
                 } else {// 属于超时
                     throw new ResourceException(
@@ -675,7 +661,8 @@ public class InternalManagedConnectionPool {
                             }
 
                         } else {
-                            log.warn("warning: background validation was specified with a non compliant ManagedConnectionFactory interface.");
+                            log
+                                .warn("warning: background validation was specified with a non compliant ManagedConnectionFactory interface.");
                         }
 
                     } finally {

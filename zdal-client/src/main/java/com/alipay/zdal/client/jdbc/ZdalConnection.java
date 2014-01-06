@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.Array;
@@ -29,9 +33,14 @@ import com.alipay.zdal.client.config.DataSourceConfigType;
 import com.alipay.zdal.client.dispatcher.SqlDispatcher;
 import com.alipay.zdal.client.util.ExceptionUtils;
 
+/**
+ * 
+ * @author 伯牙
+ * @version $Id: ZdalConnection.java, v 0.1 2014-1-6 下午05:02:15 Exp $
+ */
 public class ZdalConnection implements Connection {
-    private static final Logger                  logger                       = Logger
-                                                                                  .getLogger(ZdalConnection.class);
+    private static final Logger                  logger               = Logger
+                                                                          .getLogger(ZdalConnection.class);
 
     private Map<String, DBSelector>              dbSelectors;
 
@@ -39,19 +48,15 @@ public class ZdalConnection implements Connection {
     private SqlDispatcher                        readDispatcher;
 
     private int                                  retryingTimes;
-    /**
-     * 决定是否记录在真实数据库上执行真实sql的信息 默认关闭
-     */
-    protected boolean                            enableProfileRealDBAndTables = true;
     private String                               username;
     private String                               password;
 
-    // TConnection对象所持有的真正数据库连接
-    private Map<String, ConnectionAndDatasource> actualConnections            = new HashMap<String, ConnectionAndDatasource>();
+    // ZdalConnection对象所持有的真正数据库连接
+    private Map<String, ConnectionAndDatasource> actualConnections    = new HashMap<String, ConnectionAndDatasource>();
 
-    private boolean                              autoCommit                   = true;
+    private boolean                              autoCommit           = true;
 
-    private int                                  transactionIsolation         = -1;
+    private int                                  transactionIsolation = -1;
 
     private boolean                              closed;
 
@@ -61,14 +66,12 @@ public class ZdalConnection implements Connection {
     private String                               txTarget;
 
     // TConnection对象创建的所有TStatement对象，包括TPreparedStatement对象
-    private Set<ZdalStatement>                   openStatements               = new HashSet<ZdalStatement>();
+    private Set<ZdalStatement>                   openStatements       = new HashSet<ZdalStatement>();
 
-    private DataSourceConfigType                 dbConfigType                 = null;
-
-    private boolean                              isHintReplaceSupport         = false;
+    private DataSourceConfigType                 dbConfigType         = null;
 
     /**  数据源的名称*/
-    protected String                             appDsName                    = null;
+    protected String                             appDsName            = null;
 
     public ZdalConnection() {
     }
@@ -116,12 +119,11 @@ public class ZdalConnection implements Connection {
 
         ZdalStatement stmt = new RetryableTStatement(writeDispatcher, readDispatcher);
         stmt.setDataSourcePool(dbSelectors);
-        stmt.setHintReplaceSupport(isHintReplaceSupport);
+        //        stmt.setHintReplaceSupport(isHintReplaceSupport);
         //stmt.setRuleController(ruleController);
         stmt.setAutoCommit(autoCommit);
         stmt.setReadOnly(readOnly);
         stmt.setConnectionProxy(this);
-        stmt.setEnableProfileRealDBAndTables(enableProfileRealDBAndTables);
         stmt.setRetryingTimes(retryingTimes);
         //		stmt.setPoolRandom(poolRandom);
         stmt.setDbConfigType(dbConfigType);
@@ -158,7 +160,6 @@ public class ZdalConnection implements Connection {
         stmt.setReadOnly(readOnly);
         stmt.setConnectionProxy(this);
         stmt.setSql(sql);
-        stmt.setEnableProfileRealDBAndTables(enableProfileRealDBAndTables);
         stmt.setRetryingTimes(retryingTimes);
         stmt.setDbConfigType(dbConfigType);
         stmt.setAppDsName(getAppDsName());
@@ -512,14 +513,6 @@ public class ZdalConnection implements Connection {
         this.readDispatcher = readDispatcher;
     }
 
-    public boolean isEnableProfileRealDBAndTables() {
-        return enableProfileRealDBAndTables;
-    }
-
-    public void setEnableProfileRealDBAndTables(boolean enableProfileRealDBAndTables) {
-        this.enableProfileRealDBAndTables = enableProfileRealDBAndTables;
-    }
-
     public int getRetryingTimes() {
         return retryingTimes;
     }
@@ -589,14 +582,6 @@ public class ZdalConnection implements Connection {
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
         return null;
-    }
-
-    public void setHintReplaceSupport(boolean isHintReplaceSupport) {
-        this.isHintReplaceSupport = isHintReplaceSupport;
-    }
-
-    public boolean isHintReplaceSupport() {
-        return isHintReplaceSupport;
     }
 
     public void setDbConfigType(DataSourceConfigType dbConfigType) {

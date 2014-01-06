@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.groovy;
 
 import groovy.lang.GroovyClassLoader;
@@ -132,7 +136,7 @@ public class GroovyListRuleEngine extends CartesianProductBasedListResultRule {
                 throw new IllegalArgumentException("规则引擎的结果不能为null");
             }
         } catch (Exception e) {
-            throw new ZdalRuleCalculateException("规则引擎计算出错,拆分值="+argumentMap, e);
+            throw new ZdalRuleCalculateException("规则引擎计算出错,拆分值=" + argumentMap, e);
         }
     }
 

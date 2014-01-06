@@ -1,24 +1,7 @@
-/*
-* JBoss, Home of Professional Open Source
-* Copyright 2005, JBoss Inc., and individual contributors as indicated
-* by the @authors tag. See the copyright.txt in the distribution for a
-* full listing of individual contributors.
-*
-* This is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License as
-* published by the Free Software Foundation; either version 2.1 of
-* the License, or (at your option) any later version.
-*
-* This software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this software; if not, write to the Free
-* Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-* 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource.resource.util.collection;
 
 import java.lang.ref.ReferenceQueue;
@@ -32,8 +15,9 @@ import java.util.Set;
  * This Map will remove entries when the value in the map has been
  * cleaned from garbage collection
  *
- * @version <tt>$Revision: 37390 $</tt>
- * @author  <a href="mailto:bill@jboss.org">Bill Burke</a>
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: WeakValueHashMap.java, v 0.1 2014-1-6 ÏÂÎç05:41:08 Exp $
  */
 public class WeakValueHashMap extends AbstractMap implements Map {
     private static class WeakValueRef extends WeakReference {

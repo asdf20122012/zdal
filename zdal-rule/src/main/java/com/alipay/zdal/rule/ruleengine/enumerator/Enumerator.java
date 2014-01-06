@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.enumerator;
 
 import java.util.Set;
@@ -11,20 +15,20 @@ import java.util.Set;
  * 所以解决的方法就是把100~200之间的所有值都按照atomicIncreatementValue的设定值进行枚举。
  * 枚举出的值被放入set后返回给调用者。
  * 
- * @author shenxun
  *
  */
 public interface Enumerator {
-	/**
-	 * @param condition 条件
-	 * @param cumulativeTimes 值的个数，对于部分连续的函数来说，他完成一轮累加的次数是有限的，这里要求输入这个次数
-	 * @param atomIncrValue 引起值域发生最小变动的定义域原子增数值。ex:如果对于dayofweek这样的函数来说，引起值域
-	 * 发生变化的定义域的最小变动范围为1天。
-	 * @param needMergeValueInCloseInterval 是否需要对> < >= <= 进行计算。
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public Set<Object> getEnumeratedValue(Comparable condition,Integer cumulativeTimes,Comparable<?> atomicIncreatementValue
-			,boolean needMergeValueInCloseInterval);
-//	 void setNeedMergeValueInCloseInterval(boolean needMergeValueInCloseInterval);
+    /**
+     * @param condition 条件
+     * @param cumulativeTimes 值的个数，对于部分连续的函数来说，他完成一轮累加的次数是有限的，这里要求输入这个次数
+     * @param atomIncrValue 引起值域发生最小变动的定义域原子增数值。ex:如果对于dayofweek这样的函数来说，引起值域
+     * 发生变化的定义域的最小变动范围为1天。
+     * @param needMergeValueInCloseInterval 是否需要对> < >= <= 进行计算。
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public Set<Object> getEnumeratedValue(Comparable condition, Integer cumulativeTimes,
+                                          Comparable<?> atomicIncreatementValue,
+                                          boolean needMergeValueInCloseInterval);
+    //	 void setNeedMergeValueInCloseInterval(boolean needMergeValueInCloseInterval);
 }

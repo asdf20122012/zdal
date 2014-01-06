@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.rule;
 
 import java.util.ArrayList;
@@ -22,7 +26,6 @@ import com.alipay.zdal.rule.ruleengine.util.RuleUtils;
 /**
  * 结果集是一列数的规则
  * 
- * @author shenxun
  * 
  */
 public abstract class CartesianProductBasedListResultRule extends ListAbstractResultRule {

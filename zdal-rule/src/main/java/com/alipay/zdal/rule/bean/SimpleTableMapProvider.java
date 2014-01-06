@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.bean;
 
 import java.util.ArrayList;
@@ -13,7 +17,6 @@ import com.alipay.zdal.rule.ruleengine.util.RuleUtils;
  * 
  * 
  * 
- * @author shenxun
  * 
  */
 public class SimpleTableMapProvider implements TableMapProvider {

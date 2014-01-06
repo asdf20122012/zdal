@@ -1,7 +1,16 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.util;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author ²®ÑÀ
+ * @version $Id: NagiosUtils.java, v 0.1 2014-1-6 ÏÂÎç05:22:18 Exp $
+ */
 public class NagiosUtils {
     private static final Logger nagiosLog                  = Logger.getLogger("Nagios");
 

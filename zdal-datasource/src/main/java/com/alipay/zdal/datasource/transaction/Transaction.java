@@ -1,24 +1,7 @@
-/*
-* JBoss, Home of Professional Open Source
-* Copyright 2005, JBoss Inc., and individual contributors as indicated
-* by the @authors tag. See the copyright.txt in the distribution for a
-* full listing of individual contributors.
-*
-* This is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License as
-* published by the Free Software Foundation; either version 2.1 of
-* the License, or (at your option) any later version.
-*
-* This software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this software; if not, write to the Free
-* Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-* 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.datasource.transaction;
 
 import javax.transaction.xa.XAResource;
@@ -29,8 +12,7 @@ import javax.transaction.xa.XAResource;
  *
  *  @version $Revision: 37390 $
  */
-public interface Transaction
-{
+public interface Transaction {
     /**
      *  Attempt to commit this transaction.
      *
@@ -47,9 +29,8 @@ public interface Transaction
      *  @throws SecurityException If the caller is not allowed to commit this
      *          transaction.
      */
-    public void commit()
-        throws RollbackException, HeuristicMixedException,
-            HeuristicRollbackException, SecurityException, SystemException;
+    public void commit() throws RollbackException, HeuristicMixedException,
+                        HeuristicRollbackException, SecurityException, SystemException;
 
     /**
      *  Rolls back this transaction.
@@ -61,8 +42,7 @@ public interface Transaction
      *  @throws SystemException If the transaction service fails in an
      *          unexpected way.
      */
-    public void rollback()
-        throws IllegalStateException, SystemException;
+    public void rollback() throws IllegalStateException, SystemException;
 
     /**
      *  Mark the transaction so that the only possible outcome is a rollback.
@@ -72,8 +52,7 @@ public interface Transaction
      *  @throws SystemException If the transaction service fails in an
      *          unexpected way.
      */
-    public void setRollbackOnly()
-        throws IllegalStateException, SystemException;
+    public void setRollbackOnly() throws IllegalStateException, SystemException;
 
     /**
      *  Get the status of the transaction.
@@ -101,8 +80,8 @@ public interface Transaction
      *  @throws SystemException If the transaction service fails in an
      *          unexpected way.
      */
-    public boolean enlistResource(XAResource xaRes)
-        throws RollbackException, IllegalStateException, SystemException;
+    public boolean enlistResource(XAResource xaRes) throws RollbackException,
+                                                   IllegalStateException, SystemException;
 
     /**
      *  Delist an XA resource from this transaction.
@@ -116,8 +95,8 @@ public interface Transaction
      *  @throws SystemException If the transaction service fails in an
      *          unexpected way.
      */
-    public boolean delistResource(XAResource xaRes, int flag)
-        throws IllegalStateException, SystemException;
+    public boolean delistResource(XAResource xaRes, int flag) throws IllegalStateException,
+                                                             SystemException;
 
     /**
      *  Register a {@link Synchronization} callback with this transaction.
@@ -132,6 +111,6 @@ public interface Transaction
      *  @throws SystemException If the transaction service fails in an
      *          unexpected way.
      */
-    public void registerSynchronization(Synchronization sync)
-        throws RollbackException, IllegalStateException, SystemException;
+    public void registerSynchronization(Synchronization sync) throws RollbackException,
+                                                             IllegalStateException, SystemException;
 }

@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.dbselector;
 
 import java.sql.SQLException;
@@ -18,7 +22,6 @@ import com.alipay.zdal.common.OperationDBType;
 /**
  * 只有一个数据源的DBSelector
  * //private String id, 作为dbSelector的id和db的dsKey
- * @author linxuan
  */
 public class OneDBSelector extends AbstractDBSelector {
     private static final Logger logger              = Logger.getLogger(OneDBSelector.class);

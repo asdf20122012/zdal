@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.resultset;
 
 import java.math.BigDecimal;
@@ -14,8 +18,6 @@ import java.util.TreeSet;
 
 import com.alipay.zdal.client.jdbc.OrderByColumn;
 import com.alipay.zdal.client.jdbc.ZdalStatement;
-
-
 
 /**
  * bugfix by fanzeng.
@@ -41,6 +43,9 @@ public class OrderByTResultSet extends BaseTResultSet {
     private Comparator<Integer>         setComparator;
     private List<Comparator<ResultSet>> sortFieldComparators;
 
+    /** 
+     * @see com.alipay.zdal.client.jdbc.resultset.BaseTResultSet#internNext()
+     */
     @Override
     protected boolean internNext() throws SQLException {
         if (!inited) {
@@ -108,9 +113,9 @@ public class OrderByTResultSet extends BaseTResultSet {
                 ResultSet resultSet1, resultSet2;
                 resultSet1 = actualResultSets.get(left);
                 resultSet2 = actualResultSets.get(right);
-                
+
                 int ret;
-            
+
                 for (int indexOfOrderByColumn = 0; indexOfOrderByColumn < orderByColumns.length; indexOfOrderByColumn++) {
                     try {
                         if (sortIndexes[indexOfOrderByColumn] == -1) {

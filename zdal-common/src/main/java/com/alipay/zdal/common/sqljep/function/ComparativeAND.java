@@ -1,5 +1,8 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.sqljep.function;
-
 
 /**
  * AND节点
@@ -11,27 +14,24 @@ package com.alipay.zdal.common.sqljep.function;
  *             
  * 类似这样的节点出现
  * 
- * @author shenxun
  *
  */
-public class ComparativeAND extends ComparativeBaseList{
-	
-	public ComparativeAND(int function, Comparable<?> value) {
-		super(function, value);
-	}
-	
-	public ComparativeAND(){
-	}
-	
-	public ComparativeAND(Comparative item){
-		super(item);
-	}
-	
+public class ComparativeAND extends ComparativeBaseList {
 
+    public ComparativeAND(int function, Comparable<?> value) {
+        super(function, value);
+    }
 
-	@Override
-	protected String getRelation() {
-		return " and ";
-	}
+    public ComparativeAND() {
+    }
+
+    public ComparativeAND(Comparative item) {
+        super(item);
+    }
+
+    @Override
+    protected String getRelation() {
+        return " and ";
+    }
 
 }

@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.config.beans;
 
 import java.util.HashMap;
@@ -6,7 +10,6 @@ import java.util.Map;
 /**
  * 一份完整的分库分表规则配置，一套库一份
  *  
- * @author linxuan
  */
 public class ShardRule implements Cloneable {
     private Map<String/*逻辑表名*/, TableRule> tableRules;

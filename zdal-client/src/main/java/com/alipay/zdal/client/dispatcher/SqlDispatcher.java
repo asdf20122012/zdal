@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.dispatcher;
 
 import java.util.List;
@@ -5,7 +9,6 @@ import java.util.List;
 import com.alipay.zdal.client.RouteCondition;
 import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.exception.checked.ZdalCheckedExcption;
-
 
 /**
  * 从TStatement的角度看，只需传入sql和其参数，就可以得到以下信息：
@@ -23,24 +26,25 @@ import com.alipay.zdal.common.exception.checked.ZdalCheckedExcption;
  * 
  * 所以要进一步有以下几个接口: 解析、规则、匹配
  *  
- * @author linxuan
  */
-public interface SqlDispatcher extends DatabaseChoicer{
-	/**
-	 * 获取当前数据库和表。
-	 * @param sql
-	 * @param args
-	 * @return
-	 * @throws ZdalCheckedExcption
-	 */
-	DispatcherResult getDBAndTables(String sql, List<Object> args) throws ZdalCheckedExcption;
-	
-	/**
-	 * 不解析SQL，由ThreadLocal传入的指定对象（RouteCondition），决定库表目的地的接口
-	 * @param rc
-	 * @return
-	 */
-	DispatcherResult getDBAndTables(RouteCondition rc);
-	DBType getDBType();
-	Result getAllDatabasesAndTables(String logicTableName);
+public interface SqlDispatcher extends DatabaseChoicer {
+    /**
+     * 获取当前数据库和表。
+     * @param sql
+     * @param args
+     * @return
+     * @throws ZdalCheckedExcption
+     */
+    DispatcherResult getDBAndTables(String sql, List<Object> args) throws ZdalCheckedExcption;
+
+    /**
+     * 不解析SQL，由ThreadLocal传入的指定对象（RouteCondition），决定库表目的地的接口
+     * @param rc
+     * @return
+     */
+    DispatcherResult getDBAndTables(RouteCondition rc);
+
+    DBType getDBType();
+
+    Result getAllDatabasesAndTables(String logicTableName);
 }

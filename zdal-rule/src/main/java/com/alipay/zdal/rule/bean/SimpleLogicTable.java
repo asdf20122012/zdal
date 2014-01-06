@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.bean;
 
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ import com.alipay.zdal.rule.ruleengine.util.RuleUtils;
  * 
  * 构造好以后变成运行时可以使用的运行时数据，然后进行运行。
  * 
- * @author shenxun
  *
  */
 public class SimpleLogicTable extends LogicTable {

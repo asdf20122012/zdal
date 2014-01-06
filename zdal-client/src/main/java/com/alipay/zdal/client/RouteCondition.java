@@ -1,6 +1,8 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client;
-
-
 
 /**
  * 通用接口，可以通过重写{@link RouteHandler} 并且注册到{@link RouteHandlerRegister}
@@ -8,10 +10,9 @@ package com.alipay.zdal.client;
  * 中的key为RouteCondition实现的class全名称。
  * 
  * 
- * @author shenxun
  * 
  */
 public interface RouteCondition {
-	public String getVirtualTableName() ;
+    public String getVirtualTableName();
 
 }

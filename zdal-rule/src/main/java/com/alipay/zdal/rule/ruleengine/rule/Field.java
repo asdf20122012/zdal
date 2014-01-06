@@ -1,11 +1,12 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule.ruleengine.rule;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-
-
 
 /**
  * 存放列名->sourceKey的映射。
@@ -24,22 +25,22 @@ import java.util.Set;
  * 
  * 这样写的作用是不污染现有sourceKeys。减少逻辑改动
  * 
- * @author shenxun
  *
  */
 public class Field {
-	public Field(int capacity) {
-		sourceKeys = new HashMap<String, Set<Object>>(capacity);
-	}
-	 public Map<String/* 列名 */, Set<Object>/* 得到该结果的描点值名 */> sourceKeys ;
-	 /**
-	 * 用于映射规则中存放映射后的所有值，这些值都应该有相同的列名，对应mappingTargetColumn
-	 */
-	public Set<Object> mappingKeys;
-	 /**
-	 * 对应上述mappingKeys的targetColumn
-	 */
-	public String mappingTargetColumn;
-        
-	public static final Field EMPTY_FIELD = new Field(0);
+    public Field(int capacity) {
+        sourceKeys = new HashMap<String, Set<Object>>(capacity);
+    }
+
+    public Map<String/* 列名 */, Set<Object>/* 得到该结果的描点值名 */> sourceKeys;
+    /**
+    * 用于映射规则中存放映射后的所有值，这些值都应该有相同的列名，对应mappingTargetColumn
+    */
+    public Set<Object>                                        mappingKeys;
+    /**
+    * 对应上述mappingKeys的targetColumn
+    */
+    public String                                             mappingTargetColumn;
+
+    public static final Field                                 EMPTY_FIELD = new Field(0);
 }

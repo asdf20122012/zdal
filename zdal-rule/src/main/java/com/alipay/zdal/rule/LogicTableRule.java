@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.rule;
 
 import java.util.List;
@@ -9,25 +13,23 @@ import com.alipay.zdal.rule.ruleengine.entities.inputvalue.CalculationContextInt
 import com.alipay.zdal.rule.ruleengine.entities.retvalue.TargetDB;
 
 public interface LogicTableRule {
-	Set<RuleChain> getRuleChainSet();
+    Set<RuleChain> getRuleChainSet();
 
+    //	void setNeedRowCopy(boolean needRowCopy);
 
-//	void setNeedRowCopy(boolean needRowCopy);
+    boolean isAllowReverseOutput();
 
-	boolean isAllowReverseOutput();
+    //	void setAllowReverseOutput(boolean allowReverseOutput);
 
-//	void setAllowReverseOutput(boolean allowReverseOutput);
-	
-	/**
-	 * 不同的节点领走自己的结果，并根据结果进行1对多映射
-	 * @param map
-	 * @return
-	 */
-	public List<TargetDB> calculate(
-			Map<RuleChain, CalculationContextInternal> map);
-	
-	public List<String> getUniqueColumns();
-	
-//	public Map<String, ? extends SharedElement> getSubSharedElements();
-//	DBType getDBType();
+    /**
+     * 不同的节点领走自己的结果，并根据结果进行1对多映射
+     * @param map
+     * @return
+     */
+    public List<TargetDB> calculate(Map<RuleChain, CalculationContextInternal> map);
+
+    public List<String> getUniqueColumns();
+
+    //	public Map<String, ? extends SharedElement> getSubSharedElements();
+    //	DBType getDBType();
 }

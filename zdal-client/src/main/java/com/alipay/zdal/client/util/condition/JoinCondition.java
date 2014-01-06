@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * 增加RouteCondition方式下，对join的简单支持，这里只是添加了被join的虚拟表名，在对sql进行表名替换的时候用到
- * @author jiangping
  *
  * @version $Id: JoinCondition.java, v 0.1 2010-1-29 下午02:02:01 jiangping Exp $
  */

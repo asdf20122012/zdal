@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.common.lang;
 
 import java.io.IOException;
@@ -16,8 +20,9 @@ import com.alipay.zdal.common.exception.runtime.InputStringIsNotValidException;
  * 这个类中的每个方法都可以“安全”地处理<code>null</code>，而不会抛出<code>NullPointerException</code>。
  * </p>
  *
- * @author Michael Zhou
- * @version $Id: StringUtil.java 1149 2004-08-10 02:01:41Z baobao $
+ * 
+ * @author 伯牙
+ * @version $Id: StringUtil.java, v 0.1 2014-1-6 下午05:20:58 Exp $
  */
 public class StringUtil {
     /* ============================================================================ */

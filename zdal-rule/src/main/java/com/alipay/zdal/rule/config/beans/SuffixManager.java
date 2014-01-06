@@ -1,5 +1,6 @@
 /**
- * 
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
  */
 package com.alipay.zdal.rule.config.beans;
 
@@ -31,7 +32,7 @@ public class SuffixManager {
         Suffix suf = new Suffix();
         listSuffix.add(suf);
     }
-    
+
     public List<Suffix> getListSuffix() {
         return listSuffix;
     }

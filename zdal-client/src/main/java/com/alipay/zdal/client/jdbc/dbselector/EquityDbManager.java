@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc.dbselector;
 
 import java.io.IOException;
@@ -12,8 +16,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.alipay.zdal.client.ThreadLocalString;
 import com.alipay.zdal.client.jdbc.ZdalStatement.DB_OPERATION_TYPE;
@@ -31,14 +34,13 @@ import com.alipay.zdal.common.lang.StringUtil;
  * 
  * 支持动态推送权重，动态加减库
  * 
- * @author linxuan
  * 
  * @param <T> JdbcTemplate 或则 DataSource
  * 
  * TODO 从DataSource对象本身判断是不是同一个库，不再保留这种配置信息：Map<String, Map<String, Object>>
  */
 public class EquityDbManager extends AbstractDBSelector {
-    private static final Log logger = LogFactory.getLog(EquityDbManager.class);
+    private static final Logger logger = Logger.getLogger(EquityDbManager.class);
 
     /**
      * 运行期会动态改变的状态。保持不变对象，只能重建，不能修改。
@@ -208,9 +210,7 @@ public class EquityDbManager extends AbstractDBSelector {
             }
             if (name == null) {
                 exceptions.add(new NoMoreDataSourceException("在执行sql的过程中，没有可用数据源了！"));
-                if (logger.isWarnEnabled()) {
-                    logger.warn("在此次执行sql的过程中，数据源" + wr.getAllDbKeys() + "均不可用了！");
-                }
+                logger.warn("在此次执行sql的过程中，数据源" + wr.getAllDbKeys() + "均不可用了！");
                 break;
             }
             //获取到db的名字，然后缓存起来，业务会用到该名字

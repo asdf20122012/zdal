@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.config;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -5,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.log4j.Logger;
 
 import com.alipay.zdal.common.Constants;
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.lang.StringUtil;
 
 /**
@@ -39,6 +44,9 @@ public abstract class ZdalDataSourceConfig {
 
     protected DataSourceConfigType dbConfigType  = null;
 
+    /** 数据库类型. */
+    protected DBType               dbType;
+
     /**
      * 检验配置项.
      */
@@ -72,6 +80,7 @@ public abstract class ZdalDataSourceConfig {
         this.zdalConfig = ZdalConfigurationLoader.getInstance().getZdalConfiguration(appName,
             dbmode, appDsName, configPath);
         this.dbConfigType = zdalConfig.getDataSourceConfigType();
+        this.dbType = zdalConfig.getDbType();
         this.initDataSources(zdalConfig);
         this.inited.set(true);
         CONFIG_LOGGER.warn("WARN ## init ZdalDataSource [" + appDsName + "] success,cost "
@@ -89,6 +98,10 @@ public abstract class ZdalDataSourceConfig {
 
     public DataSourceConfigType getDbConfigType() {
         return dbConfigType;
+    }
+
+    public DBType getDbType() {
+        return dbType;
     }
 
     // 下面的get/set对应的参数需要在初始化的时候设置.

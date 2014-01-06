@@ -12,8 +12,6 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author fengqi.lin@alipay.com
- * @version $Id: ZConnectionValidator.java, v 0.1 2010-8-12 обнГ01:26:04 fengqi.lin Exp $
  */
 public class ZConnectionValidator {
 

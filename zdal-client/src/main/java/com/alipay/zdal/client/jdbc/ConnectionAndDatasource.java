@@ -1,3 +1,7 @@
+/**
+ * Alipay.com Inc.
+ * Copyright (c) 2004-2012 All Rights Reserved.
+ */
 package com.alipay.zdal.client.jdbc;
 
 import java.sql.Connection;
@@ -14,18 +18,17 @@ import javax.sql.DataSource;
  *         3，获取真正的链接。
  * 
  * 
- * @author shenxun
  *
  */
 public class ConnectionAndDatasource {
-	/**
-	 * 随着读重试 connection也会不断发生变化。
-	 */
-	Connection connection;
-	DataSource parentDataSource;
-	/**
-	 * dbselector对象，在正常情况下是TDatasource中持有的dbSelector.
-	 * 但如果发生读重试，则持有的是经过copy，并去掉了有问题datasource对象的dbSelector
-	 */
-	DBSelector dbSelector;
+    /**
+     * 随着读重试 connection也会不断发生变化。
+     */
+    Connection connection;
+    DataSource parentDataSource;
+    /**
+     * dbselector对象，在正常情况下是TDatasource中持有的dbSelector.
+     * 但如果发生读重试，则持有的是经过copy，并去掉了有问题datasource对象的dbSelector
+     */
+    DBSelector dbSelector;
 }
