@@ -12,7 +12,6 @@ import com.alipay.zdal.rule.ruleengine.entities.abstractentities.SharedElement;
  * 
  * 用于创建database中持有多个表的map
  * 
- * @author shenxun
  *
  */
 public interface TableMapProvider {

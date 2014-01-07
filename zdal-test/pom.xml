@@ -55,6 +55,11 @@
 			<version>2.3.4.726</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.alipay</groupId>
+			<artifactId>ats</artifactId>
+			<version>4.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
