@@ -13,13 +13,13 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.parser.DefaultSQLParser;
 import com.alipay.zdal.parser.GroupFunctionType;
 import com.alipay.zdal.parser.SQLParser;
 import com.alipay.zdal.parser.result.DefaultSqlParserResult;
 import com.alipay.zdal.parser.result.SqlParserResult;
-
 
 public class SQLParserOfMysqlWithDeleteTest {
     //    private static final String   MYSQL_DELETE        = "delete from  users  where c3 = ? and  c4='xiaoqing.zhouxq'";
@@ -37,7 +37,7 @@ public class SQLParserOfMysqlWithDeleteTest {
     @Test
     public void testParseWithPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -62,10 +62,10 @@ public class SQLParserOfMysqlWithDeleteTest {
     /**
      * 测试绑定参数是，如果拆分字段不在sql语句中，拆分规则会报错.
      */
-        @Test
+    @Test
     public void testParserWithoutPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -90,10 +90,10 @@ public class SQLParserOfMysqlWithDeleteTest {
     /**
      * 测试绑定参数时，判断多个字段的拆分规则是否正确.
      */
-        @Test
+    @Test
     public void testParserWithMultiPartinations() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -112,21 +112,21 @@ public class SQLParserOfMysqlWithDeleteTest {
         Assert.assertEquals(0, patitions.size());
 
         Comparative idCompa = patitions.get("c3");
-      //  Assert.assertEquals(Comparative.Equivalent, idCompa.getComparison());
-       // Assert.assertEquals(100, idCompa.getValue());
+        //  Assert.assertEquals(Comparative.Equivalent, idCompa.getComparison());
+        // Assert.assertEquals(100, idCompa.getValue());
 
         Comparative nameCompa = patitions.get("c4");
-       // Assert.assertEquals(Comparative.Equivalent, nameCompa.getComparison());
-       // Assert.assertEquals("xiaoqing.zhouxq", nameCompa.getValue());
+        // Assert.assertEquals(Comparative.Equivalent, nameCompa.getComparison());
+        // Assert.assertEquals("xiaoqing.zhouxq", nameCompa.getValue());
     }
 
     /**
      * 测试非绑定参数时，判断单个字段的拆分规则是否正确.
      */
-        @Test
+    @Test
     public void testParserWithNoBindPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE_NOBIND, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_DELETE_NOBIND, DBType.MYSQL);
         Assert.assertEquals("users", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());

@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.common.sqljep.function.ComparativeAND;
 import com.alipay.zdal.common.sqljep.function.ComparativeOR;
@@ -16,7 +17,6 @@ import com.alipay.zdal.parser.DefaultSQLParser;
 import com.alipay.zdal.parser.GroupFunctionType;
 import com.alipay.zdal.parser.SQLParser;
 import com.alipay.zdal.parser.result.SqlParserResult;
-
 
 public class SQLParserOfOracleWithSelectTest {
     //    private static final String   ORACLE_SELECT       = "select inst_id, finance_exchange_code, reference_no, div_db_flag, gmt_biz_create, gmt_biz_modified, gmt_create, gmt_modified"
@@ -46,18 +46,18 @@ public class SQLParserOfOracleWithSelectTest {
     /**
      * 测试绑定参数时，判断单个字段的拆分规则是否正确.
      */
-        @Test
+    @Test
     public void testParseWithTwoPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_SELECT, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_SELECT, DBType.ORACLE);
         Assert.assertEquals("trade_base", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
         //Assert.assertEquals(19, parserResult.getMax(Arrays.asList(ORACLE_SELECT_ARGS)));
         Assert.assertEquals(true, parserResult.getOrderByEles().isEmpty());
         //Assert.assertEquals(5, parserResult.getSkip(Arrays.asList(ORACLE_SELECT_ARGS)));
-       // Assert.assertEquals(6, parserResult.isRowCountBind());
+        // Assert.assertEquals(6, parserResult.isRowCountBind());
         //Assert.assertEquals(5, parserResult.isSkipBind());
 
         Set<String> partinationSet = new HashSet<String>();
@@ -75,11 +75,11 @@ public class SQLParserOfOracleWithSelectTest {
         }
     }
 
-        @Test
+    @Test
     public void testParseWithOnePartination() {
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(ORACLE_SELECT1, false);
+        SqlParserResult parserResult = sqlParser.parse(ORACLE_SELECT1, DBType.ORACLE);
         Assert.assertEquals("fin_retrieval_serial", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -121,8 +121,8 @@ public class SQLParserOfOracleWithSelectTest {
                      + " AND a.trade_no = ?";
         Object[] objects = new Object[] { 1, 2, 3, 4 };
         SQLParser parser = new DefaultSQLParser();
-        SqlParserResult parserResult = parser.parse(sql, false);
-       // parserResult.getTableName();
+        SqlParserResult parserResult = parser.parse(sql, DBType.ORACLE);
+        // parserResult.getTableName();
         Set<String> partinationSet = new HashSet<String>();
         partinationSet.add("trade_no");
         Map<String, Comparative> patitions = parserResult.getComparativeMapChoicer().getColumnsMap(
@@ -130,14 +130,14 @@ public class SQLParserOfOracleWithSelectTest {
         System.out.println();
     }
 
-       @Test
+    @Test
     public void test2() {
         Object[] args = new Object[] { 1, 2, 2 };
         Set<String> partinationSet = new HashSet<String>();
         partinationSet.add("trade_no");
         SQLParser sqlParser = new DefaultSQLParser();
         String sql = " select /*+ index(t, TRADE_GOODS_INFO_TNO_IND) */ ID,TRADE_NO,GOODS_ID,GOODS_TITLE,GOODS_BID,GOODS_QUANTITY,DETAIL_URL,GOODS_MEMO,REFER_URL,PARTNER,GMT_CREATE,OTHER_FEE,CATEGORY,PROMOTION_DESC,PIC_URL from trade_goods_info t where  (trade_no=? or trade_no=?) and rownum <= ?    ";
-        SqlParserResult parserResult = sqlParser.parse(sql, false);
+        SqlParserResult parserResult = sqlParser.parse(sql, DBType.ORACLE);
         Assert.assertEquals("trade_goods_info", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -150,7 +150,7 @@ public class SQLParserOfOracleWithSelectTest {
         System.out.println(patitions);
     }
 
-        @Test
+    @Test
     public void test3() {
         Object[] args = new Object[] { 1, 2, 3, 4, 5 };
         Set<String> partinationSet = new HashSet<String>();
@@ -174,10 +174,10 @@ public class SQLParserOfOracleWithSelectTest {
                                                                         + "b where b.row_num >?";
 
         SqlParserResult parserResult = sqlParser.parse(
-            SELECT_DATASOURCETEMPLATE_BY_DBMODE_IDCNAME_DSTYPE_SQL, false);
+            SELECT_DATASOURCETEMPLATE_BY_DBMODE_IDCNAME_DSTYPE_SQL, DBType.ORACLE);
         Assert.assertEquals("app_ds_template", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
-       // Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
+        // Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
         Assert.assertEquals(4, parserResult.getMax(Arrays.asList(args)));
         Assert.assertEquals(true, parserResult.getOrderByEles().isEmpty());
         Assert.assertEquals(-1000, parserResult.getSkip(Arrays.asList(args)));

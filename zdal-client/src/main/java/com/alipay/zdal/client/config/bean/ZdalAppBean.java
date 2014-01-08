@@ -5,9 +5,9 @@
 package com.alipay.zdal.client.config.bean;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 
@@ -66,9 +66,12 @@ public class ZdalAppBean implements InitializingBean {
         if (appDataSourceList == null || appDataSourceList.isEmpty()) {
             throw new IllegalArgumentException("ERROR ## the appDataSource is empty of " + appName);
         } else {
-            //校验是否有同名的appDataSourceName,借助于AppDataSourceBean.equeals,hashcode.
-            Set<AppDataSourceBean> tmp = new HashSet<AppDataSourceBean>(appDataSourceList);
-            if (tmp.size() != appDataSourceList.size()) {
+            //校验是否有同名的appDataSourceName.
+            Map<String, AppDataSourceBean> tmps = new HashMap<String, AppDataSourceBean>();
+            for (AppDataSourceBean bean : appDataSourceList) {
+                tmps.put(bean.getAppDataSourceName(), bean);
+            }
+            if (tmps.size() != appDataSourceList.size()) {
                 throw new IllegalArgumentException(
                     "ERROR ## the appDataSourceList has same appDataSourceName of " + appName);
             }

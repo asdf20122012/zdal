@@ -9,12 +9,12 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.common.sqljep.function.ComparativeOR;
 import com.alipay.zdal.parser.DefaultSQLParser;
 import com.alipay.zdal.parser.SQLParser;
 import com.alipay.zdal.parser.result.SqlParserResult;
-
 
 public class SQLParserWithSelectInTest {
 
@@ -32,11 +32,11 @@ public class SQLParserWithSelectInTest {
     /**
      * 测试绑定参数时,in里面带多个参数.
      */
-        @Test
+    @Test
     public void test1() {
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT, DBType.MYSQL);
         Set<String> partinationSet = new HashSet<String>();
         partinationSet.add("inst_id");
         Map<String, Comparative> patitions = parserResult.getComparativeMapChoicer().getColumnsMap(
@@ -56,7 +56,7 @@ public class SQLParserWithSelectInTest {
     public void test2() {
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT1, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT1, DBType.MYSQL);
         Set<String> partinationSet = new HashSet<String>();
         partinationSet.add("inst_id");
         Map<String, Comparative> patitions = parserResult.getComparativeMapChoicer().getColumnsMap(

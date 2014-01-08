@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.alipay.zdal.common.DBType;
 import com.alipay.zdal.common.sqljep.function.Comparative;
 import com.alipay.zdal.common.sqljep.function.ComparativeAND;
 import com.alipay.zdal.common.sqljep.function.ComparativeOR;
@@ -18,7 +19,6 @@ import com.alipay.zdal.parser.GroupFunctionType;
 import com.alipay.zdal.parser.SQLParser;
 import com.alipay.zdal.parser.result.SqlParserResult;
 import com.alipay.zdal.parser.visitor.OrderByEle;
-
 
 public class SQLParserOfMysqlWithSelectTest {
 
@@ -57,7 +57,7 @@ public class SQLParserOfMysqlWithSelectTest {
                      + "ORDER BY gmt_biz_create DESC";
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(sql, true);
+        SqlParserResult parserResult = sqlParser.parse(sql, DBType.MYSQL);
         System.out.println(parserResult.getGroupFuncType());
         List<OrderByEle> orderByes = parserResult.getOrderByEles();
         for (OrderByEle orderByEle : orderByes) {
@@ -74,7 +74,7 @@ public class SQLParserOfMysqlWithSelectTest {
         String sql = "select count(*) from (select * from test where id in (?,?,?)) ";
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(sql, true);
+        SqlParserResult parserResult = sqlParser.parse(sql, DBType.MYSQL);
         System.out.println(parserResult.getGroupFuncType());
         System.out.println(parserResult);
     }
@@ -86,7 +86,7 @@ public class SQLParserOfMysqlWithSelectTest {
     public void testParseWithPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
 
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT, DBType.MYSQL);
         Assert.assertEquals("fin_retrieval_serial", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());
@@ -117,7 +117,7 @@ public class SQLParserOfMysqlWithSelectTest {
     //    @Test
     public void testParserWithoutPartination() {
         SQLParser sqlParser = new DefaultSQLParser();
-        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT1, true);
+        SqlParserResult parserResult = sqlParser.parse(MYSQL_SELECT1, DBType.MYSQL);
         Assert.assertEquals("fin_retrieval_serial", parserResult.getTableName());
         Assert.assertEquals(true, parserResult.getGroupByEles().isEmpty());
         Assert.assertEquals(GroupFunctionType.NORMAL, parserResult.getGroupFuncType());

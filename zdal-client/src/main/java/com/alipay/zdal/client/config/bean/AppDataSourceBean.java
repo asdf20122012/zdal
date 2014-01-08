@@ -247,6 +247,15 @@ public class AppDataSourceBean implements InitializingBean {
         if (physicalDataSourceSet == null || physicalDataSourceSet.isEmpty()) {
             throw new IllegalArgumentException("ERROR ## the physicalDataSourceSet is empty of "
                                                + appDataSourceName);
+        } else {
+            Map<String, PhysicalDataSourceBean> tmps = new HashMap<String, PhysicalDataSourceBean>();
+            for (PhysicalDataSourceBean bean : physicalDataSourceSet) {
+                tmps.put(bean.getName(), bean);
+            }
+            if (tmps.size() != physicalDataSourceSet.size()) {
+                throw new IllegalArgumentException(
+                    "ERROR ## the physicalDataSourceSet has same name of " + appDataSourceName);
+            }
         }
 
         if (this.dataSourceConfigType.isShardGroup()) {
