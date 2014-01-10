@@ -32,10 +32,10 @@ public abstract class AbstractTResultSet extends DummyTResultSet {
     }
 
     /**
-     * 原来会发生一个情况就是如果TStatement调用了close()方法
+     * 原来会发生一个情况就是如果ZdalStatement调用了close()方法
      * 而本身其管理的TResultSet没有closed时候。外部会使用iterator来遍历每一个
      * TResultSet，调用关闭的方法，但因为TResultSet的close方法会回调
-     * TStatement里面用于创建iterator的Set<ResultSet>对象，并使用remove方法。
+     * ZdalStatement里面用于创建iterator的Set<ResultSet>对象，并使用remove方法。
      * 这就会抛出一个concurrentModificationException。
      * 
      * @param removeThis

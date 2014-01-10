@@ -38,7 +38,7 @@ public class TestShardGroupDataSource extends BaseTest {
             "201312268302803819"            };
 
     @Test
-    public void testShardFailoverDataSource() throws Throwable {
+    public void testShardGroupDataSource() throws Throwable {
         ZdalDataSource dataSource = new ZdalDataSource();
         dataSource.setAppName(APPNAME);
         dataSource.setAppDsName(APPDSNAME);
