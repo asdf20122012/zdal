@@ -15,11 +15,7 @@ import com.alipay.zdal.rule.ruleengine.entities.retvalue.TargetDB;
 public interface LogicTableRule {
     Set<RuleChain> getRuleChainSet();
 
-    //	void setNeedRowCopy(boolean needRowCopy);
-
     boolean isAllowReverseOutput();
-
-    //	void setAllowReverseOutput(boolean allowReverseOutput);
 
     /**
      * 不同的节点领走自己的结果，并根据结果进行1对多映射
@@ -29,7 +25,4 @@ public interface LogicTableRule {
     public List<TargetDB> calculate(Map<RuleChain, CalculationContextInternal> map);
 
     public List<String> getUniqueColumns();
-
-    //	public Map<String, ? extends SharedElement> getSubSharedElements();
-    //	DBType getDBType();
 }

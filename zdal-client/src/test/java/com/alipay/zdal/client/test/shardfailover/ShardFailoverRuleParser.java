@@ -21,6 +21,7 @@ public class ShardFailoverRuleParser {
      * @return
      */
     public static int parserDbIndex(String userId) {
+        //由应用确定何时到主库，何时到failover库，需要与规则中的dbindex中的逻辑数据源进行匹配
         return getId(userId) / 2 * 2;
     }
 
